@@ -3,6 +3,7 @@
 Chanel is a code cleaner for Pharo. 
 
 - [Installation](#installation)
+- [Quick start](#quick-start)
 - [Documentation](#documentation)
 - [Version management](#version-management)
 - [Smalltalk versions compatibility](#smalltalk-versions-compatibility)
@@ -29,10 +30,22 @@ To add it to your baseline:
 
 Note that you can replace the #v1.x.x by another branch such as #development or a tag such as #v1.0.0, #v1.? or #v1.1.?.
 
+## Quick start
+
+It is possible to clean a collection of packages using the #perfume: method.
+
+```Smalltalk
+packages := ((IceRepository registry select: [ :e | e name includesSubstring: 'Moose' ])
+	flatCollect: [ :e | e workingCopy packageNames collect: [ :s | s asPackageIfAbsent: [ nil ] ] ]) reject: #isNil.
+
+Chanel perfume: packages
+```
+
+> **WARNING**: Some cleaning are making sense in most cases but might cause troubles in some edge cases. Please, read the documentation to see the list of possible problems it might introduce.
 
 ## Documentation
 
-TODO
+Find the full documentation [Here](resources/doc/documentation.md).
 
 ## Version management 
 
