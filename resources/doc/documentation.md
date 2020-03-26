@@ -28,7 +28,7 @@ Here is the list of rewrites it will apply:
 | `x deny y = true` | `x deny: y` |
 | `x assert: y = false` | `x deny: y` |
 | `x deny: y = false` | `x assert: y` |
-| `x assert: y equals: true` ==> `x assert: y` |
+| `x assert: y equals: true` | `x assert: y` |
 | `x deny y equals: true` | `x deny: y` |
 | `x assert: y equals: false` | `x deny: y` |
 | `x deny: y equals: false` | `x assert: y` |
@@ -51,14 +51,14 @@ Chanel simplifies conditionals. For example it will rewrite:
 
 | Original | Transformation |
 | ------------- | ------------- |
-| `x isNil ifTrue: y | x ifNil: y` |
-| `x isNil ifFalse: y | x ifNotNil: y` |
-| `x isNotNil ifTrue: y | x ifNotNil: y` |
-| `x isNotNil ifFalse: y | x ifNil: y` |
-| `x isNil ifTrue: y ifFalse: z | x ifNil: y ifNotNil: z` |
-| `x isNil ifFalse: y ifTrue: z | x ifNil: z ifNotNil: y` |
-| `x isNotNil ifTrue: y ifFalse: z | x ifNil: z ifNotNil: y` |
-| `x isNotNil ifFalse: y ifTrue: z | x ifNil: y ifNotNil: z` |
+| `x isNil ifTrue: y` | `x ifNil: y` |
+| `x isNil ifFalse: y` | `x ifNotNil: y` |
+| `x isNotNil ifTrue: y` | `x ifNotNil: y` |
+| `x isNotNil ifFalse: y` | `x ifNil: y` |
+| `x isNil ifTrue: y ifFalse: z` | `x ifNil: y ifNotNil: z` |
+| `x isNil ifFalse: y ifTrue: z` | `x ifNil: z ifNotNil: y` |
+| `x isNotNil ifTrue: y ifFalse: z` | `x ifNil: z ifNotNil: y` |
+| `x isNotNil ifFalse: y ifTrue: z` | `x ifNil: y ifNotNil: z` |
 
 > The only danger of this cleaning happens for projects working on multiple Smalltalks
 
