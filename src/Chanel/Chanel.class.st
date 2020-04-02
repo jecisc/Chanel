@@ -173,7 +173,7 @@ Chanel >> clean [
 { #category : #protocols }
 Chanel >> cleanCloseProtocols [
 	| methods |
-	methods := self localMethods.
+	methods := self localMethodsWithoutExtensions.
 	self protocolsToCleanMap keysAndValuesDo: [ :olds :new | methods do: [ :meth | (olds includes: meth protocol) ifTrue: [ meth protocol: new ] ] ]
 ]
 
@@ -201,7 +201,7 @@ Chanel >> cleanEqualityTest [
 { #category : #protocols }
 Chanel >> cleanProtocols [
 	| methods protocolsMap |
-	methods := self localMethods.
+	methods := self localMethodsWithoutExtensions.
 
 	self cleanCloseProtocols.
 
@@ -297,6 +297,11 @@ Chanel >> ensureTestMethodsAreInRightProtocol [
 { #category : #accessing }
 Chanel >> localMethods [
 	^ (packages flatCollect: #methods) reject: #isFromTrait
+]
+
+{ #category : #accessing }
+Chanel >> localMethodsWithoutExtensions [
+	^ self localMethods reject: #isExtension
 ]
 
 { #category : #accessing }
