@@ -242,7 +242,9 @@ Chanel >> ensureSuperInitializeForMethods: methods [
 		select: [ :method | 
 			method methodClass isInstanceSide
 				and: [ method selector = #initialize
-						and: [ (method ast sendNodes ifNotEmpty: [ :nodes | nodes anySatisfy: [ :node | node isSuperSend and: [ node selector = #initialize ] ] ]) not ] ] ]
+						and: [ method ast sendNodes
+								ifNotEmpty: [ :nodes | (nodes anySatisfy: [ :node | node isSuperSend and: [ node selector = #initialize ] ]) not ]
+								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
 			| ast |
 			ast := method ast.
