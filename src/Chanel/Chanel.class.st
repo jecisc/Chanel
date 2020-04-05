@@ -158,8 +158,8 @@ Chanel class >> testMethodsInSpecificProtocolMap [
 
 { #category : #cleaning }
 Chanel >> clean [
+	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
-		cleanEqualityTest;
 		simplifyConditions;
 		cleanProtocols;
 		ensureTestCasesEndsWithTestInsteadOfTests;
@@ -175,27 +175,6 @@ Chanel >> cleanCloseProtocols [
 	| methods |
 	methods := self localMethodsWithoutExtensions.
 	self protocolsToCleanMap keysAndValuesDo: [ :olds :new | methods do: [ :meth | (olds includes: meth protocol) ifTrue: [ meth protocol: new ] ] ]
-]
-
-{ #category : #equality }
-Chanel >> cleanEqualityTest [
-	| r |
-	r := RBParseTreeRewriter new
-		replace: '`@receiver assert: `@arg = `@arg2' with: '`@receiver assert: `@arg equals: `@arg2';
-		replace: '`@receiver deny: `@arg = `@arg2' with: '`@receiver deny: `@arg equals: `@arg2';
-		replace: '`@receiver assert: `@arg == `@arg2' with: '`@receiver assert: `@arg identicalTo: `@arg2';
-		replace: '`@receiver deny: `@arg == `@arg2' with: '`@receiver deny: `@arg identicalTo: `@arg2';
-		replace: '`@receiver assert: `@arg = true' with: '`@receiver assert: `@arg';
-		replace: '`@receiver deny: `@arg = true' with: '`@receiver deny: `@arg';
-		replace: '`@receiver assert: `@arg = false' with: '`@receiver deny: `@arg';
-		replace: '`@receiver deny: `@arg = false' with: '`@receiver assert: `@arg';
-		replace: '`@receiver assert: `@arg equals: true' with: '`@receiver assert: `@arg';
-		replace: '`@receiver deny: `@arg equals: true' with: '`@receiver deny: `@arg';
-		replace: '`@receiver assert: `@arg equals: false' with: '`@receiver deny: `@arg';
-		replace: '`@receiver deny: `@arg equals: false' with: '`@receiver assert: `@arg';
-		yourself.
-
-	self rewriteMethodsOf: self definedTestCases matching: [ :m | m selector beginsWith: 'test' ] with: r
 ]
 
 { #category : #protocols }
@@ -367,21 +346,16 @@ Chanel >> removeUnreadTemporaries [
 ]
 
 { #category : #execution }
-Chanel >> rewriteMethodsOf: classes matching: aBlock with: rewriter [
+Chanel >> rewriteMethodsOf: classes with: rewriter [
 	classes
 		do: [ :class | 
 			class localMethods
-				select: aBlock
+				select: [ :method | true ]
 				thenDo: [ :m | 
 					| n |
 					n := m parseTree.
 					(rewriter executeTree: n) ifTrue: [ class compile: n formattedCode ] ] ]
 		displayingProgress: [ :c | c printString ]
-]
-
-{ #category : #execution }
-Chanel >> rewriteMethodsOf: classes with: rewriter [
-	self rewriteMethodsOf: classes matching: [ :method | true ] with: rewriter
 ]
 
 { #category : #simplification }
