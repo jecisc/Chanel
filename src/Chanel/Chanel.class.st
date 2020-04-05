@@ -11,7 +11,6 @@ For more information, check the class comments of all subclasses of ChanelAbstra
 7) Remove methods only calling super
 ================================
 
-Remove each methods only doing a super call. Does not remove methods with pragmas.
 
 
 9) Remove duplicated methods from traits 
@@ -38,9 +37,7 @@ Chanel class >> perfume: aCollectionOfPackages [
 { #category : #cleaning }
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
-	self
-		removeMethodsOnlyCallingSuper;
-		removeDuplicatedMethodsFromTrait
+	self removeDuplicatedMethodsFromTrait
 ]
 
 { #category : #accessing }
@@ -77,12 +74,4 @@ Chanel >> removeDuplicatedMethodsFromTrait [
 				do:
 					[ :method | (class traitComposition compiledMethodAt: method selector ifAbsent: [ nil ])
 										ifNotNil: [ :m | m ast = method ast ifTrue: [ method removeFromSystem ] ] ] ]
-]
-
-{ #category : #simplification }
-Chanel >> removeMethodsOnlyCallingSuper [
-	| matcher |
-	matcher := RBParseTreeSearcher justSendsSuper.
-	self localMethods
-		do: [ :method | (method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ]) ifTrue: [ method removeFromSystem ] ]
 ]
