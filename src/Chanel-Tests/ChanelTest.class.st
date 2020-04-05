@@ -9,10 +9,5 @@ Class {
 
 { #category : #tests }
 ChanelTest >> testSmokeTest [
-	self
-		shouldnt: [ Chanel
-				perfume:
-					(((IceRepository registry select: [ :e | e name beginsWith: 'Chanel' ])
-						flatCollect: [ :e | e workingCopy packageNames collect: [ :s | s asPackageIfAbsent: [ nil ] ] ]) reject: #isNil) ]
-		raise: Error
+	self shouldnt: [ Chanel perfume: (#('Chanel-Tests' 'BaselineOfChanel' 'Chanel') collect: #asPackage) ] raise: Error
 ]
