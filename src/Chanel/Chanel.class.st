@@ -1,5 +1,5 @@
 "
-packages := ((IceRepository registry select: [ :e | e name includesSubstring: 'Moose' ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil..
+packages := ((IceRepository registry select: [ :e | e name includesSubstring: 'Moose' ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
 Chanel perfume: packages
 
