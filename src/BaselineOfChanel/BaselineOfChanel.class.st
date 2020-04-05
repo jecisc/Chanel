@@ -18,7 +18,13 @@ BaselineOfChanel >> baseline: spec [
 
 			spec
 				group: 'Core' with: #('Chanel');
-				group: 'Tests' with: #('Chanel-Tests') ]
+				group: 'Tests' with: #('Chanel-Tests') ].
+
+	spec
+		for: #'pharo6.x'
+		do: [ spec
+				package: 'Chanel-Pharo6';
+				package: 'Chanel' with: [ spec requires: 'Chanel-Pharo6' ] ]
 ]
 
 { #category : #accessing }
