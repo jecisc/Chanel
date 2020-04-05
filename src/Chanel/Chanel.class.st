@@ -8,27 +8,6 @@ I am in charge of cleaning multiple things in packages of a project.
 
 For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
-3) Conditional simplifications
-================================
-
-I simplify conditionals. For example I'll rewrite:
-
-x isNil ifTrue: y 							==> x ifNil: y
-
-x isNil ifFalse: y 						==> x ifNotNil: y
-
-x isNotNil ifTrue: y 						==> x ifNotNil: y
-
-x isNotNil ifFalse: y 					==> x ifNil: y
-
-x isNil ifTrue: y ifFalse: z 			==> x ifNil: y ifNotNil: z
-
-x isNil ifFalse: y ifTrue: z 			==> x ifNil: z ifNotNil: y
-
-x isNotNil ifTrue: y ifFalse: z 		==> x ifNil: z ifNotNil: y
-
-x isNotNil ifFalse: y ifTrue: z 		==> x ifNil: y ifNotNil: z
-
 4) Test case names
 ================================
 
@@ -81,7 +60,6 @@ Chanel class >> perfume: aCollectionOfPackages [
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
-		simplifyConditions;
 		ensureTestCasesEndsWithTestInsteadOfTests;
 		ensureRightSuperIsCall;
 		removeNilAssignmentsInInitialize;
@@ -221,34 +199,4 @@ Chanel >> removeUnreadTemporaries [
 								nodesDo: [ :node | (node isTemp and: [ node name = temp name ]) ifTrue: [ node parent replaceWith: node parent value ] ];
 								removeTemporaryNamed: temp name ].
 					method methodClass compile: ast formattedCode ] ]
-]
-
-{ #category : #execution }
-Chanel >> rewriteMethodsOf: classes with: rewriter [
-	classes
-		do: [ :class | 
-			class localMethods
-				select: [ :method | true ]
-				thenDo: [ :m | 
-					| n |
-					n := m parseTree.
-					(rewriter executeTree: n) ifTrue: [ class compile: n formattedCode ] ] ]
-		displayingProgress: [ :c | c printString ]
-]
-
-{ #category : #simplification }
-Chanel >> simplifyConditions [
-	| r |
-	r := RBParseTreeRewriter new
-		replace: '`@receiver isNil ifTrue: `@arg' with: '`@receiver ifNil: `@arg';
-		replace: '`@receiver isNil ifFalse: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifTrue: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifFalse: `@arg' with: '`@receiver ifNil: `@arg';
-		replace: '`@receiver isNil ifTrue: `@arg ifFalse: `@arg2' with: '`@receiver ifNil: `@arg ifNotNil: `@arg2';
-		replace: '`@receiver isNil ifFalse: `@arg ifTrue: `@arg2' with: '`@receiver ifNil: `@arg2 ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifTrue: `@arg ifFalse: `@arg2' with: '`@receiver ifNil: `@arg2 ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifFalse: `@arg ifTrue: `@arg2' with: '`@receiver ifNil: `@arg ifNotNil: `@arg2';
-		yourself.
-
-	self rewriteMethodsOf: self definedClasses with: r
 ]

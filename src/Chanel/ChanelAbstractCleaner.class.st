@@ -78,3 +78,8 @@ ChanelAbstractCleaner >> rewriteMethodsOf: classes matching: aBlock with: rewrit
 					(rewriter executeTree: n) ifTrue: [ class compile: n formattedCode ] ] ]
 		displayingProgress: [ :c | c printString ]
 ]
+
+{ #category : #rewriting }
+ChanelAbstractCleaner >> rewriteMethodsOf: classes with: rewriter [
+	self rewriteMethodsOf: classes matching: [ :method | true ] with: rewriter
+]
