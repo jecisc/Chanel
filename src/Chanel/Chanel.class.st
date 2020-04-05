@@ -1,22 +1,26 @@
 "
-packages := ((IceRepository registry select: [ :e | e name includesSubstring: 'Moose' ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
-
-Chanel perfume: packages
-
+Description
+--------------------
 
 I am in charge of cleaning multiple things in packages of a project. 
 
 For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
-7) Remove methods only calling super
-================================
+Examples
+--------------------
 
+	
+	packages := ((IceRepository registry select: [ :e | e name includesSubstring: 'Moose' ])
+						flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
+	Chanel perfume: packages
+ 
+Internal Representation and Key Implementation Points.
+--------------------
 
-9) Remove duplicated methods from traits 
-================================
+    Instance Variables
+	packages:		<aCollection>		List of packages to clean.
 
-If methods present on traits are duplicated on classes, we remove the duplicated version.
 "
 Class {
 	#name : #Chanel,
@@ -36,8 +40,7 @@ Chanel class >> perfume: aCollectionOfPackages [
 
 { #category : #cleaning }
 Chanel >> clean [
-	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
-	self removeDuplicatedMethodsFromTrait
+	(ChanelAbstractCleaner cleanersFor: self) do: #clean
 ]
 
 { #category : #accessing }
@@ -63,15 +66,4 @@ Chanel >> localMethodsWithoutExtensions [
 { #category : #accessing }
 Chanel >> packages: anObject [
 	packages := anObject
-]
-
-{ #category : #simplification }
-Chanel >> removeDuplicatedMethodsFromTrait [
-	self definedClasses
-		select: [ :class | class isTrait not and: [ class hasTraitComposition ] ]
-		thenDo: [ :class | 
-			class localMethods
-				do:
-					[ :method | (class traitComposition compiledMethodAt: method selector ifAbsent: [ nil ])
-										ifNotNil: [ :m | m ast = method ast ifTrue: [ method removeFromSystem ] ] ] ]
 ]
