@@ -6,43 +6,7 @@ Chanel perfume: packages
 
 I am in charge of cleaning multiple things in packages of a project. 
 
-1) Tests equality
-================================
-
-A first thing I'll clean is equality. For example I'll replace those cases:
-
-
-x assert: y = z 					==> x assert: y equals: z
-
-x deny: y = z 						==> x deny: y equals: z
-
-x assert: y == z 					==> x assert: y identicalTo: z
-
-x deny: y == z 						==> x deny: y identicalTo: z
-
-x assert: y = true 				==> x assert: y
-
-x deny y = true 					==> x deny: y
-
-x assert: y = false 				==> x deny: y
-
-x deny: y = false 					==> x assert: y
-
-x assert: y equals: true 		==> x assert: y
-
-x deny y equals: true 			==> x deny: y
-
-x assert: y equals: false 		==> x deny: y
-
-x deny: y equals: false 			==> x assert: y
-
-2) Clean protocols
-================================
-
-I do multiple cleanings in protocols. 
-
-* I'll ensure that some methods are in the right protocol. For example #initialize should be in #initialization. Find more in `self methodsInSpecificProtocolMap` and `self testMethodsInSpecificProtocolMap`.
-* I'll update some protocols to follow convensions. For example I'll update initialize-release to initialize. Find more in `self protocolsToCleanMap`.
+For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
 3) Conditional simplifications
 ================================
@@ -106,26 +70,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #protocols }
-Chanel class >> methodsInSpecificProtocolMap [
-	| protocolsMap |
-	protocolsMap := Dictionary new.
-	protocolsMap
-		at: #initialize put: #initialization;
-		at: #clone put: #copying;
-		at: #copy put: #copying;
-		at: #deepCopy put: #copying;
-		at: #postCopy put: #copying;
-		at: #veryDeepCopy put: #copying;
-		at: #shallowCopy put: #copying;
-		at: #= put: #comparing;
-		at: #hash put: #comparing;
-		at: #finalize put: #finalization;
-		at: #finalizeValues put: #finalization;
-		at: #isAbstract put: #testing.
-	^ protocolsMap
-]
-
 { #category : #cleaning }
 Chanel class >> perfume: aCollectionOfPackages [
 	^ self new
@@ -133,66 +77,17 @@ Chanel class >> perfume: aCollectionOfPackages [
 		clean
 ]
 
-{ #category : #protocols }
-Chanel class >> protocolsToCleanMap [
-	| protocolsMap |
-	protocolsMap := Dictionary new.
-	protocolsMap
-		at: #(#'instance-creation') put: #'instance creation';
-		at: #(#remove #removal) put: #removing;
-		at: #(#'initialize-release') put: #initialization;
-		at: #(#utils #utility) put: #utilities;
-		at: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') put: #'file in/out'.
-	^ protocolsMap
-]
-
-{ #category : #protocols }
-Chanel class >> testMethodsInSpecificProtocolMap [
-	| protocolsMap |
-	protocolsMap := Dictionary new.
-	protocolsMap
-		at: #setUp put: #running;
-		at: #tearDown put: #running.
-	^ protocolsMap
-]
-
 { #category : #cleaning }
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
 		simplifyConditions;
-		cleanProtocols;
 		ensureTestCasesEndsWithTestInsteadOfTests;
 		ensureRightSuperIsCall;
 		removeNilAssignmentsInInitialize;
 		removeUnreadTemporaries;
 		removeMethodsOnlyCallingSuper;
 		removeDuplicatedMethodsFromTrait
-]
-
-{ #category : #protocols }
-Chanel >> cleanCloseProtocols [
-	| methods |
-	methods := self localMethodsWithoutExtensions.
-	self protocolsToCleanMap keysAndValuesDo: [ :olds :new | methods do: [ :meth | (olds includes: meth protocol) ifTrue: [ meth protocol: new ] ] ]
-]
-
-{ #category : #protocols }
-Chanel >> cleanProtocols [
-	| methods protocolsMap |
-	methods := self localMethodsWithoutExtensions.
-
-	self cleanCloseProtocols.
-
-	self ensureTestMethodsAreInRightProtocol.
-
-	protocolsMap := self methodsInSpecificProtocolMap.
-	methods do: [ :method | protocolsMap at: method selector ifPresent: [ :protocol | method protocol = protocol ifFalse: [ method protocol: protocol ] ] ].
-
-	protocolsMap := self testMethodsInSpecificProtocolMap.
-	methods
-		select: [ :method | method class isTestCase ]
-		thenDo: [ :method | protocolsMap at: method selector ifPresent: [ :protocol | method protocol = protocol ifFalse: [ method protocol: protocol ] ] ]
 ]
 
 { #category : #accessing }
@@ -266,13 +161,6 @@ Chanel >> ensureTestCasesEndsWithTestInsteadOfTests [
 		do: [ :class | (class name endsWith: 'Tests') ifTrue: [ (RBRenameClassRefactoring rename: class to: (class name withoutSuffix: 'Tests') , 'Test') execute ] ]
 ]
 
-{ #category : #protocols }
-Chanel >> ensureTestMethodsAreInRightProtocol [
-	(self definedTestCases flatCollect: #localMethods)
-		select: [ :method | method isExtension not and: [ (method selector beginsWith: 'test') and: [ (method protocol beginsWith: 'test') not ] ] ]
-		thenDo: [ :method1 | method1 protocol = #tests ifFalse: [ method1 protocol: #tests ] ]
-]
-
 { #category : #accessing }
 Chanel >> localMethods [
 	^ (packages flatCollect: #methods) reject: #isFromTrait
@@ -284,18 +172,8 @@ Chanel >> localMethodsWithoutExtensions [
 ]
 
 { #category : #accessing }
-Chanel >> methodsInSpecificProtocolMap [
-	^ self class methodsInSpecificProtocolMap
-]
-
-{ #category : #accessing }
 Chanel >> packages: anObject [
 	packages := anObject
-]
-
-{ #category : #accessing }
-Chanel >> protocolsToCleanMap [
-	^ self class protocolsToCleanMap
 ]
 
 { #category : #simplification }
@@ -373,9 +251,4 @@ Chanel >> simplifyConditions [
 		yourself.
 
 	self rewriteMethodsOf: self definedClasses with: r
-]
-
-{ #category : #accessing }
-Chanel >> testMethodsInSpecificProtocolMap [
-	^ self class testMethodsInSpecificProtocolMap
 ]
