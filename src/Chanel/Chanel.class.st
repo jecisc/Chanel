@@ -13,10 +13,6 @@ For more information, check the class comments of all subclasses of ChanelAbstra
 
 Remove each methods only doing a super call. Does not remove methods with pragmas.
 
-8) Remove unread temporaries
-================================
-
-Remove all temporaries that are defined but not read.
 
 9) Remove duplicated methods from traits 
 ================================
@@ -43,8 +39,6 @@ Chanel class >> perfume: aCollectionOfPackages [
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
-		removeNilAssignmentsInInitialize;
-		removeUnreadTemporaries;
 		removeMethodsOnlyCallingSuper;
 		removeDuplicatedMethodsFromTrait
 ]
@@ -91,20 +85,4 @@ Chanel >> removeMethodsOnlyCallingSuper [
 	matcher := RBParseTreeSearcher justSendsSuper.
 	self localMethods
 		do: [ :method | (method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ]) ifTrue: [ method removeFromSystem ] ]
-]
-
-{ #category : #simplification }
-Chanel >> removeUnreadTemporaries [
-	self localMethods
-		do: [ :method | 
-			| ast |
-			ast := method ast.
-			(ast allSequenceNodes flatCollect: [ :sequence | sequence temporaries select: #isReadAtLeastOnce ])
-				ifNotEmpty: [ :temporariesToRemove | 
-					temporariesToRemove
-						do: [ :temp | 
-							temp declaringScope
-								nodesDo: [ :node | (node isTemp and: [ node name = temp name ]) ifTrue: [ node parent replaceWith: node parent value ] ];
-								removeTemporaryNamed: temp name ].
-					method methodClass compile: ast formattedCode ] ]
 ]
