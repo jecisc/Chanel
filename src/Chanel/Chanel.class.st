@@ -8,10 +8,6 @@ I am in charge of cleaning multiple things in packages of a project.
 
 For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
-4) Test case names
-================================
-
-Will rename each test case ending with ""Tests"" te end with ""Test"" since this is ""a XXTestCase"".
 
 5) Ensure right super are call
 ================================
@@ -60,7 +56,6 @@ Chanel class >> perfume: aCollectionOfPackages [
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
-		ensureTestCasesEndsWithTestInsteadOfTests;
 		ensureRightSuperIsCall;
 		removeNilAssignmentsInInitialize;
 		removeUnreadTemporaries;
@@ -131,12 +126,6 @@ Chanel >> ensureSuperTearDownForMethods: methods [
 			ast sendNodes select: [ :each | each isSuperSend and: [ each selector = #tearDown ] ] thenDo: #removeFromTree.
 			ast body addNodeLast: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #tearDown).
 			method methodClass compile: ast formattedCode ]
-]
-
-{ #category : #'class names' }
-Chanel >> ensureTestCasesEndsWithTestInsteadOfTests [
-	self definedTestCases
-		do: [ :class | (class name endsWith: 'Tests') ifTrue: [ (RBRenameClassRefactoring rename: class to: (class name withoutSuffix: 'Tests') , 'Test') execute ] ]
 ]
 
 { #category : #accessing }
