@@ -8,11 +8,6 @@ I am in charge of cleaning multiple things in packages of a project.
 
 For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
-6) Remove nil assignments in initialization
-================================
-
-Will remove all nil assignations in initialize methods because most of the time they are not needed. Be careful, in some cases, they are. 
-
 7) Remove methods only calling super
 ================================
 
@@ -96,18 +91,6 @@ Chanel >> removeMethodsOnlyCallingSuper [
 	matcher := RBParseTreeSearcher justSendsSuper.
 	self localMethods
 		do: [ :method | (method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ]) ifTrue: [ method removeFromSystem ] ]
-]
-
-{ #category : #simplification }
-Chanel >> removeNilAssignmentsInInitialize [
-	(self localMethods select: [ :method | method selector = #initialize ])
-		do: [ :method | 
-			| ast |
-			ast := method ast.
-			(ast assignmentNodes select: [ :assignment | assignment value value isNil ])
-				ifNotEmpty: [ :nilAssignmentNode | 
-					nilAssignmentNode do: #removeFromTree.
-					method methodClass compile: ast formattedCode ] ]
 ]
 
 { #category : #simplification }
