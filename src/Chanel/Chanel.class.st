@@ -8,14 +8,6 @@ I am in charge of cleaning multiple things in packages of a project.
 
 For more information, check the class comments of all subclasses of ChanelAbstractCleaner.
 
-
-5) Ensure right super are call
-================================
-
-- Ensure #setUp in TestCases always begins by `super setUp` (move it if not the first messand sent)
-- Ensure #tearDown in TestCases always ends by `super tearDown` (move it if not the last messand sent)
-- Ensure #initialize on instance side always has `super initialize`
-
 6) Remove nil assignments in initialization
 ================================
 
@@ -56,7 +48,6 @@ Chanel class >> perfume: aCollectionOfPackages [
 Chanel >> clean [
 	(ChanelAbstractCleaner cleanersFor: self) do: #clean.
 	self
-		ensureRightSuperIsCall;
 		removeNilAssignmentsInInitialize;
 		removeUnreadTemporaries;
 		removeMethodsOnlyCallingSuper;
@@ -71,61 +62,6 @@ Chanel >> definedClasses [
 { #category : #accessing }
 Chanel >> definedTestCases [
 	^ self definedClasses select: #isTestCase
-]
-
-{ #category : #rightSuper }
-Chanel >> ensureRightSuperIsCall [
-	| methods |
-	methods := self localMethods.
-	self
-		ensureSuperSetUpForMethods: methods;
-		ensureSuperTearDownForMethods: methods;
-		ensureSuperInitializeForMethods: methods
-]
-
-{ #category : #rightSuper }
-Chanel >> ensureSuperInitializeForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isInstanceSide
-				and: [ method selector = #initialize
-						and: [ method ast sendNodes
-								ifNotEmpty: [ :nodes | (nodes anySatisfy: [ :node | node isSuperSend and: [ node selector = #initialize ] ]) not ]
-								ifEmpty: [ false ] ] ] ]
-		thenDo: [ :method | 
-			| ast |
-			ast := method ast.
-			ast body addNodeFirst: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #initialize).
-			method methodClass compile: ast formattedCode ]
-]
-
-{ #category : #rightSuper }
-Chanel >> ensureSuperSetUpForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isTestCase
-				and: [ method selector = #setUp and: [ (method ast sendNodes ifNotEmpty: [ :nodes | nodes first isSuperSend and: [ nodes first selector = #setUp ] ]) not ] ] ]
-		thenDo: [ :method | 
-			| ast |
-			ast := method ast.
-			ast sendNodes select: [ :each | each isSuperSend and: [ each selector = #setUp ] ] thenDo: #removeFromTree.
-			ast body addNodeFirst: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #setUp).
-			method methodClass compile: ast formattedCode ]
-]
-
-{ #category : #rightSuper }
-Chanel >> ensureSuperTearDownForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isTestCase
-				and: [ method selector = #tearDown
-						and: [ (method ast sendNodes ifNotEmpty: [ :nodes | nodes last isSuperSend and: [ nodes last selector = #tearDown ] ] ifEmpty: [ true ]) not ] ] ]
-		thenDo: [ :method | 
-			| ast |
-			ast := method ast.
-			ast sendNodes select: [ :each | each isSuperSend and: [ each selector = #tearDown ] ] thenDo: #removeFromTree.
-			ast body addNodeLast: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #tearDown).
-			method methodClass compile: ast formattedCode ]
 ]
 
 { #category : #accessing }
