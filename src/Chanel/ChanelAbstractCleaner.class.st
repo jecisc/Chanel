@@ -46,6 +46,11 @@ ChanelAbstractCleaner class >> configuration: aChanel [
 		yourself
 ]
 
+{ #category : #testing }
+ChanelAbstractCleaner class >> isAbstract [
+	^ self = ChanelAbstractCleaner
+]
+
 { #category : #accessing }
 ChanelAbstractCleaner class >> priority [
 	^ self subclassResponsibility

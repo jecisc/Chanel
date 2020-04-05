@@ -9,5 +9,5 @@ Class {
 
 { #category : #tests }
 ChanelTest >> testSmokeTest [
-	self shouldnt: [ Chanel perfume: ((#('Chanel-Tests' 'BaselineOfChanel' 'Chanel') collect: [ :s | s asPackageIfAbsent: [ nil ] ]) reject: #isNil) ] raise: Error
+	self shouldnt: [ Chanel perfume: (#('Chanel-Tests' 'BaselineOfChanel' 'Chanel') collect: #asPackage) ] raise: Error
 ]
