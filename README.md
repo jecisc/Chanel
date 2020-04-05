@@ -63,7 +63,7 @@ Thus, it should be safe to depend on a fixed major version and moving minor vers
 
 | Version 	| Compatible Pharo versions 		|
 |-------------	|---------------------------	|
-| 1.x.x       	| Pharo 70, 80				|
+| 1.x.x       	| Pharo 61, 70, 80, 90				|
 
 ## Contact
 
