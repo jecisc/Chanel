@@ -36,18 +36,87 @@ ChanelTestEqualityCleanerTest >> setUp [
 		package: package name
 ]
 
-{ #category : #running }
-ChanelTestEqualityCleanerTest >> tearDown [
-	class removeFromSystem.
-	super tearDown
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertEquals [
+	self assert: 'self assert: 3 = 2' isRewrittenAs: 'self assert: 3 equals: 2'
 ]
 
 { #category : #tests }
-ChanelTestEqualityCleanerTest >> testAssertEquals [
-	self assert: 'self assert: 1 = 1' isRewrittenAs: 'self assert: 1 equals: 1'
+ChanelTestEqualityCleanerTest >> testAssertEqualsFalse [
+	self assert: 'self assert: 3 = false' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertEqualsFalse2 [
+	self assert: 'self assert: 3 equals: false' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertEqualsTrue [
+	self assert: 'self assert: 3 = true' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertEqualsTrue2 [
+	self assert: 'self assert: 3 equals: true' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalTo [
+	self assert: 'self assert: 3 == 2' isRewrittenAs: 'self assert: 3 identicalTo: 2'
 ]
 
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyEquals [
-	self assert: 'self deny: 1 = 1' isRewrittenAs: 'self deny: 1 equals: 1'
+	self assert: 'self deny: 3 = 2' isRewrittenAs: 'self deny: 3 equals: 2'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyEqualsFalse [
+	self assert: 'self deny: 3 = false' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyEqualsFalse2 [
+	self assert: 'self deny: 3 equals: false' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyEqualsTrue [
+	self assert: 'self deny: 3 = true' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyEqualsTrue2 [
+	self assert: 'self deny: 3 equals: true' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalTo [
+	self assert: 'self deny: 3 == 2' isRewrittenAs: 'self deny: 3 identicalTo: 2'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
+	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
+
+	class := Object
+		subclass: #ChanelEqualityNotTestCase
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: package name.
+
+	class
+		compile:
+			('{1}
+	{2}' format: {self selector . 'self assert: 3 = 2'}).
+
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+	{2}' format: {self selector . 'self assert: 3 = 2'})
 ]
