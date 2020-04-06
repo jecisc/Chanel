@@ -30,11 +30,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-ChanelAbstractCleaner class >> cleaners [
-	^ ((self allSubclasses reject: #isAbstract) sort: #priority ascending) collect: [  ]
-]
-
-{ #category : #'instance creation' }
 ChanelAbstractCleaner class >> cleanersFor: aConfiguration [
 	^ ((self allSubclasses reject: #isAbstract) sort: #priority ascending) collect: [ :class | class configuration: aConfiguration ]
 ]
