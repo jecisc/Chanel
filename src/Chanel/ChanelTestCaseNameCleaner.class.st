@@ -18,7 +18,6 @@ ChanelTestCaseNameCleaner class >> priority [
 { #category : #cleaning }
 ChanelTestCaseNameCleaner >> clean [
 	self configuration definedTestCases
-		do: [ :class |
-			(class name endsWith: 'Tests')
-				ifTrue: [ (RBRenameClassRefactoring rename: class to: (class name withoutSuffix: 'Tests') , 'Test') execute ] ]
+		select: [ :class | class name endsWith: 'Tests' ]
+		thenDo: [ :class | (RBRenameClassRefactoring rename: class to: (class name withoutSuffix: 'Tests') , 'Test') execute ]
 ]
