@@ -5,7 +5,6 @@ Class {
 	#name : #ChanelEnsureSuperIsCalledCleanerTest,
 	#superclass : #ChanelAbstractCleanerTest,
 	#instVars : [
-		'class',
 		'oldMethod'
 	],
 	#category : #'Chanel-Tests'

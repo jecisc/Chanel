@@ -4,9 +4,6 @@ A ChanelTestEqualityCleanerTest is a test class for testing the behavior of Chan
 Class {
 	#name : #ChanelTestEqualityCleanerTest,
 	#superclass : #ChanelAbstractCleanerTest,
-	#instVars : [
-		'class'
-	],
 	#category : #'Chanel-Tests'
 }
 
