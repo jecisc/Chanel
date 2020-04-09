@@ -14,7 +14,7 @@ BaselineOfChanel >> baseline: spec [
 		for: #common
 		do: [ spec
 				package: 'Chanel';
-				package: 'Chanel-Tests' with: [ spec requires: 'Chanel' ].
+				package: 'Chanel-Tests' with: [ spec requires: #('Chanel') ].
 
 			spec
 				group: 'Core' with: #('Chanel');
@@ -22,9 +22,18 @@ BaselineOfChanel >> baseline: spec [
 
 	spec
 		for: #'pharo6.x'
-		do: [ spec
+		do: [
+			self pharoBackwardCompatibility: spec.
+
+			spec
 				package: 'Chanel-Pharo6';
-				package: 'Chanel' with: [ spec requires: 'Chanel-Pharo6' ] ]
+				package: 'Chanel' with: [ spec requires: 'Chanel-Pharo6' ];
+				package: 'Chanel-Tests' with: [ spec requires: #('PharoBackwardCompatibility') ] ]
+]
+
+{ #category : #dependencies }
+BaselineOfChanel >> pharoBackwardCompatibility: spec [
+	spec baseline: 'PharoBackwardCompatibility' with: [ spec repository: 'github://jecisc/PharoBackwardCompatibility:v1.x.x/src' ]
 ]
 
 { #category : #accessing }
