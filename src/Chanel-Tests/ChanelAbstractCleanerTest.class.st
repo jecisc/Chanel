@@ -44,6 +44,7 @@ ChanelAbstractCleanerTest >> setUp [
 
 { #category : #running }
 ChanelAbstractCleanerTest >> tearDown [
-	package ifNotNil: #removeFromSystem.
+	"I do not use the #package variable because sometime the tear down fail and I want to relaunch one test to clean the system."
+	('Package-Test-For-Chanel' asPackageIfAbsent: [ nil ])  ifNotNil: #removeFromSystem.
 	super tearDown
 ]
