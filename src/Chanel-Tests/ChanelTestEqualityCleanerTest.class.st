@@ -10,22 +10,6 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
-{ #category : #helpers }
-ChanelTestEqualityCleanerTest >> assert: original isRewrittenAs: expected [
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . original}).
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . expected})
-]
-
 { #category : #running }
 ChanelTestEqualityCleanerTest >> setUp [
 	super setUp.
