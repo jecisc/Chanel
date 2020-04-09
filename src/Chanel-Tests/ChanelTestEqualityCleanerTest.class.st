@@ -29,11 +29,7 @@ ChanelTestEqualityCleanerTest >> assert: original isRewrittenAs: expected [
 { #category : #running }
 ChanelTestEqualityCleanerTest >> setUp [
 	super setUp.
-	class := TestCase subclass: #ChanelEqualityTestCase
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name
+	class := self createTestCaseNamed: #ChanelEqualityTestCase
 ]
 
 { #category : #tests }
@@ -100,12 +96,7 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalTo [
 ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 
-	class := Object
-		subclass: #ChanelEqualityNotTestCase
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
+	class := self createClassNamed: #ChanelEqualityNotTestCase.
 
 	class
 		compile:

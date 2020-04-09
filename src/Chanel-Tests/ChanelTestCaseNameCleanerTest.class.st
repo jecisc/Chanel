@@ -10,13 +10,8 @@ Class {
 { #category : #tests }
 ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTests [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
-	TestCase
-		subclass: 'ChanelMockTests' asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
 
+	self createTestCaseNamed: 'ChanelMockTests' asSymbol.
 
 	self runCleaner.
 
@@ -28,12 +23,7 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTests [
 ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferences [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
-	TestCase
-		subclass: 'ChanelMockTests' asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
+	self createTestCaseNamed: 'ChanelMockTests' asSymbol.
 
 	(self class environment at: 'ChanelMockTests' asSymbol)
 		compile:
@@ -65,13 +55,8 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferenc
 { #category : #tests }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTest [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
-	Object
-		subclass: 'ChanelMockTest' asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
 
+	self createClassNamed: 'ChanelMockTest' asSymbol.
 
 	self runCleaner.
 
@@ -82,13 +67,8 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTest [
 { #category : #tests }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTests [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
-	Object
-		subclass: 'ChanelMockTests' asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
 
+	self createClassNamed: 'ChanelMockTests' asSymbol.
 
 	self runCleaner.
 
@@ -100,13 +80,8 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTests [
 { #category : #tests }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameTestCaseEndingWithTest [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
-	TestCase
-		subclass: 'ChanelMockTest' asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: package name.
 
+	self createTestCaseNamed: 'ChanelMockTest' asSymbol.
 
 	self runCleaner.
 

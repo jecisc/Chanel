@@ -15,6 +15,22 @@ ChanelAbstractCleanerTest >> actualClass [
 	^ self class environment at: (self class name withoutSuffix: 'Test') asSymbol
 ]
 
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
+	^ Object subclass: aSymbol
+		instanceVariableNames: ''
+		classVariableNames: ''
+		package: package name
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createTestCaseNamed: aSymbol [
+	^ TestCase subclass: aSymbol
+		instanceVariableNames: ''
+		classVariableNames: ''
+		package: package name
+]
+
 { #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
 	(self actualClass configuration: (Chanel new packages: {package})) clean
