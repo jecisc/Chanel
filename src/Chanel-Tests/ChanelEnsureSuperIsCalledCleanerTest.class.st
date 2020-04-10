@@ -15,7 +15,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
 	class := self createClassNamed: #ChanelTestClass.
 
 	class compile: 'initialize
-	self assert: true'.
+  self assert: true'.
 
 	oldMethod := class >> #initialize.
 
@@ -24,8 +24,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
 	self
 		assert: (class >> #initialize) sourceCode
 		equals: 'initialize
-	super initialize.
-	self assert: true'.
+  super initialize.
+  self assert: true'.
 
 	"The old method should not be the current one since it was recompiled."
 	self deny: oldMethod identicalTo: class >> #initialize
@@ -36,7 +36,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
 	class := self createTestCaseNamed: #ChanelTestClass.
 
 	class compile: 'setUp
-	self assert: true'.
+  self assert: true'.
 
 	oldMethod := class >> #setUp.
 
@@ -45,8 +45,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
 	self
 		assert: (class >> #setUp) sourceCode
 		equals: 'setUp
-	super setUp.
-	self assert: true'.
+  super setUp.
+  self assert: true'.
 
 	"The old method should not be the current one since it was recompiled."
 	self deny: oldMethod identicalTo: class >> #setUp
@@ -57,7 +57,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
 	class := self createTestCaseNamed: #ChanelTestClass.
 
 	class compile: 'tearDown
-	self assert: true'.
+  self assert: true'.
 
 	oldMethod := class >> #tearDown.
 
@@ -66,8 +66,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
 	self
 		assert: (class >> #tearDown) sourceCode
 		equals: 'tearDown
-	self assert: true.
-	super tearDown'.
+  self assert: true.
+  super tearDown'.
 
 	"The old method should not be the current one since it was recompiled."
 	self deny: oldMethod identicalTo: class >> #tearDown
@@ -293,8 +293,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
 	class := self createTestCaseNamed: #ChanelTestClass.
 
 	class compile: 'setUp
-	self assert: true.
-	super setUp'.
+  self assert: true.
+  super setUp'.
 
 	oldMethod := class >> #setUp.
 
@@ -304,8 +304,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
 	self
 		assert: (class >> #setUp) sourceCode
 		equals: 'setUp
-	super setUp.
-	self assert: true'.
+  super setUp.
+  self assert: true'.
 
 	"The old method should not be the current one since it was recompiled."
 	self deny: oldMethod identicalTo: class >> #setUp
@@ -316,8 +316,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperTearDownIfNotLastStatement 
 	class := self createTestCaseNamed: #ChanelTestClass.
 
 	class compile: 'tearDown
-	super tearDown.
-	self assert: true'.
+  super tearDown.
+  self assert: true'.
 
 	oldMethod := class >> #tearDown.
 
@@ -327,8 +327,8 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperTearDownIfNotLastStatement 
 	self
 		assert: (class >> #tearDown) sourceCode
 		equals: 'tearDown
-	self assert: true.
-	super tearDown'.
+  self assert: true.
+  super tearDown'.
 
 	"The old method should not be the current one since it was recompiled."
 	self deny: oldMethod identicalTo: class >> #tearDown

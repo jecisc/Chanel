@@ -5,6 +5,7 @@ Class {
 	#name : #ChanelAbstractCleanerTest,
 	#superclass : #TestCase,
 	#instVars : [
+		'previousFormater',
 		'package',
 		'class'
 	],
@@ -23,7 +24,7 @@ ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected [
 	class
 		compile:
 			('{1}
-	{2}' format: {self selector . original}).
+  {2}' format: {self selector . original}).
 
 	self runCleaner.
 
@@ -31,7 +32,7 @@ ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected [
 		assert: (class >> self selector) sourceCode
 		equals:
 			('{1}
-	{2}' format: {self selector . expected})
+  {2}' format: {self selector . expected})
 ]
 
 { #category : #helpers }
@@ -58,12 +59,16 @@ ChanelAbstractCleanerTest >> runCleaner [
 { #category : #running }
 ChanelAbstractCleanerTest >> setUp [
 	super setUp.
+	previousFormater := RBProgramNode formatterClass.
+	RBProgramNode formatterClass: RBSimpleFormatter.
 	package := RPackageOrganizer default createPackageNamed: 'Package-Test-For-Chanel'
 ]
 
 { #category : #running }
 ChanelAbstractCleanerTest >> tearDown [
 	"I do not use the #package variable because sometime the tear down fail and I want to relaunch one test to clean the system."
-	('Package-Test-For-Chanel' asPackageIfAbsent: [ nil ])  ifNotNil: #removeFromSystem.
+
+	RBProgramNode formatterClass: previousFormater.
+	('Package-Test-For-Chanel' asPackageIfAbsent: [ nil ]) ifNotNil: #removeFromSystem.
 	super tearDown
 ]

@@ -20,9 +20,7 @@ ChanelConditionalSimplifierCleanerTest >> testIsNilIfFalse [
 
 { #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue [
-	self assert: '10 isNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10
-		ifNil: [ true ]
-		ifNotNil: [ false ]'
+	self assert: '10 isNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
@@ -32,9 +30,7 @@ ChanelConditionalSimplifierCleanerTest >> testIsNilIfTrue [
 
 { #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse [
-	self assert: '10 isNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10
-		ifNil: [ false ]
-		ifNotNil: [ true ]'
+	self assert: '10 isNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ false ] ifNotNil: [ true ]'
 ]
 
 { #category : #tests }
@@ -44,9 +40,7 @@ ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfFalse [
 
 { #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue [
-	self assert: '10 isNotNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10
-		ifNil: [ false ]
-		ifNotNil: [ true ]'
+	self assert: '10 isNotNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10 ifNil: [ false ] ifNotNil: [ true ]'
 ]
 
 { #category : #tests }
@@ -56,7 +50,5 @@ ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 
 { #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
-	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10
-		ifNil: [ true ]
-		ifNotNil: [ false ]'
+	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
