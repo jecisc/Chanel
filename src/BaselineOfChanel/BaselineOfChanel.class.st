@@ -32,6 +32,7 @@ BaselineOfChanel >> baseline: spec [
 	spec
 		for: #(#'pharo6.x' #'pharo7.x')
 		do: [ spec
+				package: 'Chanel-Pharo6' with: [ spec requires: 'Chanel-Pharo7' ];
 				package: 'Chanel-Pharo7';
 				package: 'Chanel-Tests' with: [ spec requires: 'Chanel-Pharo7' ] ]
 ]
