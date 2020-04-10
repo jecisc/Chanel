@@ -37,7 +37,13 @@ ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected [
 
 { #category : #helpers }
 ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
-	^ Object subclass: aSymbol
+	^ self createSubclassOf: Object named: aSymbol
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createSubclassOf: aClass named: aSymbol [
+	^ aClass
+		subclass: aSymbol
 		instanceVariableNames: ''
 		classVariableNames: ''
 		package: package name
@@ -45,10 +51,12 @@ ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
 
 { #category : #helpers }
 ChanelAbstractCleanerTest >> createTestCaseNamed: aSymbol [
-	^ TestCase subclass: aSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: package name
+	^ self createSubclassOf: TestCase named: aSymbol
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createTraitNamed: aSymbol [
+	^ Trait named: aSymbol uses: {} package: package name
 ]
 
 { #category : #running }
