@@ -21,18 +21,8 @@ BaselineOfChanel >> baseline: spec [
 				group: 'Tests' with: #('Chanel-Tests') ].
 
 	spec
-		for: #'pharo6.x'
-		do: [ self pharoBackwardCompatibility: spec.
-
-			spec
-				package: 'Chanel-Pharo6';
-				package: 'Chanel' with: [ spec requires: 'Chanel-Pharo6' ];
-				package: 'Chanel-Tests' with: [ spec requires: 'PharoBackwardCompatibility' ] ].
-
-	spec
-		for: #(#'pharo6.x' #'pharo7.x')
+		for: #(#'pharo7.x')
 		do: [ spec
-				package: 'Chanel-Pharo6' with: [ spec requires: 'Chanel-Pharo7' ];
 				package: 'Chanel-Pharo7';
 				package: 'Chanel-Tests' with: [ spec requires: 'Chanel-Pharo7' ] ]
 ]
