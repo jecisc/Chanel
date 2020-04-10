@@ -83,11 +83,6 @@ RBSimpleFormatter >> codeStream: anObject [
 ]
 
 { #category : #'public interface' }
-RBSimpleFormatter >> containerWidth: anInteger [
-	"nothing done on purpose"
-]
-
-{ #category : #'public interface' }
 RBSimpleFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
