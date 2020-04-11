@@ -14,6 +14,20 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotFailOnEmptyMethods [
+	| oldMethod |
+	class compile: 'initialize'.
+
+	oldMethod := class >> #initialize.
+	self runCleaner.
+
+	self assert: (class localSelectors includes: #initialize).
+
+	"We should not have recompiled the method if we do not clean it."
+	self assert: class >> #initialize identicalTo: oldMethod
+]
+
+{ #category : #tests }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodCallingOtherSuper [
 	| oldMethod |
 	class
