@@ -20,5 +20,6 @@ ChanelMethodsOnlyCallingSuperCleaner >> clean [
 	| matcher |
 	matcher := RBParseTreeSearcher justSendsSuper.
 	self configuration localMethods
-		do: [ :method | (method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ]) ifTrue: [ method removeFromSystem ] ]
+		select: [ :method | method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ] ]
+		thenDo: #removeFromSystem
 ]

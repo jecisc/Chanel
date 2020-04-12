@@ -18,8 +18,9 @@ ChanelNilAssignationInInitializeCleaner class >> priority [
 
 { #category : #cleaning }
 ChanelNilAssignationInInitializeCleaner >> clean [
-	(self configuration localMethods select: [ :method | method selector = #initialize ])
-		do: [ :method | 
+	self configuration localMethods
+		select: [ :method | method selector = #initialize ]
+		thenDo: [ :method | 
 			| ast |
 			ast := method ast.
 			(ast assignmentNodes select: [ :assignment | assignment value value isNil ])

@@ -30,11 +30,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-ChanelAbstractCleaner class >> cleaners [
-	^ ((self allSubclasses reject: #isAbstract) sort: #priority ascending) collect: [  ]
-]
-
-{ #category : #'instance creation' }
 ChanelAbstractCleaner class >> cleanersFor: aConfiguration [
 	^ ((self allSubclasses reject: #isAbstract) sort: #priority ascending) collect: [ :class | class configuration: aConfiguration ]
 ]
@@ -72,19 +67,13 @@ ChanelAbstractCleaner >> configuration: anObject [
 ]
 
 { #category : #rewriting }
-ChanelAbstractCleaner >> rewriteMethodsOf: classes matching: aBlock with: rewriter [
+ChanelAbstractCleaner >> rewriteMethodsOf: classes with: rewriter [
 	classes
 		do: [ :class | 
 			class localMethods
-				select: aBlock
-				thenDo: [ :m | 
-					| n |
-					n := m parseTree.
-					(rewriter executeTree: n) ifTrue: [ class compile: n formattedCode ] ] ]
+				do: [ :method | 
+					| ast |
+					ast := method ast.
+					(rewriter executeTree: ast) ifTrue: [ class compile: ast formattedCode ] ] ]
 		displayingProgress: [ :c | c printString ]
-]
-
-{ #category : #rewriting }
-ChanelAbstractCleaner >> rewriteMethodsOf: classes with: rewriter [
-	self rewriteMethodsOf: classes matching: [ :method | true ] with: rewriter
 ]
