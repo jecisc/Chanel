@@ -26,5 +26,5 @@ RBTemporaryNode >> inlineTemporary [
 
 { #category : #'*Chanel' }
 RBTemporaryNode >> isNotReadOnce [
-	^ self declaringScope allChildren noneSatisfy: [ :node | node isTemp and: [ node name = self name and: [ node isRead ] ] ]
+	^ self declaringScope allChildren noneSatisfy: [ :node | (node isTempNamed: self name) and: [ node isRead ] ]
 ]
