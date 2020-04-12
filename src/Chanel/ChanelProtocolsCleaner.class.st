@@ -19,25 +19,31 @@ For example I'll update initialize-release to initialize. Find more in `self pro
 Class {
 	#name : #ChanelProtocolsCleaner,
 	#superclass : #ChanelAbstractCleaner,
+	#classVars : [
+		'MethodsInSpecificProtocolMaps',
+		'ProtocolsToCleanMap',
+		'TestMethodsInSpecificProtocolMaps'
+	],
 	#category : #Chanel
 }
 
 { #category : #accessing }
 ChanelProtocolsCleaner class >> methodsInSpecificProtocolMap [
-	^ Dictionary new
-		at: #initialize put: #initialization;
-		at: #clone put: #copying;
-		at: #copy put: #copying;
-		at: #deepCopy put: #copying;
-		at: #postCopy put: #copying;
-		at: #veryDeepCopy put: #copying;
-		at: #shallowCopy put: #copying;
-		at: #= put: #comparing;
-		at: #hash put: #comparing;
-		at: #finalize put: #finalization;
-		at: #finalizeValues put: #finalization;
-		at: #isAbstract put: #testing;
-		yourself
+	^ MethodsInSpecificProtocolMaps
+		ifNil: [ MethodsInSpecificProtocolMaps := Dictionary new
+				at: #initialize put: #initialization;
+				at: #clone put: #copying;
+				at: #copy put: #copying;
+				at: #deepCopy put: #copying;
+				at: #postCopy put: #copying;
+				at: #veryDeepCopy put: #copying;
+				at: #shallowCopy put: #copying;
+				at: #= put: #comparing;
+				at: #hash put: #comparing;
+				at: #finalize put: #finalization;
+				at: #finalizeValues put: #finalization;
+				at: #isAbstract put: #testing;
+				yourself ]
 ]
 
 { #category : #accessing }
@@ -47,51 +53,55 @@ ChanelProtocolsCleaner class >> priority [
 
 { #category : #accessing }
 ChanelProtocolsCleaner class >> protocolsToCleanMap [
-	^ Dictionary new
-		at: #(#'instance-creation') put: #'instance creation';
-		at: #(#remove #removal) put: #removing;
-		at: #(#'initialize-release') put: #initialization;
-		at: #(#utils #utility) put: #utilities;
-		at: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') put: #'file in/out';
-		yourself
+	^ ProtocolsToCleanMap
+		ifNil: [ ProtocolsToCleanMap := Dictionary new
+				at: #(#'instance-creation') put: #'instance creation';
+				at: #(#remove #removal) put: #removing;
+				at: #(#'initialize-release') put: #initialization;
+				at: #(#utils #utility) put: #utilities;
+				at: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') put: #'file in/out';
+				yourself ]
 ]
 
 { #category : #accessing }
 ChanelProtocolsCleaner class >> testMethodsInSpecificProtocolMap [
-	^ Dictionary new
-		at: #setUp put: #running;
-		at: #tearDown put: #running;
-		yourself
+	^ TestMethodsInSpecificProtocolMaps
+		ifNil: [ TestMethodsInSpecificProtocolMaps := Dictionary new
+				at: #setUp put: #running;
+				at: #tearDown put: #running;
+				yourself ]
 ]
 
 { #category : #cleaning }
 ChanelProtocolsCleaner >> clean [
-	| methods protocolsMap |
+	| methods |
 	methods := self configuration localMethodsWithoutExtensions.
 
 	self cleanCloseProtocolsOf: methods.
 
 	self ensureTestMethodsAreInRightProtocol: methods.
 
-	protocolsMap := self methodsInSpecificProtocolMap.
-	methods do: [ :method | protocolsMap at: method selector ifPresent: [ :protocol | method protocol = protocol ifFalse: [ method protocol: protocol ] ] ].
+	methods do: [ :method | self methodsInSpecificProtocolMap at: method selector ifPresent: [ :protocol | method ensureProtocol: protocol ] ].
 
-	protocolsMap := self testMethodsInSpecificProtocolMap.
 	methods
 		select: [ :method | method methodClass isTestCase ]
-		thenDo: [ :method | protocolsMap at: method selector ifPresent: [ :protocol | method protocol = protocol ifFalse: [ method protocol: protocol ] ] ]
+		thenDo: [ :method | self testMethodsInSpecificProtocolMap at: method selector ifPresent: [ :protocol | method ensureProtocol: protocol ] ]
 ]
 
 { #category : #cleaning }
 ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
-	self protocolsToCleanMap keysAndValuesDo: [ :olds :new | methods do: [ :meth | (olds includes: meth protocol) ifTrue: [ meth protocol: new ] ] ]
+	self protocolsToCleanMap
+		keysAndValuesDo: [ :olds :new | 
+			methods
+				select: [ :meth | olds includes: meth protocol ]
+				thenDo: [ :meth | meth protocol: new ] ]
 ]
 
 { #category : #cleaning }
 ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
 	methods
 		select: [ :method | method isTestMethod and: [ (method protocol beginsWith: 'test') not ] ]
-		thenDo: [ :method | method protocol = #tests ifFalse: [ method protocol: #tests ] ]
+		thenDo: [ :method | method ensureProtocol: #tests ]
 ]
 
 { #category : #accessing }
