@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'previousFormater',
 		'package',
-		'class'
+		'class',
+		'extensionPackage'
 	],
 	#category : #'Chanel-Tests'
 }
@@ -60,6 +61,11 @@ ChanelAbstractCleanerTest >> createTraitNamed: aSymbol [
 ]
 
 { #category : #running }
+ChanelAbstractCleanerTest >> extensionProtocol [
+	^ '*' , extensionPackage name
+]
+
+{ #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
 	(self actualClass configuration: (Chanel new packages: {package})) clean
 ]
@@ -67,16 +73,25 @@ ChanelAbstractCleanerTest >> runCleaner [
 { #category : #running }
 ChanelAbstractCleanerTest >> setUp [
 	super setUp.
+
+	package := RPackageOrganizer default createPackageNamed: 'Package-Test-For-Chanel'.
+	extensionPackage := RPackageOrganizer default createPackageNamed: 'ExtensionPackage-Test-For-Chanel'.
+
+	"We only save the formatter if it is not the one used in the tests.
+	The reason is that, while debugging a test, if it fails and is rerun, the set up is runned twice and the formatter used in tests will be saved in `previousFormatter`.
+	With this guard, we avoid this case."
+	RBProgramNode formatterClass = RBSimpleFormatter ifTrue: [ ^ self ].
+
 	previousFormater := RBProgramNode formatterClass.
-	RBProgramNode formatterClass: RBSimpleFormatter.
-	package := RPackageOrganizer default createPackageNamed: 'Package-Test-For-Chanel'
+	RBProgramNode formatterClass: RBSimpleFormatter 
 ]
 
 { #category : #running }
 ChanelAbstractCleanerTest >> tearDown [
 	"I do not use the #package variable because sometime the tear down fail and I want to relaunch one test to clean the system."
 
-	RBProgramNode formatterClass: previousFormater.
+	previousFormater ifNotNil: [ :formatter | RBProgramNode formatterClass: formatter ].
 	('Package-Test-For-Chanel' asPackageIfAbsent: [ nil ]) ifNotNil: #removeFromSystem.
+	('ExtensionPackage-Test-For-Chanel' asPackageIfAbsent: [ nil ]) ifNotNil: #removeFromSystem.
 	super tearDown
 ]

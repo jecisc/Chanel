@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelMethodsOnlyCallingSuperCleanerTest >> setUp [
 	super setUp.
-	class := self createTestCaseNamed: #ChanelMethodOnlyCallingSuperFake
+	class := self createClassNamed: #ChanelMethodOnlyCallingSuperFake
 ]
 
 { #category : #tests }

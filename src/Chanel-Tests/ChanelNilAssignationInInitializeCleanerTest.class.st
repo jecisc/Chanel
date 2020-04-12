@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelNilAssignationInInitializeCleanerTest >> setUp [
 	super setUp.
-	class := self createTestCaseNamed: #ChanelNilAssignationInIntializeFake
+	class := self createClassNamed: #ChanelNilAssignationInIntializeFake
 ]
 
 { #category : #tests }

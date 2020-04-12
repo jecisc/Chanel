@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelUnreadTemporaryCleanerTest >> setUp [
 	super setUp.
-	class := self createTestCaseNamed: #ChanelUnreadTemporaryFake
+	class := self createClassNamed: #ChanelUnreadTemporaryFake
 ]
 
 { #category : #tests }
