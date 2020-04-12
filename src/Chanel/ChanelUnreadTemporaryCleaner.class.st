@@ -19,7 +19,7 @@ ChanelUnreadTemporaryCleaner class >> priority [
 ChanelUnreadTemporaryCleaner >> clean [
 	self configuration localMethods
 		do: [ :method | 
-			(method ast allTemporaries select: #isReadAtLeastOnce)
+			(method ast allTemporaries select: #isNotReadOnce)
 				ifNotEmpty: [ :temporariesToRemove | 
 					temporariesToRemove do: #inlineTemporary.
 					method ast install ] ]
