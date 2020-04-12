@@ -36,7 +36,7 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 			method methodClass isInstanceSide
 				and: [ method selector = #initialize
 						and: [ method ast sendNodes
-								ifNotEmpty: [ :nodes | (nodes anySatisfy: [ :node | node isSuperSend and: [ node selector = #initialize ] ]) not ]
+								ifNotEmpty: [ :nodes | (nodes anySatisfy: [ :node | node isSuperSendTo: #initialize ]) not ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
 			| ast |
@@ -52,12 +52,12 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
 			method methodClass isTestCase
 				and: [ method selector = #setUp
 						and: [ method ast sendNodes
-								ifNotEmpty: [ :nodes | (nodes first isSuperSend and: [ nodes first selector = #setUp ]) not ]
+								ifNotEmpty: [ :nodes | (nodes first isSuperSendTo: #setUp) not ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
 			| ast |
 			ast := method ast.
-			ast sendNodes select: [ :each | each isSuperSend and: [ each selector = #setUp ] ] thenDo: #removeFromTree.
+			ast sendNodes select: [ :each | each isSuperSendTo: #setUp ] thenDo: #removeFromTree.
 			ast body addNodeFirst: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #setUp).
 			method methodClass compile: ast formattedCode ]
 ]
@@ -69,12 +69,12 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperTearDownForMethods: methods [
 			method methodClass isTestCase
 				and: [ method selector = #tearDown
 						and: [ method ast sendNodes
-								ifNotEmpty: [ :nodes | (nodes last isSuperSend and: [ nodes last selector = #tearDown ]) not ]
+								ifNotEmpty: [ :nodes | (nodes last isSuperSendTo: #tearDown) not ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
 			| ast |
 			ast := method ast.
-			ast sendNodes select: [ :each | each isSuperSend and: [ each selector = #tearDown ] ] thenDo: #removeFromTree.
+			ast sendNodes select: [ :each | each isSuperSendTo: #tearDown ] thenDo: #removeFromTree.
 			ast body addNodeLast: (RBMessageNode receiver: (RBVariableNode named: #super) selector: #tearDown).
 			method methodClass compile: ast formattedCode ]
 ]
