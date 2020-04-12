@@ -35,8 +35,8 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 		select: [ :method | 
 			method methodClass isInstanceSide
 				and: [ method selector = #initialize
-						and: [ method ast sendNodes
-								ifNotEmpty: [ :nodes | (nodes anySatisfy: [ :node | node isSuperSendTo: #initialize ]) not ]
+						and: [ method sendNodes
+								ifNotEmpty: [ :nodes | nodes noneSatisfy: [ :node | node isSuperSendTo: #initialize ] ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
 			| ast |
@@ -51,7 +51,7 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
 		select: [ :method | 
 			method methodClass isTestCase
 				and: [ method selector = #setUp
-						and: [ method ast sendNodes
+						and: [ method sendNodes
 								ifNotEmpty: [ :nodes | (nodes first isSuperSendTo: #setUp) not ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
@@ -68,7 +68,7 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperTearDownForMethods: methods [
 		select: [ :method | 
 			method methodClass isTestCase
 				and: [ method selector = #tearDown
-						and: [ method ast sendNodes
+						and: [ method sendNodes
 								ifNotEmpty: [ :nodes | (nodes last isSuperSendTo: #tearDown) not ]
 								ifEmpty: [ false ] ] ] ]
 		thenDo: [ :method | 
