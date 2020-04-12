@@ -26,5 +26,5 @@ ChanelNilAssignationInInitializeCleaner >> clean [
 			(ast assignmentNodes select: [ :assignment | assignment value value isNil ])
 				ifNotEmpty: [ :nilAssignmentNode | 
 					nilAssignmentNode do: #removeFromTree.
-					method methodClass compile: ast formattedCode ] ]
+					ast install ] ]
 ]

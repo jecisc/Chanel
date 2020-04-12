@@ -28,5 +28,5 @@ ChanelUnreadTemporaryCleaner >> clean [
 							temp declaringScope
 								nodesDo: [ :node | (node isTemp and: [ node name = temp name ]) ifTrue: [ node parent replaceWith: node parent value ] ];
 								removeTemporaryNamed: temp name ].
-					method methodClass compile: ast formattedCode ] ]
+					ast install ] ]
 ]
