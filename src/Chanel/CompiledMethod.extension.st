@@ -6,3 +6,13 @@ CompiledMethod >> ensureProtocol: aSymbol [
 	
 	self protocol: aSymbol
 ]
+
+{ #category : #'*Chanel' }
+CompiledMethod >> hasPragma [
+	^ self pragmas isNotEmpty
+]
+
+{ #category : #'*Chanel' }
+CompiledMethod >> isInstanceSide [
+	^ self methodClass isInstanceSide
+]

@@ -12,8 +12,10 @@ BaselineOfChanel >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ spec
-				package: 'Chanel';
+		do: [ self iterators: spec.
+
+			spec
+				package: 'Chanel' with: [ spec requires: #('Iterators') ];
 				package: 'Chanel-Tests' with: [ spec requires: #('Chanel') ].
 
 			spec
@@ -25,6 +27,15 @@ BaselineOfChanel >> baseline: spec [
 		do: [ spec
 				package: 'Chanel-Pharo7';
 				package: 'Chanel-Tests' with: [ spec requires: 'Chanel-Pharo7' ] ]
+]
+
+{ #category : #dependencies }
+BaselineOfChanel >> iterators: spec [
+	spec
+		baseline: 'Iterators'
+		with: [ spec
+				loads: #('core' 'collections' 'shell-dsl' 'inspector-extensions');
+				repository: 'github://juliendelplanque/Iterators:v1.x.x/src' ]
 ]
 
 { #category : #dependencies }

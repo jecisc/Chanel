@@ -18,13 +18,10 @@ ChanelNilAssignationInInitializeCleaner class >> priority [
 
 { #category : #cleaning }
 ChanelNilAssignationInInitializeCleaner >> clean [
-	self configuration localMethods
-		select: [ :method | method selector = #initialize ]
-		thenDo: [ :method | 
-			| ast |
-			ast := method ast.
-			(ast assignmentNodes select: [ :assignment | assignment value value isNil ])
-				ifNotEmpty: [ :nilAssignmentNode | 
-					nilAssignmentNode do: #removeFromTree.
-					ast install ] ]
+	self configuration localMethods iterator
+		| [ :method | method selector = #initialize ] selectIt
+		| [ :method | method ast nilAssignmentNodes isNotEmpty ] selectIt
+		| [ :method | method nilAssigmentNodes do: #removeFromTree ] doIt
+		| [ :method | method ast install ] doIt
+		> Execute
 ]

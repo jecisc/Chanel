@@ -19,7 +19,9 @@ ChanelMethodsOnlyCallingSuperCleaner class >> priority [
 ChanelMethodsOnlyCallingSuperCleaner >> clean [
 	| matcher |
 	matcher := RBParseTreeSearcher justSendsSuper.
-	self configuration localMethods
-		select: [ :method | method pragmas isEmpty and: [ matcher executeMethod: method ast initialAnswer: false ] ]
-		thenDo: #removeFromSystem
+	self configuration localMethods iterator
+		| #hasPragma rejectIt
+		| [ :method | matcher executeMethod: method ast initialAnswer: false ] selectIt
+		| #removeFromSystem doIt
+		> Execute
 ]
