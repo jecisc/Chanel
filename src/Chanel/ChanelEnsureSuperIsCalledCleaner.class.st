@@ -33,7 +33,7 @@ ChanelEnsureSuperIsCalledCleaner >> clean [
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 	methods iterator
 		| #isInstanceSide selectIt
-		| [ :method | method select = #initialize ] selectIt
+		| [ :method | method selector = #initialize ] selectIt
 		| #hasMessages selectIt
 		| [ :method | method sendNodes noneSatisfy: [ :node | node isSuperSendTo: #initialize ] ] selectIt
 		| [ :method | 
