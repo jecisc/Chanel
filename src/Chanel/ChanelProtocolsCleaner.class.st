@@ -71,7 +71,7 @@ ChanelProtocolsCleaner >> clean [
 
 	self cleanCloseProtocolsOf: methods.
 
-	self ensureTestMethodsAreInRightProtocol.
+	self ensureTestMethodsAreInRightProtocol: methods.
 
 	protocolsMap := self methodsInSpecificProtocolMap.
 	methods do: [ :method | protocolsMap at: method selector ifPresent: [ :protocol | method protocol = protocol ifFalse: [ method protocol: protocol ] ] ].
@@ -88,9 +88,9 @@ ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 ]
 
 { #category : #cleaning }
-ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol [
-	(self configuration definedTestCases flatCollect: #localMethods)
-		select: [ :method | method isExtension not and: [ (method selector beginsWith: 'test') and: [ (method protocol beginsWith: 'test') not ] ] ]
+ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
+	methods
+		select: [ :method | method isTestMethod and: [ (method protocol beginsWith: 'test') not ] ]
 		thenDo: [ :method | method protocol = #tests ifFalse: [ method protocol: #tests ] ]
 ]
 
