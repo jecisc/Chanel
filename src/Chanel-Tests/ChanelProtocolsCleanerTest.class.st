@@ -13,7 +13,7 @@ ChanelProtocolsCleanerTest >> setUp [
 	class := self createClassNamed: #ChanelProtocolsFake
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testDoesNotUpdateCloseProtocolIfAlreadyRight [
 	class compile: 'method' classified: 'instance creation'.
 	
@@ -22,7 +22,7 @@ ChanelProtocolsCleanerTest >> testDoesNotUpdateCloseProtocolIfAlreadyRight [
 	self assert: (class >> #method) protocol equals: 'instance creation'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 	class compile: 'initialize' classified: 'random'.
 	
@@ -31,7 +31,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 	self assert: (class >> #initialize) protocol equals: 'initialization'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfExtension [
 	class compile: 'initialize' classified: self extensionProtocol.
 	
@@ -40,7 +40,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfExtension [
 	self assert: (class >> #initialize) protocol equals: self extensionProtocol
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheList [
 	class compile: 'initialize2' classified: 'random'.
 	
@@ -49,7 +49,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheLis
 	self assert: (class >> #initialize2) protocol equals: 'random'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'setUp' classified: 'random'.
@@ -59,7 +59,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 	self assert: (class >> #setUp) protocol equals: 'running'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtension [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'setUp' classified: self extensionProtocol.
@@ -69,7 +69,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtens
 	self assert: (class >> #setUp) protocol equals: self extensionProtocol
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInTestCase [
 	class compile: 'setUp' classified: 'random'.
 	
@@ -78,7 +78,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 	self assert: (class >> #setUp) protocol equals: 'random'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInTheList [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'toto' classified: 'random'.
@@ -88,7 +88,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 	self assert: (class >> #toto) protocol equals: 'random'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'testMethod' classified: 'not a test'.
@@ -98,7 +98,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 	self assert: (class >> #testMethod) protocol equals: 'tests'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'testMethod' classified: self extensionProtocol.
@@ -108,7 +108,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
 	self assert: (class >> #testMethod) protocol equals: self extensionProtocol
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase [
 	class compile: 'testMethod' classified: 'not a test'.
 	
@@ -117,7 +117,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase
 	self assert: (class >> #testMethod) protocol equals: 'not a test'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTest [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'testMethod' classified: 'test - protocols'.
@@ -127,7 +127,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTes
 	self assert: (class >> #testMethod) protocol equals: 'test - protocols'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 	class compile: 'method' classified: 'instance-creation'.
 	
