@@ -40,7 +40,16 @@ Chanel class >> perfume: aCollectionOfPackages [
 
 { #category : #cleaning }
 Chanel >> clean [
-	(ChanelAbstractCleaner cleanersFor: self) do: #clean
+	| cleaners |
+	cleaners := ChanelAbstractCleaner cleanersFor: self.
+
+	UIManager default displayProgress: 'Running Chanel' from: 1 to: cleaners size during: [ :bar | 
+		cleaners
+			doWithIndex: [ :cleaner :index |
+				bar
+					value: index;
+					title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
+				cleaner clean ] ]
 ]
 
 { #category : #accessing }
