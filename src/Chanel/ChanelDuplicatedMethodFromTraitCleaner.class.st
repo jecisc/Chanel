@@ -20,6 +20,5 @@ ChanelDuplicatedMethodFromTraitCleaner >> clean [
 	self configuration definedClasses iterator
 		| #isTrait rejectIt
 		| #hasTraitComposition selectIt
-		| #removeDuplicatedMethodsFromTrait doIt
-		> Execute
+		> #removeDuplicatedMethodsFromTrait doIt
 ]

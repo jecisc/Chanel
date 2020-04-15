@@ -22,6 +22,5 @@ ChanelNilAssignationInInitializeCleaner >> clean [
 		| [ :method | method selector = #initialize ] selectIt
 		| [ :method | method ast nilAssignmentNodes isNotEmpty ] selectIt
 		| [ :method | method ast nilAssignmentNodes do: #removeFromTree ] doIt
-		| [ :method | method ast install ] doIt
-		> Execute
+		> [ :method | method ast install ] doIt
 ]

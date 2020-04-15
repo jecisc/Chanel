@@ -36,12 +36,11 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 		| [ :method | method selector = #initialize ] selectIt
 		| #hasMessages selectIt
 		| [ :method | method sendNodes noneSatisfy: [ :node | node isSuperSendTo: #initialize ] ] selectIt
-		| [ :method | 
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast body addNodeFirst: (RBMessageNode superSendTo: #initialize).
 			ast install ] doIt
-		> Execute
 ]
 
 { #category : #cleaning }
@@ -51,13 +50,12 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
 		| [ :method | method selector = #setUp ] selectIt
 		| #hasMessages selectIt
 		| [ :method | method sendNodes first isSuperSendTo: #setUp ] rejectIt
-		| [ :method | 
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast sendNodes select: [ :each | each isSuperSendTo: #setUp ] thenDo: #removeFromTree.
 			ast body addNodeFirst: (RBMessageNode superSendTo: #setUp).
 			ast install ] doIt
-		> Execute
 ]
 
 { #category : #cleaning }
@@ -67,11 +65,10 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperTearDownForMethods: methods [
 		| [ :method | method selector = #tearDown ] selectIt
 		| #hasMessages selectIt
 		| [ :method | method sendNodes last isSuperSendTo: #tearDown ] rejectIt
-		| [ :method | 
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast sendNodes select: [ :each | each isSuperSendTo: #tearDown ] thenDo: #removeFromTree.
 			ast body addNodeLast: (RBMessageNode superSendTo: #tearDown).
 			ast install ] doIt
-		> Execute
 ]

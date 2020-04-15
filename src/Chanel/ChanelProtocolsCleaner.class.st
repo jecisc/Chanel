@@ -102,8 +102,7 @@ ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
 	methods iterator
 		| #isTestMethod selectIt
 		| [ :method | method protocol beginsWith: 'test' ] rejectIt
-		| [ :method | method ensureProtocol: #tests ] doIt
-		> Execute
+		> [ :method | method ensureProtocol: #tests ] doIt
 ]
 
 { #category : #accessing }
