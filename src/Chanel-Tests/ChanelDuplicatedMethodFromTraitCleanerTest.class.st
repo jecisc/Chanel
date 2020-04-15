@@ -153,3 +153,27 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 	self assert: (trait localSelectors includes: #one).
 	self deny: (class localSelectors includes: #one)
 ]
+
+{ #category : #tests }
+ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitOnClassSide [
+	| trait |
+	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
+	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
+
+	class addToComposition: trait.
+
+	trait class
+		compile:
+			'one
+	^ #one'.
+
+	class class
+		compile:
+			'one
+	^ #one'.
+
+	self runCleaner.
+
+	self assert: (trait class localSelectors includes: #one).
+	self deny: (class class localSelectors includes: #one)
+]

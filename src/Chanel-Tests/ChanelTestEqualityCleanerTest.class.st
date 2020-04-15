@@ -74,6 +74,22 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalTo [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
+	class class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 = 2'}).
+
+	self runCleaner.
+
+	self
+		assert: (class class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 equals: 2'})
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 
@@ -91,4 +107,24 @@ ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 		equals:
 			('{1}
 	{2}' format: {self selector . 'self assert: 3 = 2'})
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testWithNothingToReplace [
+	| oldMethod |
+	class
+		compile:
+			('{1}
+	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
+
+	oldMethod := class >> self selector.
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
+	
+	self assert: class >> self selector identicalTo: oldMethod
 ]

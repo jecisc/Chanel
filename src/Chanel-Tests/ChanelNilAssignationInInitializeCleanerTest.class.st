@@ -70,6 +70,19 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigment [
 ]
 
 { #category : #tests }
+ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentOnClassSide [
+	class class
+		compile:
+			'initialize
+  test := nil'.
+
+	self runCleaner.
+
+	self assert: (class class >> #initialize) sourceCode equals: 'initialize
+  '
+]
+
+{ #category : #tests }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigments [
 	class
 		compile:
