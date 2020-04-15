@@ -14,7 +14,15 @@ Examples
 						flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
 	Chanel perfume: packages
+	
+	""You can also choose the list of cleaners to run:""
  
+	Chanel perfume: packages using: { ChanelTestEqualityCleaner . ChanelProtocolsCleaner  }.
+	
+	""You can find the full list of cleaners running:""
+	
+	ChanelAbstractCleaner cleaners asArray
+
 Internal Representation and Key Implementation Points.
 --------------------
 
@@ -33,23 +41,29 @@ Class {
 
 { #category : #cleaning }
 Chanel class >> perfume: aCollectionOfPackages [
-	^ self new
-		packages: aCollectionOfPackages;
-		clean
+	^ self perfume: aCollectionOfPackages using: ChanelAbstractCleaner cleaners
 ]
 
 { #category : #cleaning }
-Chanel >> clean [
-	| cleaners |
-	cleaners := ChanelAbstractCleaner cleanersFor: self.
+Chanel class >> perfume: aCollectionOfPackages using: aCollectionOfCleaners [
+	^ self new
+		packages: aCollectionOfPackages;
+		cleanUsing: aCollectionOfCleaners
+]
 
-	UIManager default displayProgress: 'Running Chanel' from: 1 to: cleaners size during: [ :bar | 
-		cleaners
-			doWithIndex: [ :cleaner :index |
-				bar
-					value: index;
-					title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
-				cleaner clean ] ]
+{ #category : #cleaning }
+Chanel >> cleanUsing: cleaners [
+	UIManager default
+		displayProgress: 'Running Chanel'
+		from: 1
+		to: cleaners size
+		during: [ :bar | 
+			cleaners
+				doWithIndex: [ :cleaner :index | 
+					bar
+						value: index;
+						title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
+					(cleaner configuration: self) clean ] ]
 ]
 
 { #category : #accessing }
