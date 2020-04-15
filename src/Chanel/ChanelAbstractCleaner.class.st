@@ -8,6 +8,8 @@ Each of my subclasses represents a kind of cleaning to apply on the project to c
 
 I am configured with an instance of Chanel to get the elements to clean.
 
+You can find the full list of cleaners running `ChanelAbstractCleaner cleaners`.
+
 Public API and Key Messages
 --------------------
 
@@ -30,8 +32,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ChanelAbstractCleaner class >> cleanersFor: aConfiguration [
-	^ ((self allSubclasses reject: #isAbstract) sort: #priority ascending) collect: [ :class | class configuration: aConfiguration ]
+ChanelAbstractCleaner class >> cleaners [
+	^ (self allSubclasses reject: #isAbstract) sort: #priority ascending
 ]
 
 { #category : #accessing }
