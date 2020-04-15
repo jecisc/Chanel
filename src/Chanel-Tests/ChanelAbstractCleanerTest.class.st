@@ -52,6 +52,21 @@ ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
 ]
 
 { #category : #helpers }
+ChanelAbstractCleanerTest >> createDefaultClass [
+	^ self createClassNamed: self defaultClassName
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createDefaultTestClass [
+	^ self createTestCaseNamed: self defaultClassName
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> createDefaultTrait [
+	^ self createTraitNamed: self defaultTraitName
+]
+
+{ #category : #helpers }
 ChanelAbstractCleanerTest >> createSubclassOf: aClass named: aSymbol [
 	^ aClass
 		subclass: aSymbol
@@ -68,6 +83,16 @@ ChanelAbstractCleanerTest >> createTestCaseNamed: aSymbol [
 { #category : #helpers }
 ChanelAbstractCleanerTest >> createTraitNamed: aSymbol [
 	^ Trait named: aSymbol uses: {} package: package name
+]
+
+{ #category : #accessing }
+ChanelAbstractCleanerTest >> defaultClassName [
+	^ (self class name , 'Fake') asSymbol
+]
+
+{ #category : #accessing }
+ChanelAbstractCleanerTest >> defaultTraitName [
+	^ ('T' , self defaultClassName) asSymbol
 ]
 
 { #category : #running }

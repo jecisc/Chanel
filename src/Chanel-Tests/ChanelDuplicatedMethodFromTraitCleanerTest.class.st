@@ -4,16 +4,22 @@ A ChanelDuplicatedMethodFromTraitCleanerTest is a test class for testing the beh
 Class {
 	#name : #ChanelDuplicatedMethodFromTraitCleanerTest,
 	#superclass : #ChanelAbstractCleanerTest,
+	#instVars : [
+		'trait'
+	],
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #running }
+ChanelDuplicatedMethodFromTraitCleanerTest >> setUp [
+	super setUp.
+	class := self createDefaultClass.
+	trait := self createDefaultTrait
+]
+
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfASTDifferent [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
-	class addToComposition: trait.
+	class setTraitComposition: trait.
 
 	trait
 		compile:
@@ -33,19 +39,17 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfEquivalentIsInSuperclasse [
-	| trait superclass |
-	superclass := self createClassNamed: #ChanelSupDuplicatedMethodFromTraitFake.
-	class := self createSubclassOf: superclass named: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
+	| subClass |
+	subClass := self createSubclassOf: class named: #ChanelDuplicatedMethodFromTraitFake.
 
-	class addToComposition: trait.
+	subClass setTraitComposition: trait.
 
 	trait
 		compile:
 			'one
 	^ #one'.
 
-	superclass
+	class
 		compile:
 			'one
 			<pragma>
@@ -54,17 +58,13 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 	self runCleaner.
 
 	self assert: (trait localSelectors includes: #one).
-	self assert: (superclass localSelectors includes: #one).
-	self deny: (class localSelectors includes: #one)
+	self assert: (class localSelectors includes: #one).
+	self deny: (subClass localSelectors includes: #one)
 ]
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfPragmaIsPresent [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
-	class addToComposition: trait.
+	class setTraitComposition: trait.
 
 	trait
 		compile:
@@ -85,10 +85,6 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNothingToClassWithoutTraitComposition [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
 	trait
 		compile:
 			'one
@@ -107,11 +103,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNothingToClassWithoutTrait
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrait [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
-	class addToComposition: trait.
+	class setTraitComposition: trait.
 
 	trait
 		compile:
@@ -131,11 +123,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitIfFormattingDifferent [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
-	class addToComposition: trait.
+	class setTraitComposition: trait.
 
 	trait
 		compile:
@@ -156,11 +144,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 
 { #category : #tests }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitOnClassSide [
-	| trait |
-	class := self createClassNamed: #ChanelDuplicatedMethodFromTraitFake.
-	trait := self createTraitNamed: #TChanelDuplicatedMethodFromTraitFake.
-
-	class addToComposition: trait.
+	class setTraitComposition: trait.
 
 	trait class
 		compile:

@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
-	class := self createTestCaseNamed: #ChanelConditionalSimplifierMock
+	class := self createDefaultTestClass
 ]
 
 { #category : #tests }
@@ -70,6 +70,30 @@ ChanelConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions
   {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
 
 	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]
+
+{ #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testReplacementInTraits [
+	| trait |
+	trait := self createDefaultTrait.
+
+	class setTraitComposition: trait.
+
+	trait
+		compile:
+			('{1}
+  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'}).
+
+	self runCleaner.
+
+	self
+		assert: (trait >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
+
+	self assert: (trait localSelectors includes: self selector).
+	self deny: (class localSelectors includes: self selector)
 ]
 
 { #category : #tests }
