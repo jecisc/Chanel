@@ -74,6 +74,25 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalTo [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testDoesNotRemoveExtensions [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 = 2'})
+		classified: self extensionProtocol.
+
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 equals: 2'}).
+
+	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
 	class class
 		compile:
