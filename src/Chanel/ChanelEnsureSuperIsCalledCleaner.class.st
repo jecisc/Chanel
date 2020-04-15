@@ -31,50 +31,44 @@ ChanelEnsureSuperIsCalledCleaner >> clean [
 
 { #category : #cleaning }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isInstanceSide
-				and: [ method selector = #initialize
-						and: [ method sendNodes
-								ifNotEmpty: [ :nodes | nodes noneSatisfy: [ :node | node isSuperSendTo: #initialize ] ]
-								ifEmpty: [ false ] ] ] ]
-		thenDo: [ :method | 
+	methods iterator
+		| #isInstanceSide selectIt
+		| [ :method | method selector = #initialize ] selectIt
+		| #hasMessages selectIt
+		| [ :method | method sendNodes noneSatisfy: [ :node | node isSuperSendTo: #initialize ] ] selectIt
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast body addNodeFirst: (RBMessageNode superSendTo: #initialize).
-			ast install ]
+			ast install ] doIt
 ]
 
 { #category : #cleaning }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isTestCase
-				and: [ method selector = #setUp
-						and: [ method sendNodes
-								ifNotEmpty: [ :nodes | (nodes first isSuperSendTo: #setUp) not ]
-								ifEmpty: [ false ] ] ] ]
-		thenDo: [ :method | 
+	methods iterator
+		| [ :method | method methodClass isTestCase ] selectIt
+		| [ :method | method selector = #setUp ] selectIt
+		| #hasMessages selectIt
+		| [ :method | method sendNodes first isSuperSendTo: #setUp ] rejectIt
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast sendNodes select: [ :each | each isSuperSendTo: #setUp ] thenDo: #removeFromTree.
 			ast body addNodeFirst: (RBMessageNode superSendTo: #setUp).
-			ast install ]
+			ast install ] doIt
 ]
 
 { #category : #cleaning }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperTearDownForMethods: methods [
-	methods
-		select: [ :method | 
-			method methodClass isTestCase
-				and: [ method selector = #tearDown
-						and: [ method sendNodes
-								ifNotEmpty: [ :nodes | (nodes last isSuperSendTo: #tearDown) not ]
-								ifEmpty: [ false ] ] ] ]
-		thenDo: [ :method | 
+	methods iterator
+		| [ :method | method methodClass isTestCase ] selectIt
+		| [ :method | method selector = #tearDown ] selectIt
+		| #hasMessages selectIt
+		| [ :method | method sendNodes last isSuperSendTo: #tearDown ] rejectIt
+		> [ :method | 
 			| ast |
 			ast := method ast.
 			ast sendNodes select: [ :each | each isSuperSendTo: #tearDown ] thenDo: #removeFromTree.
 			ast body addNodeLast: (RBMessageNode superSendTo: #tearDown).
-			ast install ]
+			ast install ] doIt
 ]
