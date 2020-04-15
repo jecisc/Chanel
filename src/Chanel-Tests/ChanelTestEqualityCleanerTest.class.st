@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelTestEqualityCleanerTest >> setUp [
 	super setUp.
-	class := self createTestCaseNamed: #ChanelEqualityTestCase
+	class := self createDefaultTestClass
 ]
 
 { #category : #tests }
@@ -93,6 +93,30 @@ ChanelTestEqualityCleanerTest >> testDoesNotRemoveExtensions [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testDoesNotReplaceInTraits [
+	| trait |
+	trait := self createDefaultTrait.
+
+	class setTraitComposition: trait.
+
+	trait
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 = 2'}).
+
+	self runCleaner.
+
+	self
+		assert: (trait >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self assert: 3 = 2'}).
+
+	self assert: (trait localSelectors includes: self selector).
+	self deny: (class localSelectors includes: self selector)
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
 	class class
 		compile:
@@ -112,7 +136,7 @@ ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
 ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 
-	class := self createClassNamed: #ChanelEqualityNotTestCase.
+	class := self createDefaultClass.
 
 	class
 		compile:

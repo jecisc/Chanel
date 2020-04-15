@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelMethodsOnlyCallingSuperCleanerTest >> setUp [
 	super setUp.
-	class := self createClassNamed: #ChanelMethodOnlyCallingSuperFake
+	class := self createDefaultClass
 ]
 
 { #category : #tests }
@@ -139,6 +139,24 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperEven
 	self runCleaner.
 
 	self deny: (class localSelectors includes: #initialize)
+]
+
+{ #category : #tests }
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+	
+	trait
+		compile:
+			'initialize
+  super initialize'.
+
+	self runCleaner.
+
+	self deny: (class localSelectors includes: #initialize).
+	self deny: (trait localSelectors includes: #initialize)
 ]
 
 { #category : #tests }

@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelNilAssignationInInitializeCleanerTest >> setUp [
 	super setUp.
-	class := self createClassNamed: #ChanelNilAssignationInIntializeFake
+	class := self createDefaultClass
 ]
 
 { #category : #tests }
@@ -67,6 +67,31 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigment [
 		equals:
 			'initialize
   super initialize'
+]
+
+{ #category : #tests }
+ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+	
+	trait
+		compile:
+			'initialize
+  super initialize.
+  test := nil'.
+
+	self runCleaner.
+
+	self
+		assert: (trait >> #initialize) sourceCode
+		equals:
+			'initialize
+  super initialize'.
+
+	self deny: (class localSelectors includes: #initialize).
+	self assert: (trait localSelectors includes: #initialize)
 ]
 
 { #category : #tests }

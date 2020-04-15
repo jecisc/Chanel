@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelUnreadTemporaryCleanerTest >> setUp [
 	super setUp.
-	class := self createClassNamed: #ChanelUnreadTemporaryFake
+	class := self createDefaultClass
 ]
 
 { #category : #tests }
@@ -42,7 +42,7 @@ ChanelUnreadTemporaryCleanerTest >> testDoesNotRemoveTemporaryReadFromDeeperScop
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testDontRemoveTemporaryRead [
-		| oldMethod |
+	| oldMethod |
 	class
 		compile:
 			'testMethod
@@ -63,12 +63,12 @@ ChanelUnreadTemporaryCleanerTest >> testDontRemoveTemporaryRead [
   ^test'.
 
 	"We should not have recompiled the method if we do not clean it."
-	self assert: (class >> #testMethod) identicalTo: oldMethod
+	self assert: class >> #testMethod identicalTo: oldMethod
 ]
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaries [
-		class
+	class
 		compile:
 			'testMethod
   | test test2 |
@@ -89,7 +89,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaries [
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporariesOnClassSide [
-		class class
+	class class
 		compile:
 			'testMethod
   | test test2 |
@@ -110,7 +110,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporariesOnClassSide [
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
-		class
+	class
 		compile:
 			'testMethod
   | test |
@@ -129,7 +129,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScope [
-		class
+	class
 		compile:
 			'testMethod
   true ifTrue: [ | test |
@@ -149,7 +149,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScope [
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopes [
-		class
+	class
 		compile:
 			'testMethod
   true ifTrue: [ | test |
@@ -171,7 +171,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopes [
 
 { #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopesWithOneRead [
-		class
+	class
 		compile:
 			'testMethod
   true ifTrue: [ | test |
@@ -191,4 +191,31 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopesWithOneRe
         test := self tata.
         ^test ].
   ^#one'
+]
+
+{ #category : #tests }
+ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+
+	trait
+		compile:
+			'testMethod
+  | test |
+  test := self toto.
+  ^#one'.
+
+	self runCleaner.
+
+	self
+		assert: (trait >> #testMethod) sourceCode
+		equals:
+			'testMethod
+  self toto.
+  ^#one'.
+
+	self deny: (class localSelectors includes: #testMethod).
+	self assert: (trait localSelectors includes: #testMethod)
 ]

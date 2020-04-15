@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelProtocolsCleanerTest >> setUp [
 	super setUp.
-	class := self createClassNamed: #ChanelProtocolsFake
+	class := self createDefaultClass
 ]
 
 { #category : #tests }
@@ -29,6 +29,21 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 	self runCleaner.
 	
 	self assert: (class >> #initialize) protocol equals: 'initialization'
+]
+
+{ #category : #tests }
+ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+
+	trait compile: 'initialize' classified: 'random'.
+
+	self runCleaner.
+
+	self assert: (trait >> #initialize) protocol equals: 'initialization'.
+
+	self deny: (class localSelectors includes: #initialize).
+	self assert: (trait localSelectors includes: #initialize)
 ]
 
 { #category : #tests }
@@ -60,7 +75,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolOnClassSide [
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'setUp' classified: 'random'.
 	
 	self runCleaner.
@@ -70,7 +85,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtension [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'setUp' classified: self extensionProtocol.
 
 	self runCleaner.
@@ -89,7 +104,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInTheList [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'toto' classified: 'random'.
 
 	self runCleaner.
@@ -98,8 +113,26 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 ]
 
 { #category : #tests }
+ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	class := self createDefaultTestClass.
+	
+	class setTraitComposition: trait.
+
+	trait compile: 'setUp' classified: 'random'.
+	
+	self runCleaner.
+	
+	self assert: (trait >> #setUp) protocol equals: 'random'.
+	
+	self deny: (class localSelectors includes: #setUp).
+	self assert: (trait localSelectors includes: #setUp)
+]
+
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: 'not a test'.
 	
 	self runCleaner.
@@ -109,7 +142,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: self extensionProtocol.
 	
 	self runCleaner.
@@ -128,7 +161,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTest [
-	class := self createTestCaseNamed: #ChanelProtocolsFake.
+	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: 'test - protocols'.
 	
 	self runCleaner.
@@ -143,6 +176,23 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 	self runCleaner.
 	
 	self assert: (class >> #method) protocol equals: 'instance creation'
+]
+
+{ #category : #tests }
+ChanelProtocolsCleanerTest >> testUpdateCloseProtocolInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+	
+	trait compile: 'method' classified: 'instance-creation'.
+	
+	self runCleaner.
+	
+	self assert: (trait >> #method) protocol equals: 'instance creation'.
+
+	self deny: (class localSelectors includes: #method ).
+	self assert: (trait localSelectors includes: #method)
 ]
 
 { #category : #tests }

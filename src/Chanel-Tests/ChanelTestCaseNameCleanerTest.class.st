@@ -15,7 +15,7 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTests [
 
 	self runCleaner.
 
-	self class environment at: 'ChanelMockTests' asSymbol ifPresent: [ :class | self fail ].
+	self class environment at: 'ChanelMockTests' asSymbol ifPresent: [ :c | self fail ].
 	self class environment at: 'ChanelMockTest' asSymbol ifAbsent: [ self fail ]
 ]
 
@@ -37,15 +37,15 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferenc
 
 	self class environment
 		at: 'ChanelMockTest' asSymbol
-		ifPresent: [ :class | 
+		ifPresent: [ :c | 
 			self
-				assert: (class >> #test1) sourceCode
+				assert: (c >> #test1) sourceCode
 				equals:
 					'test1
 	^ ChanelMockTest'.
 
 			self
-				assert: (class >> #test2) sourceCode
+				assert: (c >> #test2) sourceCode
 				equals:
 					'test2
 	^ #ChanelMockTest' ]
@@ -74,7 +74,20 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTests [
 
 	"The class should not be renamed since it inherits from Object and not TestCase."
 	self class environment at: 'ChanelMockTests' asSymbol ifAbsent: [ self fail ].
-	self class environment at: 'ChanelMockTest' asSymbol ifPresent: [ :class | self fail ]
+	self class environment at: 'ChanelMockTest' asSymbol ifPresent: [ :c | self fail ]
+]
+
+{ #category : #tests }
+ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTraitEndingWithTests [
+	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
+
+	self createTraitNamed: 'TChanelMockTests' asSymbol.
+
+	self runCleaner.
+
+	"The class should not be renamed since it inherits from Object and not TestCase."
+	self class environment at: 'TChanelMockTests' asSymbol ifAbsent: [ self fail ].
+	self class environment at: 'TChanelMockTest' asSymbol ifPresent: [ :c | self fail ]
 ]
 
 { #category : #tests }

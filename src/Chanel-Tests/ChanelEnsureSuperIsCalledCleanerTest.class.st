@@ -10,10 +10,14 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #running }
+ChanelEnsureSuperIsCalledCleanerTest >> setUp [
+	super setUp.
+	class := self createDefaultTestClass
+]
+
 { #category : #'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
-	class := self createClassNamed: #ChanelTestClass.
-
 	class compile: 'initialize
   self assert: true'.
 
@@ -31,10 +35,35 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
 	self deny: oldMethod identicalTo: class >> #initialize
 ]
 
+{ #category : #'tests - initialize' }
+ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitializeInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+
+	class setTraitComposition: trait.
+
+	trait
+		compile:
+			'initialize
+  self assert: true'.
+
+	oldMethod := trait >> #initialize.
+
+	self runCleaner.
+
+	self
+		assert: (trait >> #initialize) sourceCode
+		equals:
+			'initialize
+  super initialize.
+  self assert: true'.
+
+	self assert: (trait localSelectors includes: #initialize).
+	self deny: (class localSelectors includes: #initialize)
+]
+
 { #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'setUp
   self assert: true'.
 
@@ -54,8 +83,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
 
 { #category : #'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'tearDown
   self assert: true'.
 
@@ -75,8 +102,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
 
 { #category : #'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeOnClassSide [
-	class := self createClassNamed: #ChanelTestClass.
-
 	class class compile: 'initialize
 	self assert: true'.
 
@@ -96,8 +121,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeOnClassSide
 
 { #category : #'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeWhenAlreadyThere [
-	class := self createClassNamed: #ChanelTestClass.
-
 	class compile: 'initialize
 	super initialize.
 	self assert: true'.
@@ -118,7 +141,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeWhenAlready
 
 { #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfClassIsNotATestCase [
-	class := self createClassNamed: #ChanelTestClass.
+	class := self createDefaultClass.
 
 	class compile: 'setUp
 	self assert: true'.
@@ -139,8 +162,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfClassIsNotATes
 
 { #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'setUp
 '.
 
@@ -156,6 +177,30 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
 
 	"In case there is nothing to change, we should *not* recompile the method, thus it should be identical."
 	self assert: oldMethod identicalTo: class >> #setUp
+]
+
+{ #category : #'tests - setup' }
+ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+
+	trait compile: 'setUp
+  self assert: true'.
+
+	oldMethod := trait >> #setUp.
+
+	self runCleaner.
+
+	self
+		assert: (trait >> #setUp) sourceCode
+		equals: 'setUp
+  self assert: true'.
+
+	self assert: (trait localSelectors includes: #setUp).
+	self deny: (class localSelectors includes: #setUp)
+
 ]
 
 { #category : #'tests - setup' }
@@ -178,8 +223,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpOnClassSide [
 
 { #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpWhenAlreadyThere [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'setUp
 	super setUp.
 	self assert: true'.
@@ -200,7 +243,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpWhenAlreadyThere
 
 { #category : #'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfClassIsNotATestCase [
-	class := self createClassNamed: #ChanelTestClass.
+	class := self createDefaultClass.
 
 	class compile: 'tearDown
 	self assert: true'.
@@ -221,8 +264,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfClassIsNotA
 
 { #category : #'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'tearDown
 '.
 
@@ -238,6 +279,30 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod
 
 	"In case there is nothing to change, we should *not* recompile the method, thus it should be identical."
 	self assert: oldMethod identicalTo: class >> #tearDown
+]
+
+{ #category : #'tests - teardown' }
+ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownInTrait [
+	| trait |
+	trait := self createDefaultTrait.
+	
+	class setTraitComposition: trait.
+
+	trait compile: 'tearDown
+  self assert: true'.
+
+	oldMethod := trait >> #tearDown.
+
+	self runCleaner.
+
+	self
+		assert: (trait >> #tearDown) sourceCode
+		equals: 'tearDown
+  self assert: true'.
+
+	self assert: (trait localSelectors includes: #tearDown).
+	self deny: (class localSelectors includes: #tearDown)
+
 ]
 
 { #category : #'tests - teardown' }
@@ -260,8 +325,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownOnClassSide [
 
 { #category : #'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownWhenAlreadyThere [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'tearDown
 	self assert: true.
 	super tearDown'.
@@ -282,8 +345,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownWhenAlreadyTh
 
 { #category : #'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotCreateSuperInitializeInEmptyMethod [
-	class := self createClassNamed: #ChanelTestClass.
-
 	class compile: 'initialize
 '.
 
@@ -303,8 +364,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotCreateSuperInitializeInEmptyM
 
 { #category : #'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotMoveSuperInitializeIfNotTheFirstStatement [
-	class := self createClassNamed: #ChanelTestClass.
-
 	class compile: 'initialize
 	self assert: true.
 	super initialize'.
@@ -326,8 +385,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotMoveSuperInitializeIfNotTheFi
 
 { #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'setUp
   self assert: true.
   super setUp'.
@@ -349,8 +406,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
 
 { #category : #'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperTearDownIfNotLastStatement [
-	class := self createTestCaseNamed: #ChanelTestClass.
-
 	class compile: 'tearDown
   super tearDown.
   self assert: true'.
