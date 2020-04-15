@@ -50,6 +50,15 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheLis
 ]
 
 { #category : #tests }
+ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolOnClassSide [
+	class class compile: 'initialize' classified: 'random'.
+	
+	self runCleaner.
+	
+	self assert: (class class>> #initialize) protocol equals: 'initialization'
+]
+
+{ #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 	class := self createTestCaseNamed: #ChanelProtocolsFake.
 	class compile: 'setUp' classified: 'random'.
@@ -134,4 +143,13 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 	self runCleaner.
 	
 	self assert: (class >> #method) protocol equals: 'instance creation'
+]
+
+{ #category : #tests }
+ChanelProtocolsCleanerTest >> testUpdateCloseProtocolOnClassSide [
+	class class compile: 'method' classified: 'instance-creation'.
+	
+	self runCleaner.
+	
+	self assert: (class class>> #method) protocol equals: 'instance creation'
 ]

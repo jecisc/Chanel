@@ -88,6 +88,27 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaries [
 ]
 
 { #category : #tests }
+ChanelUnreadTemporaryCleanerTest >> testRemoveTemporariesOnClassSide [
+		class class
+		compile:
+			'testMethod
+  | test test2 |
+  test := self toto.
+  test2 := self toto2.
+  ^#one'.
+
+	self runCleaner.
+
+	self
+		assert: (class class>> #testMethod) sourceCode
+		equals:
+			'testMethod
+  self toto.
+  self toto2.
+  ^#one'
+]
+
+{ #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
 		class
 		compile:

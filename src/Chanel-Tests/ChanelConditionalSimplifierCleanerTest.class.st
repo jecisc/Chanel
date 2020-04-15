@@ -52,3 +52,39 @@ ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
+
+{ #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
+	class class
+		compile:
+			('{1}
+  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'}).
+
+	self runCleaner.
+
+	self
+		assert: (class class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10 ifNotNil: [ false ]'})
+]
+
+{ #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testWithNothingToReplace [
+	| oldMethod |
+	class
+		compile:
+			('{1}
+	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
+
+	oldMethod := class >> self selector.
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
+	
+	self assert: class >> self selector identicalTo: oldMethod
+]

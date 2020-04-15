@@ -140,3 +140,15 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperEven
 
 	self deny: (class localSelectors includes: #initialize)
 ]
+
+{ #category : #tests }
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperOnClassSide [
+	class class
+		compile:
+			'initialize
+  super initialize'.
+
+	self runCleaner.
+
+	self deny: (class class localSelectors includes: #initialize)
+]

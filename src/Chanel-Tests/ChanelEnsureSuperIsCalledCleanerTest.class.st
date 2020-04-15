@@ -159,6 +159,24 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
 ]
 
 { #category : #'tests - setup' }
+ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpOnClassSide [
+	class class compile: 'setUp
+	self assert: true'.
+
+	oldMethod := class class>> #setUp.
+
+	self runCleaner.
+
+	self
+		assert: (class class>> #setUp) sourceCode
+		equals: 'setUp
+	self assert: true'.
+
+	"In case there is nothing to change, we should *not* recompile the method, thus it should be identical."
+	self assert: oldMethod identicalTo: class class>> #setUp
+]
+
+{ #category : #'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpWhenAlreadyThere [
 	class := self createTestCaseNamed: #ChanelTestClass.
 
@@ -220,6 +238,24 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod
 
 	"In case there is nothing to change, we should *not* recompile the method, thus it should be identical."
 	self assert: oldMethod identicalTo: class >> #tearDown
+]
+
+{ #category : #'tests - teardown' }
+ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownOnClassSide [
+	class class compile: 'tearDown
+	self assert: true'.
+
+	oldMethod := class class>> #tearDown.
+
+	self runCleaner.
+
+	self
+		assert: (class class>> #tearDown) sourceCode
+		equals: 'tearDown
+	self assert: true'.
+
+	"In case there is nothing to change, we should *not* recompile the method, thus it should be identical."
+	self assert: oldMethod identicalTo: class class>> #tearDown
 ]
 
 { #category : #'tests - teardown' }
