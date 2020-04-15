@@ -50,6 +50,8 @@ Chanel perfume: packages using: { ChanelTestEqualityCleaner . ChanelProtocolsCl
 You can find the full list of cleaners running `ChanelAbstractCleaner cleaners asArray`.
 It is advised to keep the cleaner in the given order of this snippet since some of them needs to run before the others.
 
+> You can open playgrounds containing those snippets via the world menu once the project is installed.
+
 > **WARNING**: Some cleaning are making sense in most cases but might cause troubles in some edge cases. Please, read the documentation to see the list of possible problems it might introduce.
 
 ## Documentation
