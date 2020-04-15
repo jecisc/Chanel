@@ -54,6 +54,25 @@ ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 ]
 
 { #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'})
+		classified: self extensionProtocol.
+
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
+
+	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]
+
+{ #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
 	class class
 		compile:

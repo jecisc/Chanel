@@ -13,6 +13,16 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #testing }
+ChanelAbstractCleanerTest class >> isAbstract [
+	^ self = ChanelAbstractCleanerTest
+]
+
+{ #category : #testing }
+ChanelAbstractCleanerTest class >> shouldInheritSelectors [
+	^ true
+]
+
 { #category : #accessing }
 ChanelAbstractCleanerTest >> actualClass [
 	^ self class environment at: (self class name withoutSuffix: 'Test') asSymbol
