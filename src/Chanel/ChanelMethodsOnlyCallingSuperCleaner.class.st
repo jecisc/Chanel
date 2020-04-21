@@ -22,5 +22,5 @@ ChanelMethodsOnlyCallingSuperCleaner >> clean [
 	self configuration localMethods iterator
 		| #hasPragma rejectIt
 		| [ :method | matcher executeMethod: method ast initialAnswer: false ] selectIt
-		> #removeFromSystem doIt
+		> #removeMethod doIt
 ]

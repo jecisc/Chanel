@@ -94,7 +94,7 @@ ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 		keysAndValuesDo: [ :olds :new | 
 			methods
 				select: [ :meth | olds includes: meth protocol ]
-				thenDo: [ :meth | meth protocol: new ] ]
+				thenDo: [ :meth | meth ensureProtocol: new ] ]
 ]
 
 { #category : #cleaning }

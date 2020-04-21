@@ -111,7 +111,7 @@ ChanelAbstractCleanerTest >> extensionProtocol [
 
 { #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
-	(self actualClass configuration: (Chanel new packages: {package})) clean
+	Chanel perfume: {package} using: {self actualClass}
 ]
 
 { #category : #running }

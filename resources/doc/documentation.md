@@ -24,7 +24,31 @@ It is advised to keep the cleaner in the given order of this snippet since some 
 
 > You can open playgrounds containing those snippets via the world menu once the project is installed.
 
-## Tests equality
+## Logging changes
+
+By default, *Chanel* uses [TinyLogger](https://github.com/jecisc/TinyLogger) to record every changes. 
+
+The default logger output the logs on the Transcript, STDio and in a file named `Chanel.log`.
+
+It is possible to update the logger to use:
+
+```Smalltalk
+Chanel logger: (TinyLogger new ensureTranscriptLogger; yourself)
+```
+
+It is also possible to disable the logging:
+
+```Smalltalk
+Chanel logger: TinyLogger new
+```
+
+For more info on the logger customization, read the documentation of `TinyLogger`.
+
+## Cleaners descriptions
+
+This section will go over every cleaners and explain their behavior.
+
+### Tests equality
 
 Chanel iterates on all the tests of the packages and clean equality assertions. 
 Here is the list of rewrites it will apply:
@@ -47,7 +71,7 @@ Here is the list of rewrites it will apply:
 
 > The danger of this cleaning happens on projects working in Pharo < 7. Some of this new assertions were introduced in Pharo 7.
 
-## Clean protocols
+### Clean protocols
 
 Channel do multiple cleanings in protocols. 
 
@@ -56,7 +80,7 @@ Channel do multiple cleanings in protocols.
 
 > This cleaning should not have any counter indication.
 
-## Conditional simplifications
+### Conditional simplifications
 
 Chanel simplifies conditionals. For example it will rewrite:
 
@@ -73,13 +97,13 @@ Chanel simplifies conditionals. For example it will rewrite:
 
 > The only danger of this cleaning happens for projects working on multiple Smalltalks
 
-## Test case names
+### Test case names
 
 Chanel rename each test case ending with `Tests` te end with `Test` since this is `a XXTestCase`.
 
 > This might cause trouble if you have a test case end with `Test` and another class with the same name ending with `Tests`.
 
-## Ensure right super are call
+### Ensure right super are call
 
 - Ensure `#setUp` in TestCases always begins by `super setUp` (move it if not the first messand sent)
 - Ensure `#tearDown` in TestCases always ends by `super tearDown` (move it if not the last messand sent)
@@ -87,22 +111,22 @@ Chanel rename each test case ending with `Tests` te end with `Test` since this i
 
 > A problem might happen if a super was deliberatly ignored.
 
-## Remove nil assignments in initialization
+### Remove nil assignments in initialization
 
 Chanel removes all nil assignations in `initialize` methods because most of the time they are not needed. 
 
 > This might be a problem in some rare case where #initialize methods are called by teh user to reset an instance. In that case it is recommended to create a `#reset` method.
 
-## Remove methods only calling super
+### Remove methods only calling super
 
 Remove each methods only doing a super call. This does not remove methods with pragmas.
 
 > This might remove methods added just to add comments in a subclass.
 
-## Remove unread temporaries
+### Remove unread temporaries
 
 Remove all temporaries that are defined but not read.
 
-## Remove duplicated methods from traits 
+### Remove duplicated methods from traits 
 
 If methods present on traits are duplicated in a classe using the trait, Chanel removes the duplicated version.
