@@ -81,7 +81,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodWithPragma [
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveBinaryMethodOnlyCollingSuper [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveBinaryMethodOnlyCallingSuper [
 	class
 		compile:
 			'= aString
@@ -93,7 +93,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveBinaryMethodOnlyCollingSup
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveKeywordMethodOnlyCollingSuper [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveKeywordMethodOnlyCallingSuper [
 	class
 		compile:
 			'initialize: aString
@@ -105,7 +105,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveKeywordMethodOnlyCollingSu
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuper [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper [
 	class
 		compile:
 			'initialize
@@ -117,7 +117,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuper [
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuper2 [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper2 [
 	class
 		compile:
 			'initialize
@@ -130,7 +130,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuper2 [
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperEvenIfThereIsAReturn [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperEvenIfThereIsAReturn [
 	class
 		compile:
 			'initialize
@@ -142,7 +142,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperEven
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperInTrait [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperInTrait [
 	| trait |
 	trait := self createDefaultTrait.
 	
@@ -160,7 +160,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperInTr
 ]
 
 { #category : #tests }
-ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCollingSuperOnClassSide [
+ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperOnClassSide [
 	class class
 		compile:
 			'initialize

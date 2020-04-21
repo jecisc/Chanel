@@ -1,5 +1,14 @@
 "
-A ChanelAbstractCleanerTest is a test class for testing the behavior of ChanelAbstractCleaner
+A ChanelAbstractCleanerTest is a test class for testing the behavior of ChanelAbstractCleaner.
+
+List of special cases to take into account when writing a new cleaner (add tests for them):
+- Should it apply on classe side?
+- Should it apply on traits? In that case, ensure the methods are not duplicated in the user classes
+- Ensure extension methods are not moved of protocol
+- When rewriting the content of a method: ensure we do not create an infinit loop by calling self
+- If it concern only test cases, test on non test cases
+- What should happen if the method is empty?
+- Be careful of methods with pragmas which can be special cases. (for example, do not remove empty methods with a pragma)
 "
 Class {
 	#name : #ChanelAbstractCleanerTest,
