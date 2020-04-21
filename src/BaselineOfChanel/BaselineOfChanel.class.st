@@ -12,10 +12,12 @@ BaselineOfChanel >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ self iterators: spec.
+		do: [ self
+				iterators: spec;
+				tinyLogger: spec.
 
 			spec
-				package: 'Chanel' with: [ spec requires: #('Iterators') ];
+				package: 'Chanel' with: [ spec requires: #('Iterators' 'TinyLogger') ];
 				package: 'Chanel-Tests' with: [ spec requires: #('Chanel') ].
 
 			spec
@@ -46,4 +48,13 @@ BaselineOfChanel >> pharoBackwardCompatibility: spec [
 { #category : #accessing }
 BaselineOfChanel >> projectClass [
 	^ MetacelloCypressBaselineProject
+]
+
+{ #category : #dependencies }
+BaselineOfChanel >> tinyLogger: spec [
+	spec
+		baseline: 'TinyLogger'
+		with: [ spec
+				loads: 'Core';
+				repository: 'github://jecisc/TinyLogger:v1.x.x/src' ]
 ]

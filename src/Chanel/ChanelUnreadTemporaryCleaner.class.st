@@ -22,5 +22,5 @@ ChanelUnreadTemporaryCleaner >> clean [
 			(method ast allTemporaries select: #isNotReadOnce)
 				ifNotEmpty: [ :temporariesToRemove | 
 					temporariesToRemove do: #inlineTemporary.
-					method ast install ] ]
+					method installAST ] ]
 ]

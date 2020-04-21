@@ -71,5 +71,5 @@ ChanelAbstractCleaner >> configuration: anObject [
 { #category : #rewriting }
 ChanelAbstractCleaner >> rewriteMethodsOf: classes with: rewriter [
 	(classes flatCollect: [ :class | class localMethods , class class localMethods ])
-		do: [ :method | (rewriter executeTree: method ast) ifTrue: [ method ast install ] ]
+		do: [ :method | (rewriter executeTree: method ast) ifTrue: [ method installAST ] ]
 ]

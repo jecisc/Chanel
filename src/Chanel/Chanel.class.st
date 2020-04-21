@@ -36,8 +36,26 @@ Class {
 	#instVars : [
 		'packages'
 	],
+	#classVars : [
+		'Logger'
+	],
 	#category : #Chanel
 }
+
+{ #category : #accessing }
+Chanel class >> logger [
+	^ Logger
+		ifNil: [ Logger := TinyLogger new
+				ensureTranscriptLogger;
+				ensureStdoutLogger;
+				ensureFileLoggerNamed: 'Chanel.log';
+				yourself ]
+]
+
+{ #category : #accessing }
+Chanel class >> logger: anObject [
+	Logger := anObject
+]
 
 { #category : #'world menu' }
 Chanel class >> openWorkspaceToCleanProject [
@@ -104,17 +122,21 @@ Chanel class >> worldMenuOn: aBuilder [
 
 { #category : #cleaning }
 Chanel >> cleanUsing: cleaners [
-	UIManager default
-		displayProgress: 'Running Chanel'
-		from: 1
-		to: cleaners size
-		during: [ :bar | 
-			cleaners
-				doWithIndex: [ :cleaner :index | 
-					bar
-						value: index;
-						title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
-					(cleaner configuration: self) clean ] ]
+	TinyCurrentLogger
+		value: self class logger
+		during: [ self
+				execute: [ UIManager default
+						displayProgress: 'Running Chanel'
+						from: 1
+						to: cleaners size
+						during: [ :bar | 
+							cleaners
+								doWithIndex: [ :cleaner :index | 
+									bar
+										value: index;
+										title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
+									self execute: [ (cleaner configuration: self) clean ] recordedAs: 'Running ' , cleaner printString ] ] ]
+				recordedAs: 'Running Chanel on: ' , (', ' join: (packages collect: #name)) ]
 ]
 
 { #category : #accessing }
