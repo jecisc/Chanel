@@ -13,7 +13,7 @@ ChanelConditionalSimplifierCleanerTest >> setUp [
 	class := self createDefaultTestClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	| oldMethod |
 	class
@@ -34,7 +34,7 @@ ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfin
 	self assert: class >> #ifNotNil: identicalTo: oldMethod
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
 	| oldMethod |
 	class
