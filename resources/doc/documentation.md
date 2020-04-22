@@ -68,17 +68,50 @@ Here is the list of rewrites it will apply:
 | `x assert: y equals: false` | `x deny: y` |
 | `x deny: y equals: false` | `x assert: y` |
 
+*Conditions for the cleanings to by applied:*
+- Only subclasses of TestCase are cleaned.
+- Does not clean the traits in the packages.
+- A pattern from the list above match.
 
-> The danger of this cleaning happens on projects working in Pharo < 7. Some of this new assertions were introduced in Pharo 7.
+*Warnings:*
+The danger of this cleaning happens on projects working in Pharo < 7. Some of this new assertions were introduced in Pharo 7.
 
 ### Clean protocols
 
 Channel do multiple cleanings in protocols. 
 
-* Channel ensures that some methods are in the right protocol. For example, `#initialize` should be in `#initialization`. Find more in `Chanel methodsInSpecificProtocolMap` and `Chanel testMethodsInSpecificProtocolMap`.
-* Chanel updates some protocols to follow convensions. For examplee it updates `#initialize-release` to `#initialize`. Find more in `Chanel protocolsToCleanMap`.
+* Channel ensures that some methods are in the right protocol. For example, `#initialize` should be in `#initialization`.
 
-> This cleaning should not have any counter indication.
+*Conditions for the cleanings to by applied:*
+- Cleaned methods should not be extensions.
+- Can be applied on instance and class side of traits and classes.
+- The method selector need to be present in  `ChanelProtocolsCleaner methodsInSpecificProtocolMap`.
+
+* Channel ensures that some test case methods are in the right protocol. For example, `#setUp` should be in `#running`.
+
+*Conditions for the cleanings to by applied:*
+- Cleaned methods needs to be in a subclass of TestCase.
+- Cleaned methods should not be extensions.
+- Can be applied on instance and class side.
+- The method selector need to be present in  `ChanelProtocolsCleaner testMethodsInSpecificProtocolMap`.
+
+* Chanel ensure that tests are in a protocol starting with `test`.
+
+*Conditions for the cleanings to by applied:*
+- Cleaned methods needs to be in a subclass of TestCase.
+- Cleaned methods should not be extensions.
+- The method should have no argument and start with `test` or `should`.
+- The protocol of the method does not start with `test`.
+
+* Chanel updates some protocols to follow convensions. For examplee it updates `#initialize-release` to `#initialize`. Find more in `ChanelProtocolsCleaner protocolsToCleanMap`.
+
+*Conditions for the cleanings to by applied:*
+- Cleaned methods should not be extensions.
+- Can be applied on instance and class side of traits and classes.
+- The method protocol need to be present in  `ChanelProtocolsCleaner protocolsToCleanMap`.
+
+*Warnings:*
+This cleaning should not have any counter indication.
 
 ### Conditional simplifications
 
@@ -95,38 +128,106 @@ Chanel simplifies conditionals. For example it will rewrite:
 | `x isNotNil ifTrue: y ifFalse: z` | `x ifNil: z ifNotNil: y` |
 | `x isNotNil ifFalse: y ifTrue: z` | `x ifNil: y ifNotNil: z` |
 
-> The only danger of this cleaning happens for projects working on multiple Smalltalks
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+```Smalltalk
+ifNotNil: aBlock
+	^ self isNil ifFalse: aBlock
+```
+
+into:
+
+```Smalltalk
+ifNotNil: aBlock
+	^ self ifNotNil: aBlock
+```
+
+*Warnings:*
+The only danger of this cleaning happens for projects working on multiple Smalltalks
 
 ### Test case names
 
 Chanel rename each test case ending with `Tests` te end with `Test` since this is `a XXTestCase`.
 
-> This might cause trouble if you have a test case end with `Test` and another class with the same name ending with `Tests`.
+*Conditions for the cleanings to by applied:*
+- The class needs to be a subclass of TestCase.
+- The class name needs to end with `Tests`.
+
+*Warnings:*
+This might cause trouble if you have a test case end with `Test` and another class with the same name ending with `Tests`.
 
 ### Ensure right super are call
 
 - Ensure `#setUp` in TestCases always begins by `super setUp` (move it if not the first messand sent)
+
+*Conditions for the cleanings to by applied:*
+- The class needs to be a subclass of `TestCase`.
+- The method selector needs to be `setUp`.
+- The method needs to send at least one message. We consider that an empty `#setUp` method was created to prevent the execution of the method it overrides.
+- The first sent message needs to be different of `super setUp`.
+
 - Ensure `#tearDown` in TestCases always ends by `super tearDown` (move it if not the last messand sent)
+
+*Conditions for the cleanings to by applied:*
+- The class needs to be a subclass of `TestCase`.
+- The method selector needs to be `tearDown`.
+- The method needs to send at least one message. We consider that an empty `#tearDown` method was created to prevent the execution of the method it overrides.
+- The last sent message needs to be different of `super tearDown`.
+
 - Ensure `#initialize` on instance side always has `super initialize`
 
-> A problem might happen if a super was deliberatly ignored.
+*Conditions for the cleanings to by applied:*
+- Works on any class or trait.
+- The method selector needs to be `initialize`.
+- The method needs to send at least one message. We consider that an empty `#initialize` method was created to prevent the execution of the method it overrides.
+- None of the sent message should be `super initialize`.
+
+*Warnings:*
+A problem might happen if a super was deliberatly ignored.
 
 ### Remove nil assignments in initialization
 
 Chanel removes all nil assignations in `initialize` methods because most of the time they are not needed. 
 
-> This might be a problem in some rare case where #initialize methods are called by teh user to reset an instance. In that case it is recommended to create a `#reset` method.
+*Conditions for the cleanings to by applied:*
+- The method selector needs to be `#initialize`.
+- The method should contain nil assignations.
+
+*Warnings:*
+This might be a problem in some rare case where #initialize methods are called by teh user to reset an instance. In that case it is recommended to create a `#reset` method.
 
 ### Remove methods only calling super
 
 Remove each methods only doing a super call. This does not remove methods with pragmas.
 
-> This might remove methods added just to add comments in a subclass.
+*Conditions for the cleanings to by applied:*
+- The method should have only one message sent that is a call to the super of the same selector.
+- The method should not have any pragma.
+
+*Warnings:*
+
+This might remove methods added just to add comments in a subclass.
 
 ### Remove unread temporaries
 
 Remove all temporaries that are defined but not read.
 
+*Conditions for the cleanings to by applied:*
+- The method should have at least one temporary that is never read in its scope.
+
+*Warnings:*
+This might remove methods that were intentionally created with the flaw for testing purpose.
+
 ### Remove duplicated methods from traits 
 
 If methods present on traits are duplicated in a classe using the trait, Chanel removes the duplicated version.
+
+*Conditions for the cleanings to by applied:*
+- The class of the method needs to use at least on trait
+- The method should have another method in the trait composition with the same name and the same AST.
+
+*Warnings:*
+This cleaning should not have any counter indication.
