@@ -22,6 +22,10 @@ CompiledMethod >> hasPragma [
 CompiledMethod >> installAST [
 	"In Chanel we update some ASTs. This method install the updated AST."
 
+	"In case the update of ast introduce a direct call to self, we do not take the risk to update the AST to not introduce an infinite loop.
+	Instead we discard the AST cache."
+	(self ast sendNodes anySatisfy: [ :message | message isSelfSendTo: self selector ]) ifTrue: [ ^ ASTCache reset ].
+
 	self ast install
 ]
 

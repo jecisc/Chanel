@@ -14,6 +14,48 @@ ChanelConditionalSimplifierCleanerTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
+	| oldMethod |
+	class
+		compile:
+			'ifNotNil: aBlock
+  ^self isNil ifFalse: aBlock'.
+
+	oldMethod := class >> #ifNotNil:.
+
+	self runCleaner.
+
+	self
+		assert: (class >> #ifNotNil:) sourceCode
+		equals:
+			'ifNotNil: aBlock
+  ^self isNil ifFalse: aBlock'.
+
+	self assert: class >> #ifNotNil: identicalTo: oldMethod
+]
+
+{ #category : #tests }
+ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
+	| oldMethod |
+	class
+		compile:
+			'ifNotNil: aBlock
+  self isNil ifFalse: aBlock'.
+
+	oldMethod := class >> #ifNotNil:.
+
+	self runCleaner.
+
+	self
+		assert: (class >> #ifNotNil:) sourceCode
+		equals:
+			'ifNotNil: aBlock
+  self isNil ifFalse: aBlock'.
+
+	self assert: class >> #ifNotNil: identicalTo: oldMethod
+]
+
+{ #category : #tests }
 ChanelConditionalSimplifierCleanerTest >> testIsNilIfFalse [
 	self assert: '10 isNil ifFalse: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
