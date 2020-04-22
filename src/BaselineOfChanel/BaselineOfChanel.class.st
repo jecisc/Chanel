@@ -40,11 +40,6 @@ BaselineOfChanel >> iterators: spec [
 				repository: 'github://juliendelplanque/Iterators:v1.x.x/src' ]
 ]
 
-{ #category : #dependencies }
-BaselineOfChanel >> pharoBackwardCompatibility: spec [
-	spec baseline: 'PharoBackwardCompatibility' with: [ spec repository: 'github://jecisc/PharoBackwardCompatibility:v1.x.x/src' ]
-]
-
 { #category : #accessing }
 BaselineOfChanel >> projectClass [
 	^ MetacelloCypressBaselineProject
