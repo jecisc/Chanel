@@ -1,4 +1,4 @@
-# Chanel
+# <img src="https://raw.githubusercontent.com/jecisc/Chanel/master/resources/perfume.png" width="50"> Chanel
 
 Chanel is a code cleaner for Pharo. 
 
