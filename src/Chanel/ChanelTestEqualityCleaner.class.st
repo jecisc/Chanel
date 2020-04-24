@@ -53,6 +53,14 @@ ChanelTestEqualityCleaner >> equalityRewriter [
 		replace: '`@receiver deny: `@arg = true' with: '`@receiver deny: `@arg';
 		replace: '`@receiver assert: `@arg = false' with: '`@receiver deny: `@arg';
 		replace: '`@receiver deny: `@arg = false' with: '`@receiver assert: `@arg';
+		replace: '`@receiver assert: `@arg identicalTo: true' with: '`@receiver assert: `@arg';
+		replace: '`@receiver deny: `@arg identicalTo: true' with: '`@receiver deny: `@arg';
+		replace: '`@receiver assert: `@arg identicalTo: false' with: '`@receiver deny: `@arg';
+		replace: '`@receiver deny: `@arg identicalTo: false' with: '`@receiver assert: `@arg';
+		replace: '`@receiver assert: `@arg == true' with: '`@receiver assert: `@arg';
+		replace: '`@receiver deny: `@arg == true' with: '`@receiver deny: `@arg';
+		replace: '`@receiver assert: `@arg == false' with: '`@receiver deny: `@arg';
+		replace: '`@receiver deny: `@arg == false' with: '`@receiver assert: `@arg';
 		replace: '`@receiver assert: `@arg equals: true' with: '`@receiver assert: `@arg';
 		replace: '`@receiver deny: `@arg equals: true' with: '`@receiver deny: `@arg';
 		replace: '`@receiver assert: `@arg equals: false' with: '`@receiver deny: `@arg';

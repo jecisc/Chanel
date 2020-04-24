@@ -67,6 +67,14 @@ Here is the list of rewrites it will apply:
 | `x deny y equals: true` | `x deny: y` |
 | `x assert: y equals: false` | `x deny: y` |
 | `x deny: y equals: false` | `x assert: y` |
+| `x assert: y identicalTo: true` | `x assert: y` |
+| `x deny: y identicalTo: true` | `x deny: y` |
+| `x assert: y identicalTo: false` | `x deny: y` |
+| `x deny: y identicalTo: false` | `x assert: y` |
+| `x assert: y == true` | `x assert: y` |
+| `x deny: y == true` | `x deny: y` |
+| `x assert: y == false` | `x deny: y` |
+| `x deny: y == false` | `x assert: y` |
 
 *Conditions for the cleanings to by applied:*
 - Only subclasses of TestCase are cleaned.

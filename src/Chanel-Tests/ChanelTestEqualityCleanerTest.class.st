@@ -44,6 +44,26 @@ ChanelTestEqualityCleanerTest >> testAssertIdenticalTo [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalToFalse [
+	self assert: 'self assert: 3 == false' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalToFalse2 [
+	self assert: 'self assert: 3 identicalTo: false' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalToTrue [
+	self assert: 'self assert: 3 == true' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalToTrue2 [
+	self assert: 'self assert: 3 identicalTo: true' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyEquals [
 	self assert: 'self deny: 3 = 2' isRewrittenAs: 'self deny: 3 equals: 2'
 ]
@@ -71,6 +91,26 @@ ChanelTestEqualityCleanerTest >> testDenyEqualsTrue2 [
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyIdenticalTo [
 	self assert: 'self deny: 3 == 2' isRewrittenAs: 'self deny: 3 identicalTo: 2'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalToFalse [
+	self assert: 'self deny: 3 == false' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalToFalse2 [
+	self assert: 'self deny: 3 identicalTo: false' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue [
+	self assert: 'self deny: 3 == true' isRewrittenAs: 'self deny: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue2 [
+	self assert: 'self deny: 3 identicalTo: true' isRewrittenAs: 'self deny: 3'
 ]
 
 { #category : #tests }
