@@ -53,6 +53,21 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferenc
 ]
 
 { #category : #tests }
+ChanelTestCaseNameCleanerTest >> testShouldNotRenameIfTheNewClassNameAlreadyExistsInTheSystem [
+	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
+
+	self createTestCaseNamed: 'ChanelMockTests' asSymbol.
+	self createTestCaseNamed: 'ChanelMockTest' asSymbol.
+
+	"The class should not be renamed since the right name already exists in the system."
+
+	self shouldnt: [ self runCleaner ] raise: Error.
+
+	self class environment at: 'ChanelMockTest' asSymbol ifAbsent: [ self fail ].
+	self class environment at: 'ChanelMockTests' asSymbol ifAbsent: [ self fail ]
+]
+
+{ #category : #tests }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTest [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 

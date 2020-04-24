@@ -17,9 +17,14 @@ ChanelTestCaseNameCleaner class >> priority [
 
 { #category : #cleaning }
 ChanelTestCaseNameCleaner >> clean [
-	self configuration definedTestCases
-		select: [ :class | class name endsWith: 'Tests' ]
-		thenDo: [ :class | 
-			('Renaming ' , class name , ' to ' , class name allButLast) record.
-			(RBRenameClassRefactoring rename: class to: class name allButLast) execute ]
+	self configuration definedTestCases iterator
+		| [ :class | class name endsWith: 'Tests' ] selectIt
+		| [ :class | self class environment hasClassNamed: class name allButLast ] rejectIt
+		> [ :class | self rename: class as: class name allButLast ] doIt
+]
+
+{ #category : #cleaning }
+ChanelTestCaseNameCleaner >> rename: class as: aString [
+	('Renaming ' , class name , ' to ' , aString) record.
+	(RBRenameClassRefactoring rename: class to: aString) execute
 ]

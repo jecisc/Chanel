@@ -155,9 +155,10 @@ Chanel rename each test case ending with `Tests` te end with `Test` since this i
 *Conditions for the cleanings to by applied:*
 - The class needs to be a subclass of TestCase.
 - The class name needs to end with `Tests`.
+- The system should not contain a class with the same name without the final `s`.
 
 *Warnings:*
-This might cause trouble if you have a test case end with `Test` and another class with the same name ending with `Tests`.
+This cleaning should not have any counter indication.
 
 ### Ensure right super are call
 
@@ -208,7 +209,6 @@ Remove each methods only doing a super call. This does not remove methods with p
 - The method should not have any pragma.
 
 *Warnings:*
-
 This might remove methods added just to add comments in a subclass.
 
 ### Remove unread temporaries
