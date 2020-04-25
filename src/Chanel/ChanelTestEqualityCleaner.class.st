@@ -32,7 +32,7 @@ x deny: y equals: false 			==> x assert: y
 "
 Class {
 	#name : #ChanelTestEqualityCleaner,
-	#superclass : #ChanelAbstractCleaner,
+	#superclass : #ChanelMethodRewriterCleaner,
 	#category : #Chanel
 }
 
@@ -42,12 +42,7 @@ ChanelTestEqualityCleaner class >> priority [
 ]
 
 { #category : #cleaning }
-ChanelTestEqualityCleaner >> clean [
-	self rewriteMethodsOf: self configuration definedTestCases with: self equalityRewriter
-]
-
-{ #category : #cleaning }
-ChanelTestEqualityCleaner >> equalityRewriter [
+ChanelTestEqualityCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver assert: `@arg = true' with: '`@receiver assert: `@arg';
 		replace: '`@receiver deny: `@arg = true' with: '`@receiver deny: `@arg';
@@ -71,4 +66,9 @@ ChanelTestEqualityCleaner >> equalityRewriter [
 		replace: '`@receiver deny: `@arg == `@arg2' with: '`@receiver deny: `@arg identicalTo: `@arg2';
 		replace: '`@receiver assert: `@arg = true' with: '`@receiver assert: `@arg';
 		yourself
+]
+
+{ #category : #cleaning }
+ChanelTestEqualityCleaner >> scope [
+	^ self configuration definedTestCases
 ]

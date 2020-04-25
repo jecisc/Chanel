@@ -162,6 +162,40 @@ ifNotNil: aBlock
 *Warnings:*
 The only danger of this cleaning happens for projects working on multiple Smalltalks
 
+### Methods with alias unification
+
+Chanel unify the use of some methods with alias. Here is the list of rewrites:
+
+| Original | Transformation | Reason |
+| ------------- | ------------- | ------------- |
+| `x notEmpty` | `x isNotEmpty` | To be coherent with `isEmpty` |
+| `x notNil` | `x isNotNil` | To be coherent with `isNil` |
+| `x includesAnyOf: y` | `x includesAny: y` | Previous might be deprecated |
+| `x includesAllOf: y` | `x includesAll: y` | Previous is deprecated in P9 |
+| `x ifNotNilDo: y` | `x ifNotNil: y` | Missleading. `Do:` is usually for iterations |
+| `x ifNil: y ifNotNilDo: z` | `x ifNil: y ifNotNil: z` | Missleading. `Do:` is usually for iterations |
+| `x ifNotNilDo: y ifNil: z` | `x ifNotNil: y ifNil: z` | Missleading. `Do:` is usually for iterations |
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+```Smalltalk
+ifNotNil: aBlock
+	^ self isNil ifFalse: aBlock
+```
+
+into:
+
+```Smalltalk
+ifNotNil: aBlock
+	^ self ifNotNil: aBlock
+```
+
+*Warnings:*
+The only danger of this cleaning happens for projects working on multiple Smalltalks or is a project implements ont of those methods and do something else than the ones present in Pharo.
+
 ### Test case names
 
 Chanel rename each test case ending with `Tests` te end with `Test` since this is `a XXTestCase`.
