@@ -3,22 +3,6 @@ Description
 --------------------
 
 I am an abstract cleaner for cleanings using Pharo's parse tree rewriter to update the contents of some methods.
-
-Public API and Key Messages
---------------------
-
-- #
-- #
-- #
-
-Examples
---------------------
-
-	
- 
-Internal Representation and Key Implementation Points.
---------------------
-
 "
 Class {
 	#name : #ChanelMethodRewriterCleaner,
