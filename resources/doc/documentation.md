@@ -88,14 +88,14 @@ The danger of this cleaning happens on projects working in Pharo < 7. Some of th
 
 Channel do multiple cleanings in protocols. 
 
-* Channel ensures that some methods are in the right protocol. For example, `#initialize` should be in `#initialization`.
+**Channel ensures that some methods are in the right protocol. For example, `#initialize` should be in `#initialization`.**
 
 *Conditions for the cleanings to by applied:*
 - Cleaned methods should not be extensions.
 - Can be applied on instance and class side of traits and classes.
 - The method selector need to be present in  `ChanelProtocolsCleaner methodsInSpecificProtocolMap`.
 
-* Channel ensures that some test case methods are in the right protocol. For example, `#setUp` should be in `#running`.
+**Channel ensures that some test case methods are in the right protocol. For example, `#setUp` should be in `#running`.**
 
 *Conditions for the cleanings to by applied:*
 - Cleaned methods needs to be in a subclass of TestCase.
@@ -103,7 +103,7 @@ Channel do multiple cleanings in protocols.
 - Can be applied on instance and class side.
 - The method selector need to be present in  `ChanelProtocolsCleaner testMethodsInSpecificProtocolMap`.
 
-* Chanel ensure that tests are in a protocol starting with `test`.
+**Chanel ensure that tests are in a protocol starting with `test`.**
 
 *Conditions for the cleanings to by applied:*
 - Cleaned methods needs to be in a subclass of TestCase.
@@ -111,7 +111,7 @@ Channel do multiple cleanings in protocols.
 - The method should have no argument and start with `test` or `should`.
 - The protocol of the method does not start with `test`.
 
-* Chanel updates some protocols to follow convensions. For examplee it updates `#initialize-release` to `#initialize`. Find more in `ChanelProtocolsCleaner protocolsToCleanMap`.
+**Chanel updates some protocols to follow convensions. For examplee it updates `#initialize-release` to `#initialize`. Find more in `ChanelProtocolsCleaner protocolsToCleanMap`.**
 
 *Conditions for the cleanings to by applied:*
 - Cleaned methods should not be extensions.
