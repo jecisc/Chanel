@@ -2,19 +2,19 @@
 A ChanelConditionalSimplifierCleanerTest is a test class for testing the behavior of ChanelConditionalSimplifierCleaner
 "
 Class {
-	#name : #ChanelConditionalSimplifierCleanerTest,
+	#name : #ChanelNilConditionalSimplifierCleanerTest,
 	#superclass : #ChanelAbstractCleanerTest,
 	#category : #'Chanel-Tests'
 }
 
 { #category : #running }
-ChanelConditionalSimplifierCleanerTest >> setUp [
+ChanelNilConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultTestClass
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
+ChanelNilConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	| oldMethod |
 	class
 		compile:
@@ -35,7 +35,7 @@ ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfin
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
+ChanelNilConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
 	| oldMethod |
 	class
 		compile:
@@ -56,47 +56,77 @@ ChanelConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfin
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNilIfFalse [
+ChanelNilConditionalSimplifierCleanerTest >> testIfNilNil [
+	self assert: '10 ifNil: [ nil ]' isRewrittenAs: '10'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIfNilNil2 [
+	self assert: '10 ifNil: nil' isRewrittenAs: '10'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIfNilNilIfNotNil [
+	self assert: '10 ifNil: [ nil ] ifNotNil: #even' isRewrittenAs: '10 ifNotNil: #even'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIfNilNilIfNotNil2 [
+	self assert: '10 ifNil: nil ifNotNil: #even' isRewrittenAs: '10 ifNotNil: #even'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIfNotNilIfNilNil [
+	self assert: '10 ifNotNil: #even ifNil: [ nil ]' isRewrittenAs: '10 ifNotNil: #even'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIfNotNilIfNilNil2 [
+	self assert: '10 ifNotNil: #even ifNil: nil' isRewrittenAs: '10 ifNotNil: #even'
+]
+
+{ #category : #tests }
+ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalse [
 	self assert: '10 isNil ifFalse: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue [
 	self assert: '10 isNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNilIfTrue [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfTrue [
 	self assert: '10 isNil ifTrue: [ false ]' isRewrittenAs: '10 ifNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse [
 	self assert: '10 isNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ false ] ifNotNil: [ true ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfFalse [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalse [
 	self assert: '10 isNotNil ifFalse: [ false ]' isRewrittenAs: '10 ifNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue [
 	self assert: '10 isNotNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10 ifNil: [ false ] ifNotNil: [ true ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 	self assert: '10 isNotNil ifTrue: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
+ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
+ChanelNilConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
 	class
 		compile:
 			('{1}
@@ -115,7 +145,7 @@ ChanelConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testReplacementInTraits [
+ChanelNilConditionalSimplifierCleanerTest >> testReplacementInTraits [
 	| trait |
 	trait := self createDefaultTrait.
 
@@ -139,7 +169,7 @@ ChanelConditionalSimplifierCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
+ChanelNilConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
 	class class
 		compile:
 			('{1}
@@ -155,7 +185,7 @@ ChanelConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
 ]
 
 { #category : #tests }
-ChanelConditionalSimplifierCleanerTest >> testWithNothingToReplace [
+ChanelNilConditionalSimplifierCleanerTest >> testWithNothingToReplace [
 	| oldMethod |
 	class
 		compile:

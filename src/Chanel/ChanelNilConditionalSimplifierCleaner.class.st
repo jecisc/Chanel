@@ -22,24 +22,30 @@ x isNotNil ifFalse: y ifTrue: z 		==> x ifNil: y ifNotNil: z
 
 "
 Class {
-	#name : #ChanelConditionalSimplifierCleaner,
+	#name : #ChanelNilConditionalSimplifierCleaner,
 	#superclass : #ChanelAbstractCleaner,
 	#category : #Chanel
 }
 
 { #category : #accessing }
-ChanelConditionalSimplifierCleaner class >> priority [
+ChanelNilConditionalSimplifierCleaner class >> priority [
 	^ 3000
 ]
 
 { #category : #cleaning }
-ChanelConditionalSimplifierCleaner >> clean [
+ChanelNilConditionalSimplifierCleaner >> clean [
 	self rewriteMethodsOf: self configuration definedClasses with: self conditionalsRewriter
 ]
 
 { #category : #cleaning }
-ChanelConditionalSimplifierCleaner >> conditionalsRewriter [
+ChanelNilConditionalSimplifierCleaner >> conditionalsRewriter [
 	^ RBParseTreeRewriter new
+		replace: '`@receiver ifNil: [ nil ]' with: '`@receiver';
+		replace: '`@receiver ifNil: [ nil ] ifNotNil: `@arg' with: '`@receiver ifNotNil: `@arg';
+		replace: '`@receiver ifNotNil: `@arg ifNil: [ nil ]' with: '`@receiver ifNotNil: `@arg';
+		replace: '`@receiver ifNil: nil' with: '`@receiver';
+		replace: '`@receiver ifNil: nil ifNotNil: `@arg' with: '`@receiver ifNotNil: `@arg';
+		replace: '`@receiver ifNotNil: `@arg ifNil: nil' with: '`@receiver ifNotNil: `@arg';
 		replace: '`@receiver isNil ifTrue: `@arg' with: '`@receiver ifNil: `@arg';
 		replace: '`@receiver isNil ifFalse: `@arg' with: '`@receiver ifNotNil: `@arg';
 		replace: '`@receiver isNotNil ifTrue: `@arg' with: '`@receiver ifNotNil: `@arg';
