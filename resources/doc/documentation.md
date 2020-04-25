@@ -210,7 +210,7 @@ This cleaning should not have any counter indication.
 
 ### Ensure right super are call
 
-- Ensure `#setUp` in TestCases always begins by `super setUp` (move it if not the first messand sent)
+**Ensure `#setUp` in TestCases always begins by `super setUp` (move it if not the first messand sent)**
 
 *Conditions for the cleanings to by applied:*
 - The class needs to be a subclass of `TestCase`.
@@ -218,7 +218,7 @@ This cleaning should not have any counter indication.
 - The method needs to send at least one message. We consider that an empty `#setUp` method was created to prevent the execution of the method it overrides.
 - The first sent message needs to be different of `super setUp`.
 
-- Ensure `#tearDown` in TestCases always ends by `super tearDown` (move it if not the last messand sent)
+**Ensure `#tearDown` in TestCases always ends by `super tearDown` (move it if not the last messand sent)**
 
 *Conditions for the cleanings to by applied:*
 - The class needs to be a subclass of `TestCase`.
@@ -226,7 +226,7 @@ This cleaning should not have any counter indication.
 - The method needs to send at least one message. We consider that an empty `#tearDown` method was created to prevent the execution of the method it overrides.
 - The last sent message needs to be different of `super tearDown`.
 
-- Ensure `#initialize` on instance side always has `super initialize`
+**Ensure `#initialize` on instance side always has `super initialize`**
 
 *Conditions for the cleanings to by applied:*
 - Works on any class or trait.
