@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ChanelNilConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
-	class := self createDefaultTestClass
+	class := self createDefaultClass
 ]
 
 { #category : #tests }

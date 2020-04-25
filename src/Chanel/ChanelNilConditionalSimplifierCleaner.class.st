@@ -23,7 +23,7 @@ x isNotNil ifFalse: y ifTrue: z 		==> x ifNil: y ifNotNil: z
 "
 Class {
 	#name : #ChanelNilConditionalSimplifierCleaner,
-	#superclass : #ChanelAbstractCleaner,
+	#superclass : #ChanelMethodRewriterCleaner,
 	#category : #Chanel
 }
 
@@ -33,12 +33,7 @@ ChanelNilConditionalSimplifierCleaner class >> priority [
 ]
 
 { #category : #cleaning }
-ChanelNilConditionalSimplifierCleaner >> clean [
-	self rewriteMethodsOf: self configuration definedClasses with: self conditionalsRewriter
-]
-
-{ #category : #cleaning }
-ChanelNilConditionalSimplifierCleaner >> conditionalsRewriter [
+ChanelNilConditionalSimplifierCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver ifNil: [ nil ]' with: '`@receiver';
 		replace: '`@receiver ifNil: [ nil ] ifNotNil: `@arg' with: '`@receiver ifNotNil: `@arg';
