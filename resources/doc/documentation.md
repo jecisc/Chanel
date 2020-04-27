@@ -285,10 +285,21 @@ This cleaning should not have any counter indication.
 If a methods has an equivalent method of the same name in a super class, Chanel remove the method.
 
 *Conditions for the cleanings to by applied:*
-- Work only in instances and class side of classes. Does not work on traits.
+- Work only on instances and class side of classes. Does not work on traits.
 - The superclass of the method should not be nil.
 - The method should override another method in the hierarchy.
 - The overriden method as the same AST than the overriding method.
+
+*Warnings:*
+This cleaning should not have any counter indication.
+
+### Categorize unclassified methods
+
+Chanel try to use the system method categorizer to classify unclassified methods.
+
+*Conditions for the cleanings to by applied:*
+- Work on instances and class side of classes and traits.
+- The protocol of the method needs to by `as yet unclassified`.
 
 *Warnings:*
 This cleaning should not have any counter indication.
