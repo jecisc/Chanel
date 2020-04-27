@@ -46,7 +46,6 @@ Class {
 Chanel class >> logger [
 	^ Logger
 		ifNil: [ Logger := TinyLogger new
-				ensureTranscriptLogger;
 				ensureStdoutLogger;
 				ensureFileLoggerNamed: 'Chanel.log';
 				yourself ]
