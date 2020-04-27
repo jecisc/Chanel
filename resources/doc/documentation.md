@@ -279,3 +279,16 @@ If methods present on traits are duplicated in a classe using the trait, Chanel 
 
 *Warnings:*
 This cleaning should not have any counter indication.
+
+### Remove methods with equivalent in super classes.
+
+If a methods has an equivalent method of the same name in a super class, Chanel remove the method.
+
+*Conditions for the cleanings to by applied:*
+- Work only in instances and class side of classes. Does not work on traits.
+- The superclass of the method should not be nil.
+- The method should override another method in the hierarchy.
+- The overriden method as the same AST than the overriding method.
+
+*Warnings:*
+This cleaning should not have any counter indication.
