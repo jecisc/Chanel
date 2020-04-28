@@ -34,7 +34,8 @@ Class {
 	#name : #Chanel,
 	#superclass : #Object,
 	#instVars : [
-		'packages'
+		'packages',
+		'minimalPharoVersion'
 	],
 	#classVars : [
 		'Logger'
@@ -61,10 +62,11 @@ Chanel class >> openWorkspaceToCleanProject [
 	GTPlayground
 		openContents:
 			'projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
-Chanel perfume: packages'
+Chanel perfume: packages forPharo: minimalPharoVersion'
 ]
 
 { #category : #'world menu' }
@@ -72,24 +74,39 @@ Chanel class >> openWorkspaceToCleanProjectWithSomeCleaners [
 	GTPlayground
 		openContents:
 			('projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
-Chanel perfume: packages using: \{
-	{1}
-}' format: { '.
-	' join: (ChanelAbstractCleaner cleaners collect: #name) } )
+Chanel
+	perfume: packages
+	using: \{
+		{1}
+	}
+	forPharo: minimalPharoVersion' format: { '.
+		' join: (ChanelAbstractCleaner cleaners collect: #name) } )
 ]
 
 { #category : #cleaning }
 Chanel class >> perfume: aCollectionOfPackages [
-	^ self perfume: aCollectionOfPackages using: ChanelAbstractCleaner cleaners
+	^ self perfume: aCollectionOfPackages forPharo: Float infinity
+]
+
+{ #category : #cleaning }
+Chanel class >> perfume: aCollectionOfPackages forPharo: anInteger [
+	^ self perfume: aCollectionOfPackages using: ChanelAbstractCleaner cleaners forPharo: anInteger
 ]
 
 { #category : #cleaning }
 Chanel class >> perfume: aCollectionOfPackages using: aCollectionOfCleaners [
+	^ self perfume: aCollectionOfPackages using: aCollectionOfCleaners forPharo: Float infinity
+]
+
+{ #category : #cleaning }
+Chanel class >> perfume: aCollectionOfPackages using: aCollectionOfCleaners forPharo: anInteger [
 	^ self new
 		packages: aCollectionOfPackages;
+		minimalPharoVersion: anInteger;
 		cleanUsing: aCollectionOfCleaners
 ]
 
@@ -121,6 +138,11 @@ Chanel class >> worldMenuOn: aBuilder [
 
 { #category : #cleaning }
 Chanel >> cleanUsing: cleaners [
+	self cleanWithSelectedCleaners: (cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ])
+]
+
+{ #category : #cleaning }
+Chanel >> cleanWithSelectedCleaners: cleaners [
 	TinyCurrentLogger
 		value: self class logger
 		during: [ self
@@ -156,6 +178,21 @@ Chanel >> localMethods [
 { #category : #accessing }
 Chanel >> localMethodsWithoutExtensions [
 	^ self localMethods reject: #isExtension
+]
+
+{ #category : #accessing }
+Chanel >> minimalPharoVersion [
+	^ minimalPharoVersion
+]
+
+{ #category : #accessing }
+Chanel >> minimalPharoVersion: anObject [
+	minimalPharoVersion := anObject
+]
+
+{ #category : #accessing }
+Chanel >> packages [
+	^ packages
 ]
 
 { #category : #accessing }
