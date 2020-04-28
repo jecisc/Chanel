@@ -48,6 +48,11 @@ ChanelAbstractCleaner class >> isAbstract [
 	^ self = ChanelAbstractCleaner
 ]
 
+{ #category : #testing }
+ChanelAbstractCleaner class >> isAvailableForPharo: anInteger [
+	^ true
+]
+
 { #category : #accessing }
 ChanelAbstractCleaner class >> priority [
 	^ self subclassResponsibility
@@ -66,4 +71,9 @@ ChanelAbstractCleaner >> configuration [
 { #category : #accessing }
 ChanelAbstractCleaner >> configuration: anObject [
 	configuration := anObject
+]
+
+{ #category : #accessing }
+ChanelAbstractCleaner >> minimalPharoVersion [
+	^ self configuration minimalPharoVersion
 ]

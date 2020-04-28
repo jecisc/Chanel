@@ -54,6 +54,11 @@ ChanelTestEqualityCleanerTest >> testAssertIdenticalToFalse2 [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertIdenticalToNotReplacedForPharo6 [
+	self deny: 'self assert: 3 == 2' isRewrittenForPharo: 6
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testAssertIdenticalToTrue [
 	self assert: 'self assert: 3 == true' isRewrittenAs: 'self assert: 3'
 ]
@@ -79,6 +84,11 @@ ChanelTestEqualityCleanerTest >> testDenyEqualsFalse2 [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyEqualsNotReplacedForPharo6 [
+	self deny: 'self deny: 3 = 2' isRewrittenForPharo: 6
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyEqualsTrue [
 	self assert: 'self deny: 3 = true' isRewrittenAs: 'self deny: 3'
 ]
@@ -101,6 +111,11 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalToFalse [
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyIdenticalToFalse2 [
 	self assert: 'self deny: 3 identicalTo: false' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyIdenticalToNotReplacedForPharo6 [
+	self deny: 'self deny: 3 == 2' isRewrittenForPharo: 6
 ]
 
 { #category : #tests }

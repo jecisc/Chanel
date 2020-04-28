@@ -104,6 +104,23 @@ ChanelAbstractCleanerTest >> defaultTraitName [
 	^ ('T' , self defaultClassName) asSymbol
 ]
 
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> deny: original isRewrittenForPharo: anInteger [
+	| oldMethod |
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . original}).
+
+	oldMethod := class >> self selector.
+
+	self runCleanerForPharo: anInteger.
+
+	self assert: class >> self selector identicalTo: oldMethod
+]
+
 { #category : #running }
 ChanelAbstractCleanerTest >> extensionProtocol [
 	^ '*' , extensionPackage name
@@ -112,6 +129,11 @@ ChanelAbstractCleanerTest >> extensionProtocol [
 { #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
 	Chanel perfume: {package} using: {self actualClass}
+]
+
+{ #category : #running }
+ChanelAbstractCleanerTest >> runCleanerForPharo: anInteger [
+	Chanel perfume: {package} using: {self actualClass} forPharo: anInteger
 ]
 
 { #category : #running }
