@@ -62,10 +62,11 @@ Chanel class >> openWorkspaceToCleanProject [
 	GTPlayground
 		openContents:
 			'projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
-Chanel perfume: packages'
+Chanel perfume: packages forPharo: minimalPharoVersion'
 ]
 
 { #category : #'world menu' }
@@ -73,13 +74,17 @@ Chanel class >> openWorkspaceToCleanProjectWithSomeCleaners [
 	GTPlayground
 		openContents:
 			('projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
-Chanel perfume: packages using: \{
-	{1}
-}' format: { '.
-	' join: (ChanelAbstractCleaner cleaners collect: #name) } )
+Chanel
+	perfume: packages
+	using: \{
+		{1}
+	}
+	forPharo: minimalPharoVersion' format: { '.
+		' join: (ChanelAbstractCleaner cleaners collect: #name) } )
 ]
 
 { #category : #cleaning }
