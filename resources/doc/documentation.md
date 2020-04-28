@@ -314,3 +314,28 @@ Chanel try to use the system method categorizer to classify unclassified methods
 
 *Warnings:*
 This cleaning should not have any counter indication.
+
+
+### Empty assertions
+
+Chanel iterates on all the tests of the packages and clean empty assertions. 
+Here is the list of rewrites it will apply:
+
+| Original | Transformation |
+| ------------- | ------------- |
+| `x assert: y isEmpty` | `x assertEmpty: y` |
+| `x deny: y isEmpty` | `x denyEmpty: y` |
+| `x assert: y isNotEmpty` | `x denyEmpty: y` |
+| `x deny: y isNotEmpty` | `x assertEmpty: y` |
+
+`#assertEmpty:` and `denyEmpty:` were added in Pharo 8 and gives better descriptions in case of failure than simple asserts.
+
+*Conditions for the cleanings to by applied:*
+- Only subclasses of TestCase are cleaned.
+- Does not clean the traits in the packages.
+- A pattern from the list above match.
+- The minimal pharo version provided is supperior to 8.
+
+*Warnings:*
+The danger of this cleaning happens on projects working in Pharo < 8. Some of this new assertions were introduced in Pharo 8.
+You can precise the minimal Pharo version on which the project should run to avoid the application of those rules.
