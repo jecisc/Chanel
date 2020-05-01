@@ -282,10 +282,10 @@ This might remove methods that were intentionally created with the flaw for test
 
 ### Remove duplicated methods from traits 
 
-If methods present on traits are duplicated in a classe using the trait, Chanel removes the duplicated version.
+If methods present on traits are duplicated in a classe or a trait using the trait, Chanel removes the duplicated version.
 
 *Conditions for the cleanings to by applied:*
-- The class of the method needs to use at least on trait
+- The class or trait of the method needs to use at least on trait
 - The method should have another method in the trait composition with the same name and the same AST.
 
 *Warnings:*

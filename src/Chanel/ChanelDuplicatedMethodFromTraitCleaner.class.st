@@ -18,7 +18,6 @@ ChanelDuplicatedMethodFromTraitCleaner class >> priority [
 { #category : #cleaning }
 ChanelDuplicatedMethodFromTraitCleaner >> clean [
 	self configuration definedClasses iterator
-		| #isTrait rejectIt
 		| #hasTraitComposition selectIt
 		> #removeDuplicatedMethodsFromTrait doIt
 ]
