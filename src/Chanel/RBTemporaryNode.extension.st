@@ -1,6 +1,16 @@
 Extension { #name : #RBTemporaryNode }
 
 { #category : #'*Chanel' }
+RBTemporaryNode >> canBeUselessNode [
+	"This is an ugly hack.
+	Pharo AST has a bug to know if a temporary is a declaration or a usage. See https://github.com/pharo-project/pharo/issues/6277
+	
+	This hack checks if the temporary is directly in its parent statements since declarations are not in the statements. In that case it's a candidate for removal."
+
+	^ self parent statements includes: self
+]
+
+{ #category : #'*Chanel' }
 RBTemporaryNode >> declaringScope [
 	| ancestor |
 	ancestor := self parent.

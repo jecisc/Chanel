@@ -339,3 +339,34 @@ Here is the list of rewrites it will apply:
 *Warnings:*
 The danger of this cleaning happens on projects working in Pharo < 8. Some of this new assertions were introduced in Pharo 8.
 You can precise the minimal Pharo version on which the project should run to avoid the application of those rules.
+
+### Remove useless nodes from AST
+
+Chanel goes over all the methods in the system to remove some useless nodes.
+
+
+*Conditions for the cleanings to by applied:*
+
+A node can be useless if they are:
+- A literal
+- A block
+- A global
+- A temporary usage
+- An instance variable usage
+- An argument usage
+- A literal array
+- A dynamic array
+
+And if none of its ancestor in the ast are:
+- A return
+- A message 
+- A pragma
+- A dynamic array
+- A literal array
+- An assigment
+
+*Warnings:*
+This cleaner has multiple warnings:
+- This can remove literals that where here as a tag. They should be replaced by a pragma or a call to `Object>>#flag:`
+- Read accesses to instance variables are removed if they are not used. In some edge cases, those accesses can be to a slot with behavior in the read access. It should be rare, but this can change the behavior of the code.
+- Some dynamic arrays can be removed. In the array, message changing the state of the objects can be called. Removing them can change the behavior of the code. We still remove them because it is not a clean way to manage states changes.
