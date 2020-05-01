@@ -14,3 +14,8 @@ RBProgramNode >> isTempNamed: aSymbol [
 RBProgramNode >> nilAssignmentNodes [
 	^ self assignmentNodes select: [ :assignment | assignment value value isNil ]
 ]
+
+{ #category : #'*Chanel' }
+RBProgramNode >> removeFromTree [
+	self parent removeNode: self
+]
