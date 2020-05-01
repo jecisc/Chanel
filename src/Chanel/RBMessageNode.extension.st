@@ -1,6 +1,11 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Chanel' }
+RBMessageNode >> canHaveUselessChildren [
+	^ false
+]
+
+{ #category : #'*Chanel' }
 RBMessageNode >> isSelfSendTo: aSelector [
 	^ self isSelfSend and: [  self selector = aSelector ]
 ]
