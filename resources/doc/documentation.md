@@ -132,7 +132,7 @@ Channel do multiple cleanings in protocols.
 *Warnings:*
 This cleaning should not have any counter indication.
 
-### Conditional simplifications
+### Nil conditional simplifications
 
 Chanel simplifies conditionals. For example it will rewrite:
 
@@ -180,6 +180,55 @@ ifNotNil: aBlock
 
 *Warnings:*
 The only danger of this cleaning happens for projects working on multiple Smalltalks
+
+### Empty conditional simplifications
+
+Chanel simplifies empty conditionals. For example it will rewrite:
+
+| Original | Transformation |
+| ------------- | ------------- |
+| `x isEmpty ifTrue: y` | `x ifEmpty: y` |
+| `x isEmpty ifFalse: y` | `x ifNotEmpty: y` |
+| `x isEmpty ifTrue: y ifFalse: z` | `x ifEmpty: y ifNotEmpty: z` |
+| `x isEmpty ifFalse: y ifTrue: z` | `x ifEmpty: z ifNotEmpty: y` |
+| `x isNotEmpty ifTrue: y` | `x ifNotEmpty: y` |
+| `x isNotEmpty ifFalse: y` | `x ifEmpty: y` |
+| `x isNotEmpty ifTrue: y ifFalse: z` | `x ifEmpty: z ifNotEmpty: y` |
+| `x isNotEmpty ifFalse: y ifTrue: z` | `x ifEmpty: y ifNotEmpty: z` |
+| `x ifEmpty: [ true ] ifNotEmpty: [ false ]` | `x isEmpty` |
+| `x ifEmpty: [ false ] ifNotEmpty: [ true ]` | `x isNotEmpty` |
+| `x ifNotEmpty: [ false ] ifEmpty: [ true ]` | `x isEmpty` |
+| `x ifNotEmpty: [ true ] ifEmpty: [ false ]` | `x isNotEmpty` |
+| `x isEmpty ifTrue: [ true ] ifFalse: [ false ]` | `x isEmpty` |
+| `x isEmpty ifTrue: [ false ] ifFalse: [ true ]` | `x isNotEmpty` |
+| `x isEmpty ifFalse: [ false ] ifTrue: [ true ]` | `x isEmpty` |
+| `x isEmpty ifFalse: [ true ] ifTrue: [ false ]` | `x isNotEmpty` |
+| `x isNotEmpty ifTrue: [ true ] ifFalse: [ false ]` | `x isNotEmpty` |
+| `x isNotEmpty ifTrue: [ false ] ifFalse: [ true ]` | `x isEmpty` |
+| `x isNotEmpty ifFalse: [ false ] ifTrue: [ true ]` | `x isNotEmpty` |
+| `x isNotEmpty ifFalse: [ true ] ifTrue: [ false ]` | `x isEmpty` |
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+```Smalltalk
+ifEmpty:: aBlock
+	^ self isEmpty ifTrue: aBlock
+```
+
+into:
+
+```Smalltalk
+ifEmpty: aBlock
+	^ self ifEmpty: aBlock
+```
+
+*Warnings:*
+This cleaner might introduce problems in two cases:
+- You project works on multiple smalltalks with different APIs
+- You have your own objects implementing #isEmpty or #isNotEmpty but not the conditionals. 
 
 ### Methods with alias unification
 
