@@ -152,6 +152,14 @@ Chanel simplifies conditionals. For example it will rewrite:
 | `x ifNil: nil` | `x` |
 | `x ifNil: nil ifNotNil: y` | `x ifNotNil: y` |
 | `x ifNotNil: y ifNil: nil` | `x ifNotNil: y` |
+| `x isNil ifTrue: [ nil ] ifFalse: y` | `x ifNotNil: y` |
+| `x isNil ifTrue: nil ifFalse: y` | `x ifNotNil: y` |
+| `x isNil ifFalse: y ifTrue: [ nil ]` | `x ifNotNil: y` |
+| `x isNil ifFalse: y ifTrue: nil` | `x ifNotNil: y` |
+| `x isNotNil ifTrue: y ifFalse: [ nil ]` | `x ifNotNil: y` |
+| `x isNotNil ifTrue: y ifFalse: nil` | `x ifNotNil: y` |
+| `x isNotNil ifFalse: [ nil ] ifTrue: y ` | `x ifNotNil: y` |
+| `x isNotNil ifFalse: nil ifTrue: y` | `x ifNotNil: y` |
 
 *Conditions for the cleanings to by applied:*
 - Can be applied on any classes and traits.
