@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 ChanelDuplicatedMethodFromTraitCleaner class >> priority [
-	^ 9000
+	^ 100
 ]
 
 { #category : #cleaning }

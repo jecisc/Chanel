@@ -83,8 +83,10 @@ Chanel
 	using: \{
 		{1}
 	}
-	forPharo: minimalPharoVersion' format: { '.
-		' join: (ChanelAbstractCleaner cleaners collect: #name) } )
+	forPharo: minimalPharoVersion'
+				format:
+					{('.
+		' join: ((ChanelAbstractCleaner cleaners sort: #priority ascending) collect: #name))})
 ]
 
 { #category : #cleaning }
@@ -138,7 +140,7 @@ Chanel class >> worldMenuOn: aBuilder [
 
 { #category : #cleaning }
 Chanel >> cleanUsing: cleaners [
-	self cleanWithSelectedCleaners: (cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ])
+	self cleanWithSelectedCleaners: ((cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ]) sort: #priority ascending)
 ]
 
 { #category : #cleaning }
