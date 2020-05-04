@@ -33,7 +33,7 @@ Class {
 
 { #category : #'instance creation' }
 ChanelAbstractCleaner class >> cleaners [
-	^ (self allSubclasses reject: #isAbstract) sort: #priority ascending
+	^ self allSubclasses reject: #isAbstract
 ]
 
 { #category : #accessing }

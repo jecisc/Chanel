@@ -20,7 +20,6 @@ Chanel perfume: packages using: { ChanelTestEqualityCleaner . ChanelProtocolsCl
 ```
 
 You can find the full list of cleaners running `ChanelAbstractCleaner cleaners asArray`.
-It is advised to keep the cleaner in the given order of this snippet since some of them needs to run before the others.
 
 A last parameter interesting to configure is the minimal Pharo version on which the project should work.
 *Chanel* contains cleaners that are using methods introduced only recent versions of Pharo. 
