@@ -80,7 +80,7 @@ packages := ((IceRepository registry select: [ :e | e name = projectName ]) flat
 
 Chanel
 	perfume: packages
-	using: \{
+	using: {
 		' , ('.
 		' join: ((ChanelAbstractCleaner cleaners sort: #priority ascending) collect: #name)) , '
 	}
