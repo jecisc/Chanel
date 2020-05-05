@@ -11,6 +11,26 @@ ChanelCleanersOrderTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeEmptyAssertions [
+	"The alias cleaner needs to run before the empty assertions cleaner."
+	
+	class := self createDefaultTestClass.
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self assert: #() notEmpty'}).
+
+	Chanel perfume: {package} using: {ChanelTestEmptyAssertionsCleaner . ChanelMethodAliasesCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self denyEmpty: #()'})
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeEmptyConditionals [
 	"The alias cleaner needs to run before the empty conditionals cleaner."
 
