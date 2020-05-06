@@ -35,24 +35,6 @@ ChanelNilConditionalSimplifierCleaner class >> priority [
 { #category : #cleaning }
 ChanelNilConditionalSimplifierCleaner >> rewriter [
 	^ RBParseTreeRewriter new
-		replace: '`@receiver ifNil: [ nil ]' with: '`@receiver';
-		replace: '`@receiver ifNil: [ nil ] ifNotNil: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver ifNotNil: `@arg ifNil: [ nil ]' with: '`@receiver ifNotNil: `@arg';
-
-		replace: '`@receiver ifNil: nil' with: '`@receiver';
-		replace: '`@receiver ifNil: nil ifNotNil: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver ifNotNil: `@arg ifNil: nil' with: '`@receiver ifNotNil: `@arg';
-		
-		replace: '`@receiver isNil ifTrue: [ nil ] ifFalse: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNil ifTrue: nil ifFalse: `@arg' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNil ifFalse: `@arg ifTrue: [ nil ]' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNil ifFalse: `@arg ifTrue: nil' with: '`@receiver ifNotNil: `@arg';
-		
-		replace: '`@receiver isNotNil ifTrue: `@arg ifFalse: [ nil ]' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifTrue: `@arg ifFalse: nil' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifFalse: [ nil ] ifTrue: `@arg ' with: '`@receiver ifNotNil: `@arg';
-		replace: '`@receiver isNotNil ifFalse: nil ifTrue: `@arg' with: '`@receiver ifNotNil: `@arg';
-		
 		replace: '`@receiver isNil ifTrue: `@arg' with: '`@receiver ifNil: `@arg';
 		replace: '`@receiver isNil ifFalse: `@arg' with: '`@receiver ifNotNil: `@arg';
 		replace: '`@receiver isNotNil ifTrue: `@arg' with: '`@receiver ifNotNil: `@arg';

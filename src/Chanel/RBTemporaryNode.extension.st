@@ -22,7 +22,9 @@ RBTemporaryNode >> declaringScope [
 RBTemporaryNode >> inlineAssignment [
 	"Replace the assignment in which I am by its value without the assignation to the temporary."
 
-	self parent replaceWith: self parent value
+	self parent isAssignment
+		ifTrue: [ self parent replaceWith: self parent value ]
+		ifFalse: [ "This might happen for dead temporaries. See testRemoveTemporary2." self removeFromTree ]
 ]
 
 { #category : #'*Chanel' }

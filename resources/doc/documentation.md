@@ -145,20 +145,6 @@ Chanel simplifies conditionals. For example it will rewrite:
 | `x isNil ifFalse: y ifTrue: z` | `x ifNil: z ifNotNil: y` |
 | `x isNotNil ifTrue: y ifFalse: z` | `x ifNil: z ifNotNil: y` |
 | `x isNotNil ifFalse: y ifTrue: z` | `x ifNil: y ifNotNil: z` |
-| `x ifNil: [ nil ]` | `x` |
-| `x ifNil: [ nil ] ifNotNil: y` | `x ifNotNil: y` |
-| `x ifNotNil: y ifNil: [ nil ]` | `x ifNotNil: y` |
-| `x ifNil: nil` | `x` |
-| `x ifNil: nil ifNotNil: y` | `x ifNotNil: y` |
-| `x ifNotNil: y ifNil: nil` | `x ifNotNil: y` |
-| `x isNil ifTrue: [ nil ] ifFalse: y` | `x ifNotNil: y` |
-| `x isNil ifTrue: nil ifFalse: y` | `x ifNotNil: y` |
-| `x isNil ifFalse: y ifTrue: [ nil ]` | `x ifNotNil: y` |
-| `x isNil ifFalse: y ifTrue: nil` | `x ifNotNil: y` |
-| `x isNotNil ifTrue: y ifFalse: [ nil ]` | `x ifNotNil: y` |
-| `x isNotNil ifTrue: y ifFalse: nil` | `x ifNotNil: y` |
-| `x isNotNil ifFalse: [ nil ] ifTrue: y ` | `x ifNotNil: y` |
-| `x isNotNil ifFalse: nil ifTrue: y` | `x ifNotNil: y` |
 
 *Conditions for the cleanings to by applied:*
 - Can be applied on any classes and traits.
@@ -228,6 +214,35 @@ ifEmpty: aBlock
 This cleaner might introduce problems in two cases:
 - You project works on multiple smalltalks with different APIs
 - You have your own objects implementing #isEmpty or #isNotEmpty but not the conditionals. 
+
+### Cut conditionals branches
+
+Chanel simplifies some conditionals by cutting branches. For example it will rewrite:
+
+| Original | Transformation |
+| ------------- | ------------- |
+| `x ifNil: [ nil ]` | `x` |
+| `x ifNil: [ nil ] ifNotNil: y` | `x ifNotNil: y` |
+| `x ifNotNil: y ifNil: [ nil ]` | `x ifNotNil: y` |
+| `x ifNil: nil` | `x` |
+| `x ifNil: nil ifNotNil: y` | `x ifNotNil: y` |
+| `x ifNotNil: y ifNil: nil` | `x ifNotNil: y` |
+| `x ifTrue: [ true ] ifFalse: [ false ]` | `x` |
+| `x ifTrue: [ false ] ifFalse: [ true ]` | `x not` |
+| `x ifFalse: [ false ] ifTrue: [ true ]` | `x` |
+| `x ifFalse: [ true ] ifTrue: [ false ]` | `x not` |
+| `x ifNotNil: [ x ]` | `x` |
+| `x ifNotNil: [ x ] ifNil: y` | `x ifNil: y` |
+| `x ifNil: y ifNotNil: [ x ]` | `x ifNil: y` |
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+*Warnings:*
+The only danger of this cleaning happens for projects working on multiple Smalltalks
+
 
 ### Methods with alias unification
 

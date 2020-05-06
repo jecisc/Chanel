@@ -67,6 +67,64 @@ ChanelCleanersOrderTest >> testAliasBeforeNilConditionals [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBranches [
+	"The alias cleaner needs to run before the nil conditionals cleaner which need to run before the cut conditional branches."
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '10 notNil ifFalse: [ nil ]'}).
+
+	Chanel perfume: {package} using: {ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner . ChanelMethodAliasesCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10'})
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBranches2 [
+	"The alias cleaner needs to run before the nil conditionals cleaner which need to run before the cut conditional branches."
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '10 notNil ifFalse: nil'}).
+
+	Chanel perfume: {package} using: {ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner . ChanelMethodAliasesCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10'})
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBranchesBeforeUnreadTemporaries [
+	"The alias cleaner needs to run before the nil conditionals cleaner which need to run before the cut conditional branches which needs to run before the remove unused temporaries."
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '| x |
+  x := self patate.
+  x notNil ifFalse: [ nil ].
+  ^3'}).
+
+	Chanel perfume: {package} using: {ChanelNilConditionalSimplifierCleaner . ChanelUnreadTemporaryCleaner .ChanelCutConditionalBranchesCleaner . ChanelMethodAliasesCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self patate.
+  ^3'})
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testUnreadTemporariesBeforeUselessASTNodes [
 	"The cleaner removing the useless AST nodes need to run after the cleaner removing unread temporaries because it will remove more nodes that way."
 
