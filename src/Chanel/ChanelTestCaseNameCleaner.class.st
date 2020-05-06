@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 ChanelTestCaseNameCleaner class >> priority [
-	^ 4000
+	^ 4500
 ]
 
 { #category : #cleaning }

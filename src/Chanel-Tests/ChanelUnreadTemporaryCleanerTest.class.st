@@ -128,6 +128,26 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
 ]
 
 { #category : #tests }
+ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary2 [
+	class
+		compile:
+			'testMethod
+  | test |
+  test := self toto.
+  test.
+  ^#one'.
+
+	self runCleaner.
+
+	self
+		assert: (class >> #testMethod) sourceCode
+		equals:
+			'testMethod
+  self toto.
+  ^#one'
+]
+
+{ #category : #tests }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScope [
 	class
 		compile:

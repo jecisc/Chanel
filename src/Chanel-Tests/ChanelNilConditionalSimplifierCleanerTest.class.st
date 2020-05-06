@@ -56,36 +56,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnIn
 ]
 
 { #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNilNil [
-	self assert: '10 ifNil: [ nil ]' isRewrittenAs: '10'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNilNil2 [
-	self assert: '10 ifNil: nil' isRewrittenAs: '10'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNilNilIfNotNil [
-	self assert: '10 ifNil: [ nil ] ifNotNil: #even' isRewrittenAs: '10 ifNotNil: #even'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNilNilIfNotNil2 [
-	self assert: '10 ifNil: nil ifNotNil: #even' isRewrittenAs: '10 ifNotNil: #even'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNotNilIfNilNil [
-	self assert: '10 ifNotNil: #even ifNil: [ nil ]' isRewrittenAs: '10 ifNotNil: #even'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIfNotNilIfNilNil2 [
-	self assert: '10 ifNotNil: #even ifNil: nil' isRewrittenAs: '10 ifNotNil: #even'
-]
-
-{ #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalse [
 	self assert: '10 isNil ifFalse: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
@@ -93,16 +63,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalse [
 { #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue [
 	self assert: '10 isNil ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue2 [
-	self assert: '10 isNil ifFalse: [ false ] ifTrue: [ nil ]' isRewrittenAs: '10 ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfFalseIfTrue3 [
-	self assert: '10 isNil ifFalse: [ false ] ifTrue: nil' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
@@ -116,16 +76,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse [
 ]
 
 { #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse2 [
-	self assert: '10 isNil ifTrue: [ nil ] ifFalse: [ true ]' isRewrittenAs: '10 ifNotNil: [ true ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNilIfTrueIfFalse3 [
-	self assert: '10 isNil ifTrue: nil ifFalse: [ true ]' isRewrittenAs: '10 ifNotNil: [ true ]'
-]
-
-{ #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalse [
 	self assert: '10 isNotNil ifFalse: [ false ]' isRewrittenAs: '10 ifNil: [ false ]'
 ]
@@ -136,16 +86,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue [
 ]
 
 { #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue2 [
-	self assert: '10 isNotNil ifFalse: [ nil ] ifTrue: [ true ]' isRewrittenAs: '10 ifNotNil: [ true ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfFalseIfTrue3 [
-	self assert: '10 isNotNil ifFalse: nil ifTrue: [ true ]' isRewrittenAs: '10 ifNotNil: [ true ]'
-]
-
-{ #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 	self assert: '10 isNotNil ifTrue: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
@@ -153,16 +93,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 { #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse2 [
-	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ nil ]' isRewrittenAs: '10 ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse3 [
-	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: nil' isRewrittenAs: '10 ifNotNil: [ false ]'
 ]
 
 { #category : #tests }
