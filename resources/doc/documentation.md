@@ -441,3 +441,31 @@ This cleaner has multiple warnings:
 - This can remove literals that where here as a tag. They should be replaced by a pragma or a call to `Object>>#flag:`
 - Read accesses to instance variables are removed if they are not used. In some edge cases, those accesses can be to a slot with behavior in the read access. It should be rare, but this can change the behavior of the code.
 - Some dynamic arrays can be removed. In the array, message changing the state of the objects can be called. Removing them can change the behavior of the code. We still remove them because it is not a clean way to manage states changes.
+
+### Remove unecessary assignments
+
+Chanels removes assigments to itself. For example it will rewrite:
+
+```Smalltalk
+test
+	| toto |
+	toto := 2.
+	toto := toto.
+	^ toto
+```
+
+To
+
+```Smalltalk
+test
+	| toto |
+	toto := 2.
+	^ toto
+```
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+
+*Warnings:*
+This cleaning should not have any counter indication.
