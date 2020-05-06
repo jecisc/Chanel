@@ -469,3 +469,36 @@ test
 
 *Warnings:*
 This cleaning should not have any counter indication.
+
+### Nil equality cleaner
+
+
+Chanel replace of nil equality by #isNil or #isNotNil. Here is the list of rewrites:
+
+| Original | Transformation | Reason |
+| ------------- | ------------- | ------------- |
+| `x = nil` | `x isNil` |
+| `x == nil` | `x isNil` |
+| `x ~= nil` | `x isNotNil` |
+| `x ~~ nil` | `x isNotNil` |
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+```Smalltalk
+isNil
+  ^ self = nil
+```
+
+into:
+
+```Smalltalk
+isNil
+  ^ self isNil
+```
+
+*Warnings:*
+The only danger of this cleaning happens for projects working on multiple Smalltalks or is a project implements ont of those methods and do something else than the ones present in Pharo.
+

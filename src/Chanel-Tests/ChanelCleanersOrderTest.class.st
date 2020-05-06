@@ -125,6 +125,42 @@ ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBra
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testNilEqualityBeforeNilConditionals [
+	"The alias cleaner needs to run before the nil conditionals cleaner."
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '(10 ~= nil) ifTrue: [ 1 ]'}).
+
+	Chanel perfume: {package} using: {ChanelNilConditionalSimplifierCleaner . ChanelNilEqualitySimplifierCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10 ifNotNil: [ 1 ]'})
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testNilEqualityBeforeNilConditionalsBeforeCutConditionalBranches [
+	"The nil equality cleaner needs to run before the nil conditionals cleaner which need to run before the cut conditional branches."
+
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . '(10 ~= nil) ifFalse: [ nil ]'}).
+
+	Chanel perfume: {package} using: {ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner . ChanelNilEqualitySimplifierCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . '10'})
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testUnreadTemporariesBeforeUselessASTNodes [
 	"The cleaner removing the useless AST nodes need to run after the cleaner removing unread temporaries because it will remove more nodes that way."
 
