@@ -234,6 +234,7 @@ Chanel simplifies some conditionals by cutting branches. For example it will rew
 | `x ifNotNil: [ x ]` | `x` |
 | `x ifNotNil: [ x ] ifNil: y` | `x ifNil: y` |
 | `x ifNil: y ifNotNil: [ x ]` | `x ifNil: y` |
+| `x ifEmpty: [ y ] ifNotEmpty: [ x ]` | `x ifEmpty: [ y ]` |
 
 *Conditions for the cleanings to by applied:*
 - Can be applied on any classes and traits.

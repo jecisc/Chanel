@@ -35,6 +35,11 @@ ChanelCutConditionalBranchesCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfi
 ]
 
 { #category : #tests }
+ChanelCutConditionalBranchesCleanerTest >> testIfEmptyIfNotEmpty [
+	self assert: 'self toto ifEmpty: [ false ] ifNotEmpty: [ self toto ]' isRewrittenAs: 'self toto ifEmpty: [ false ]'
+]
+
+{ #category : #tests }
 ChanelCutConditionalBranchesCleanerTest >> testIfFalseIfTrue [
 	self assert: 'true ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: 'true'
 ]

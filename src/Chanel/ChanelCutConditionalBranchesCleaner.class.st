@@ -34,5 +34,7 @@ ChanelCutConditionalBranchesCleaner >> rewriter [
 		replace: '`@receiver ifNotNil: [ `@receiver ]' with: '`@receiver';
 		replace: '`@receiver ifNotNil: [ `@receiver ] ifNil: `@arg' with: '`@receiver ifNil: `@arg';
 		replace: '`@receiver ifNil: `@arg ifNotNil: [ `@receiver ]' with: '`@receiver ifNil: `@arg';
+		
+		replace: '`@receiver ifEmpty: `@arg ifNotEmpty: [ `@receiver ]' with: '`@receiver ifEmpty: `@arg';
 		yourself
 ]
