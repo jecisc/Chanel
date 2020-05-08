@@ -104,27 +104,3 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
 ]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]

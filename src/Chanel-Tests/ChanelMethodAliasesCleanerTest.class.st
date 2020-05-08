@@ -88,30 +88,6 @@ ChanelMethodAliasesCleanerTest >> testNotNil [
 ]
 
 { #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
 ChanelMethodAliasesCleanerTest >> testincludesAllOf [
 	self assert: '#() includesAllOf: #()' isRewrittenAs: '#() includesAll: #()'
 ]

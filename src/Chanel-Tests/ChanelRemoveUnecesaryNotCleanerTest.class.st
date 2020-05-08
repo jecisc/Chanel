@@ -143,30 +143,6 @@ ChanelRemoveUnecesaryNotCleanerTest >> testRejectNotDoesNotRemoveIntermediateSta
 ]
 
 { #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testSelectNot [
 	self assert: '#() select: [:e | e odd not ]' isRewrittenAs: '#() reject: [:e |  e odd ]'
 ]

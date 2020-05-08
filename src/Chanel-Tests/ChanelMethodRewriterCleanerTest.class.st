@@ -35,6 +35,18 @@ ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected in: 
   {2}' format: {self selector . expected})
 ]
 
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> assertReplacementIn: aSelector wasDoneIn: trait [
+	self
+		assert: (trait >> aSelector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {aSelector . self replacementPair value}).
+
+	self assert: (trait localSelectors includes: aSelector).
+	self deny: (class localSelectors includes: aSelector)
+]
+
 { #category : #helpers }
 ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger [
 	| oldMethod |
@@ -74,9 +86,28 @@ ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
 	self assert: class >> self selector identicalTo: oldMethod
 ]
 
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> denyReplacementIn: aSelector wasDoneIn: trait [
+	self
+		assert: (trait >> aSelector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . self replacementPair key}).
+
+	self assert: (trait localSelectors includes: self selector).
+	self deny: (class localSelectors includes: self selector)
+]
+
 { #category : #helpers }
 ChanelMethodRewriterCleanerTest >> expressionWithNoReplacement [
 	^ self subclassResponsibility
+]
+
+{ #category : #helpers }
+ChanelMethodRewriterCleanerTest >> replaceInTraits [
+	"Override and return false if the cleaner should not do the replacements in traits."
+
+	^ true
 ]
 
 { #category : #helpers }
@@ -103,6 +134,25 @@ ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
   {2}' format: {self selector . self replacementPair value}).
 
 	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]
+
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> testReplacementInTraits [
+	| trait |
+	trait := self createDefaultTrait.
+
+	class setTraitComposition: trait.
+
+	trait
+		compile:
+			('{1}
+  {2}' format: {self selector . self replacementPair key}).
+
+	self runCleaner.
+
+	self replaceInTraits
+		ifTrue: [ self assertReplacementIn: self selector wasDoneIn: trait ]
+		ifFalse: [ self denyReplacementIn: self selector wasDoneIn: trait ]
 ]
 
 { #category : #tests }

@@ -63,27 +63,3 @@ ChanelNilEqualitySimplifierCleanerTest >> testNotEqualsNil [
 ChanelNilEqualitySimplifierCleanerTest >> testNotIdenticalToNil [
 	self assert: '10 ~~ nil' isRewrittenAs: '10 isNotNil'
 ]
-
-{ #category : #tests }
-ChanelNilEqualitySimplifierCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 = nil'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 isNil'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]

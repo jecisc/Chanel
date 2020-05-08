@@ -34,30 +34,6 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testRemoveUnecessaryAssigmentIn
 ]
 
 { #category : #tests }
-ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'test := test'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . ''}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testWithNothingToReplace2 [
 	self denyIsRewritten: 'test := 3'
 ]

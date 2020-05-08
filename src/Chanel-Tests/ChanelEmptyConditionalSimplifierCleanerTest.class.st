@@ -164,27 +164,3 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse2 [
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse3 [
 	self assert: '#() isNotEmpty ifTrue: [ true ] ifFalse: [ false ]' isRewrittenAs: '#() isNotEmpty'
 ]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]

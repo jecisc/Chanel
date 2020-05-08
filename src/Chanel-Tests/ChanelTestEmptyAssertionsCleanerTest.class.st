@@ -13,6 +13,11 @@ ChanelTestEmptyAssertionsCleanerTest >> expressionWithNoReplacement [
 ]
 
 { #category : #helpers }
+ChanelTestEmptyAssertionsCleanerTest >> replaceInTraits [
+	^ false
+]
+
+{ #category : #helpers }
 ChanelTestEmptyAssertionsCleanerTest >> replacementPair [
 	^ 'self assert: #() isEmpty' -> 'self assertEmpty: #()'
 ]
@@ -61,30 +66,6 @@ ChanelTestEmptyAssertionsCleanerTest >> testDenyEmpty2NotReplacedForPharo7 [
 { #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testDenyEmptyNotReplacedForPharo7 [
 	self deny: 'self deny: #() isEmpty' isRewrittenForPharo: 7
-]
-
-{ #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testDoesNotReplaceInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
 ]
 
 { #category : #tests }

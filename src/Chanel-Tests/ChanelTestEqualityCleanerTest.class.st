@@ -13,6 +13,11 @@ ChanelTestEqualityCleanerTest >> expressionWithNoReplacement [
 ]
 
 { #category : #helpers }
+ChanelTestEqualityCleanerTest >> replaceInTraits [
+	^ false
+]
+
+{ #category : #helpers }
 ChanelTestEqualityCleanerTest >> replacementPair [
 	^ 'self assert: 3 = 2' -> 'self assert: 3 equals: 2'
 ]
@@ -136,30 +141,6 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue [
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue2 [
 	self assert: 'self deny: 3 identicalTo: true' isRewrittenAs: 'self deny: 3'
-]
-
-{ #category : #tests }
-ChanelTestEqualityCleanerTest >> testDoesNotReplaceInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 = 2'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 = 2'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
 ]
 
 { #category : #tests }
