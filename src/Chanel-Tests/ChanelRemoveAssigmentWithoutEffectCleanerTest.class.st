@@ -68,18 +68,7 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'test := test'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . ''})
+	self assertClassSide: 'test := test' isRewrittenAs: ''
 ]
 
 { #category : #tests }

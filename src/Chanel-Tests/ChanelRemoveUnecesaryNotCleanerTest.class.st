@@ -177,18 +177,7 @@ ChanelRemoveUnecesaryNotCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'})
+	self assertClassSide: 'true not' isRewrittenAs: 'false'
 ]
 
 { #category : #tests }

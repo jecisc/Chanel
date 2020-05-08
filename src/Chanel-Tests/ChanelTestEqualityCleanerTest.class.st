@@ -173,18 +173,7 @@ ChanelTestEqualityCleanerTest >> testDoesNotReplaceInTraits [
 
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 = 2'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 equals: 2'})
+	self assertClassSide: 'self assert: 3 = 2' isRewrittenAs: 'self assert: 3 equals: 2'
 ]
 
 { #category : #tests }

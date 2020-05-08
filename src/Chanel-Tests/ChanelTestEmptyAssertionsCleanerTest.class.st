@@ -98,18 +98,7 @@ ChanelTestEmptyAssertionsCleanerTest >> testDoesNotReplaceInTraits [
 
 { #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assertEmpty: #()'})
+	self assertClassSide: 'self assert: #() isEmpty' isRewrittenAs: 'self assertEmpty: #()'
 ]
 
 { #category : #tests }

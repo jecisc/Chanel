@@ -16,7 +16,12 @@ ChanelMethodRewriterCleanerTest class >> isAbstract [
 ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected [
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
 
-	class
+	self assert: original isRewrittenAs: expected in: class
+]
+
+{ #category : #helpers }
+ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected in: aClass [
+	aClass
 		compile:
 			('{1}
   {2}' format: {self selector . original}).
@@ -24,10 +29,17 @@ ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected [
 	self runCleaner.
 
 	self
-		assert: (class >> self selector) sourceCode
+		assert: (aClass >> self selector) sourceCode
 		equals:
 			('{1}
   {2}' format: {self selector . expected})
+]
+
+{ #category : #helpers }
+ChanelMethodRewriterCleanerTest >> assertClassSide: original isRewrittenAs: expected [
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	self assert: original isRewrittenAs: expected in: class class
 ]
 
 { #category : #helpers }

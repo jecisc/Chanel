@@ -122,18 +122,7 @@ ChanelMethodAliasesCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelMethodAliasesCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'})
+	self assertClassSide: '#() notEmpty' isRewrittenAs: '#() isNotEmpty'
 ]
 
 { #category : #tests }

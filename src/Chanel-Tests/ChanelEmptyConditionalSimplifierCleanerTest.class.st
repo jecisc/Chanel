@@ -200,18 +200,7 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'})
+	self assertClassSide: '#() isEmpty ifTrue: [ false ]' isRewrittenAs: '#() ifEmpty: [ false ]'
 ]
 
 { #category : #tests }

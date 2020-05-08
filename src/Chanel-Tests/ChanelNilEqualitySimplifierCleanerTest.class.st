@@ -99,18 +99,7 @@ ChanelNilEqualitySimplifierCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelNilEqualitySimplifierCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 = nil'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 isNil'})
+	self assertClassSide: '10 = nil' isRewrittenAs: '10 isNil'
 ]
 
 { #category : #tests }

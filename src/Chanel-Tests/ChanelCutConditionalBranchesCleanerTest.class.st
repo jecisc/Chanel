@@ -149,18 +149,7 @@ ChanelCutConditionalBranchesCleanerTest >> testReplacementInTraits [
 
 { #category : #tests }
 ChanelCutConditionalBranchesCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 ifNil: [ nil ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10'})
+	self assertClassSide: '10 ifNil: [ nil ]' isRewrittenAs: '10'
 ]
 
 { #category : #tests }
