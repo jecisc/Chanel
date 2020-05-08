@@ -4,6 +4,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelMethodAliasesCleanerTest >> replacementPair [
+	^ '#() notEmpty' -> '#() isNotEmpty'
+]
+
 { #category : #running }
 ChanelMethodAliasesCleanerTest >> setUp [
 	super setUp.
@@ -75,25 +80,6 @@ ChanelMethodAliasesCleanerTest >> testNotEmpty [
 { #category : #tests }
 ChanelMethodAliasesCleanerTest >> testNotNil [
 	self assert: 'nil notNil' isRewrittenAs: 'nil isNotNil'
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

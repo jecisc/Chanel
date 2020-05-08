@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelEmptyConditionalSimplifierCleanerTest >> replacementPair [
+	^ '#() isEmpty ifTrue: [ false ]' -> '#() ifEmpty: [ false ]'
+]
+
 { #category : #running }
 ChanelEmptyConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
@@ -153,25 +158,6 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse2 [
 { #category : #tests }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse3 [
 	self assert: '#() isNotEmpty ifTrue: [ true ] ifFalse: [ false ]' isRewrittenAs: '#() isNotEmpty'
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

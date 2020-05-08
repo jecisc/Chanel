@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelCutConditionalBranchesCleanerTest >> replacementPair [
+	^ '10 ifNil: [ nil ]' -> '10'
+]
+
 { #category : #running }
 ChanelCutConditionalBranchesCleanerTest >> setUp [
 	super setUp.
@@ -102,25 +107,6 @@ ChanelCutConditionalBranchesCleanerTest >> testIfTrueIfFalse [
 { #category : #tests }
 ChanelCutConditionalBranchesCleanerTest >> testIfTrueIfFalse2 [
 	self assert: 'true ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: 'true not'
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 ifNil: [ nil ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

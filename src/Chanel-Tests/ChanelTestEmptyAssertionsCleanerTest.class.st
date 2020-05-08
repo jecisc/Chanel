@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelTestEmptyAssertionsCleanerTest >> replacementPair [
+	^ 'self assert: #() isEmpty' -> 'self assertEmpty: #()'
+]
+
 { #category : #running }
 ChanelTestEmptyAssertionsCleanerTest >> setUp [
 	super setUp.
@@ -51,25 +56,6 @@ ChanelTestEmptyAssertionsCleanerTest >> testDenyEmpty2NotReplacedForPharo7 [
 { #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testDenyEmptyNotReplacedForPharo7 [
 	self deny: 'self deny: #() isEmpty' isRewrittenForPharo: 7
-]
-
-{ #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assertEmpty: #()'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

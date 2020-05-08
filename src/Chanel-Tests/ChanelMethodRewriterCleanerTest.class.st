@@ -80,3 +80,29 @@ ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
 
 	self assert: class >> self selector identicalTo: oldMethod
 ]
+
+{ #category : #helpers }
+ChanelMethodRewriterCleanerTest >> replacementPair [
+	"Should return an association of a replacement the cleaner should be able to do."
+
+	^ self subclassResponsibility
+]
+
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . self replacementPair key})
+		classified: self extensionProtocol.
+
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . self replacementPair value}).
+
+	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]

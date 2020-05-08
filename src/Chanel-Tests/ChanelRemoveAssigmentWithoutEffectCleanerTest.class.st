@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelRemoveAssigmentWithoutEffectCleanerTest >> replacementPair [
+	 ^ 'test := test' -> ''
+]
+
 { #category : #running }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> setUp [
 	super setUp.
@@ -21,25 +26,6 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testRemoveUnecessaryAssigment [
 { #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testRemoveUnecessaryAssigmentInDeeperScope [
 	self assert: 'true ifTrue: [ test := test ]' isRewrittenAs: 'true ifTrue: [  ]'
-]
-
-{ #category : #tests }
-ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'test := test'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . ''}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

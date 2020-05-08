@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelNilEqualitySimplifierCleanerTest >> replacementPair [
+	^ '10 = nil' -> '10 isNil'
+]
+
 { #category : #running }
 ChanelNilEqualitySimplifierCleanerTest >> setUp [
 	super setUp.
@@ -52,25 +57,6 @@ ChanelNilEqualitySimplifierCleanerTest >> testNotEqualsNil [
 { #category : #tests }
 ChanelNilEqualitySimplifierCleanerTest >> testNotIdenticalToNil [
 	self assert: '10 ~~ nil' isRewrittenAs: '10 isNotNil'
-]
-
-{ #category : #tests }
-ChanelNilEqualitySimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 = nil'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 isNil'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelNilConditionalSimplifierCleanerTest >> replacementPair [
+	^ '10 isNil ifFalse: [ false ]' -> '10 ifNotNil: [ false ]'
+]
+
 { #category : #running }
 ChanelNilConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
@@ -93,25 +98,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 { #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

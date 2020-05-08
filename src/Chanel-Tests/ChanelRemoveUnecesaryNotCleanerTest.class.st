@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelRemoveUnecesaryNotCleanerTest >> replacementPair [
+	^ 'true not' -> 'false'
+]
+
 { #category : #running }
 ChanelRemoveUnecesaryNotCleanerTest >> setUp [
 	super setUp.
@@ -130,25 +135,6 @@ ChanelRemoveUnecesaryNotCleanerTest >> testRejectNotDoesNotRemoveIntermediateSta
 			'#() select: [:e |  | test |
         test := self toto.
         e odd ]'
-]
-
-{ #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }

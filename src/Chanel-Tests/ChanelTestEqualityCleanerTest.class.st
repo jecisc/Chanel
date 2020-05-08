@@ -7,6 +7,11 @@ Class {
 	#category : #'Chanel-Tests'
 }
 
+{ #category : #helpers }
+ChanelTestEqualityCleanerTest >> replacementPair [
+	^ 'self assert: 3 = 2' -> 'self assert: 3 equals: 2'
+]
+
 { #category : #running }
 ChanelTestEqualityCleanerTest >> setUp [
 	super setUp.
@@ -126,25 +131,6 @@ ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue [
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testDenyIdenticalToTrue2 [
 	self assert: 'self deny: 3 identicalTo: true' isRewrittenAs: 'self deny: 3'
-]
-
-{ #category : #tests }
-ChanelTestEqualityCleanerTest >> testDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 = 2'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assert: 3 equals: 2'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
 
 { #category : #tests }
