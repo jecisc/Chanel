@@ -21,30 +21,19 @@ ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected [
 
 { #category : #helpers }
 ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected in: aClass [
-	aClass
-		compile:
-			('{1}
-  {2}' format: {self selector . original}).
+	aClass compile: (self methodBodyFor: original).
 
 	self runCleaner.
 
-	self
-		assert: (aClass >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . expected})
+	self assert: (aClass >> self selector) sourceCode equals: (self methodBodyFor: expected)
 ]
 
 { #category : #tests }
-ChanelMethodRewriterCleanerTest >> assertReplacementIn: aSelector wasDoneIn: trait [
-	self
-		assert: (trait >> aSelector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {aSelector . self replacementPair value}).
+ChanelMethodRewriterCleanerTest >> assertReplacementWasDoneIn: trait [
+	self assert: (trait >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair value).
 
-	self assert: (trait localSelectors includes: aSelector).
-	self deny: (class localSelectors includes: aSelector)
+	self assert: (trait localSelectors includes: self selector).
+	self deny: (class localSelectors includes: self selector)
 ]
 
 { #category : #helpers }
@@ -52,10 +41,7 @@ ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger
 	| oldMethod |
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
 
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . original}).
+	class compile: (self methodBodyFor: original).
 
 	oldMethod := class >> self selector.
 
@@ -69,30 +55,19 @@ ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
 	| oldMethod |
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
 
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . aString}).
+	class compile: (self methodBodyFor: aString).
 
 	oldMethod := class >> self selector.
 	self runCleaner.
 
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . aString}).
+	self assert: (class >> self selector) sourceCode equals: (self methodBodyFor: aString).
 
 	self assert: class >> self selector identicalTo: oldMethod
 ]
 
 { #category : #tests }
-ChanelMethodRewriterCleanerTest >> denyReplacementIn: aSelector wasDoneIn: trait [
-	self
-		assert: (trait >> aSelector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . self replacementPair key}).
+ChanelMethodRewriterCleanerTest >> denyReplacementWasDoneIn: trait [
+	self assert: (trait >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair key).
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
@@ -119,19 +94,11 @@ ChanelMethodRewriterCleanerTest >> replacementPair [
 
 { #category : #tests }
 ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . self replacementPair key})
-		classified: self extensionProtocol.
+	class compile: (self methodBodyFor: self replacementPair key) classified: self extensionProtocol.
 
 	self runCleaner.
 
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . self replacementPair value}).
+	self assert: (class >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair value).
 
 	self assert: (class >> self selector) protocol equals: self extensionProtocol
 ]
@@ -143,16 +110,13 @@ ChanelMethodRewriterCleanerTest >> testReplacementInTraits [
 
 	class setTraitComposition: trait.
 
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . self replacementPair key}).
+	trait compile: (self methodBodyFor: self replacementPair key).
 
 	self runCleaner.
 
 	self replaceInTraits
-		ifTrue: [ self assertReplacementIn: self selector wasDoneIn: trait ]
-		ifFalse: [ self denyReplacementIn: self selector wasDoneIn: trait ]
+		ifTrue: [ self assertReplacementWasDoneIn: trait ]
+		ifFalse: [ self denyReplacementWasDoneIn: trait ]
 ]
 
 { #category : #tests }

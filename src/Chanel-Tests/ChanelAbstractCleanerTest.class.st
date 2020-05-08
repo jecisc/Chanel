@@ -91,6 +91,12 @@ ChanelAbstractCleanerTest >> extensionProtocol [
 	^ '*' , extensionPackage name
 ]
 
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> methodBodyFor: aString [
+	^ '{1}
+  {2}' format: {self selector . aString}
+]
+
 { #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
 	Chanel perfume: {package} using: {self actualClass}
