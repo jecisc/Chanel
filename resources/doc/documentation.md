@@ -503,3 +503,55 @@ isNil
 *Warnings:*
 The only danger of this cleaning happens for projects working on multiple Smalltalks or is a project implements ont of those methods and do something else than the ones present in Pharo.
 
+### Remove unecessary not
+
+Chanel remove some unecessary call to `not` to make code easier to read. Here is the list of rewrites:
+
+| Original | Transformation | Reason |
+| ------------- | ------------- | ------------- |
+| `true not` | `false` |
+| `false not` | `true` |
+| `x not not` | `x` |
+| `x not ifTrue: y` | `x ifFalse: y` |
+| `x not ifFalse: y` | `x ifTrue: y` |
+| `x not ifTrue: y1 ifFalse: z` | `x ifTrue: z ifFalse: y1` |
+| `x not ifFalse: y1 ifTrue: z` | `x ifTrue: y1 ifFalse: z` |
+| `x isEmpty not` | `x isNotEmpty` |
+| `x isNotEmpty not` | `x isEmpty` |
+| `x isNil not` | `x isNotNil` |
+| `x isNotNil not` | `x isNil` |
+| `x select: [:temp | a not]` | `x reject: [:temp |  a]` |
+| `x reject: [:temp | a not]` | `x select: [:temp |  a]` |
+| `(x <= y) not` | `x > y` |
+| `(x < y) not` | `x >= y` |
+| `(x = y) not` | `x ~= y` |
+| `(x == y) not` | `x ~~ y` |
+| `(x ~= y) not` | `x = y` |
+| `(x ~~ y) not` | `x == y` |
+| `(x >= y) not` | `x < y` |
+| `(x > y) not` | `x <= y` |
+| `[ a not] whileTrue: ``@block` | `[ a] whileFalse: ``@block` |
+| `[ a not] whileFalse: ``@block` | `[ a] whileTrue: ``@block` |
+| `[ a not] whileTrue` | `[ a] whileFalse` |
+| `[ a not] whileFalse` | `[ a] whileTrue` |
+
+*Conditions for the cleanings to by applied:*
+- Can be applied on any classes and traits.
+- A pattern from the list above match.
+- Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
+
+```Smalltalk
+>= arg
+  ^(self < arg) not
+```
+
+into:
+
+```Smalltalk
+>= arg
+  ^self >= arg
+```
+
+*Warnings:*
+This cleaner can be dangerous if you have classes implementing #`isEmpty` without #`isNotEmpty` for example.
+

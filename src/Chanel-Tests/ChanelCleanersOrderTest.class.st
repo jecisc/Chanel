@@ -125,6 +125,54 @@ ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBra
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNot [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self toto notEmpty not'}).
+
+	Chanel perfume: {package} using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner}.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self toto isEmpty'})
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeEmptySimplifier [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self toto notEmpty not ifTrue: [ 1 ]'}).
+
+	Chanel perfume: {package} using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner. ChanelEmptyConditionalSimplifierCleaner }.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self toto ifEmpty: [ 1 ]'})
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeNilSimplifier [
+	class
+		compile:
+			('{1}
+  {2}' format: {self selector . 'self toto notNil not ifTrue: [ 1 ]'}).
+
+	Chanel perfume: {package} using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner. ChanelNilConditionalSimplifierCleaner }.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+  {2}' format: {self selector . 'self toto ifNil: [ 1 ]'})
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testNilEqualityBeforeNilConditionals [
 	"The alias cleaner needs to run before the nil conditionals cleaner."
 
