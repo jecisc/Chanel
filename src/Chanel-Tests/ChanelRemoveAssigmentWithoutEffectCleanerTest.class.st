@@ -3,7 +3,7 @@ A ChanelRemoveAssigmentWithoutEffectCleanerTest is a test class for testing the 
 "
 Class {
 	#name : #ChanelRemoveAssigmentWithoutEffectCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

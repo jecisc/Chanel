@@ -3,7 +3,7 @@ A ChanelTestEmptyAssertionsCleanerTest is a test class for testing the behavior 
 "
 Class {
 	#name : #ChanelTestEmptyAssertionsCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

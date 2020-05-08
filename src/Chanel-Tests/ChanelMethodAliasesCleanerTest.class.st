@@ -1,6 +1,6 @@
 Class {
 	#name : #ChanelMethodAliasesCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

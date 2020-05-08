@@ -3,7 +3,7 @@ A ChanelNilEqualitySimplifierCleanerTest is a test class for testing the behavio
 "
 Class {
 	#name : #ChanelNilEqualitySimplifierCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

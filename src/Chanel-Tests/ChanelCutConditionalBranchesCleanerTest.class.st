@@ -3,7 +3,7 @@ A ChanelCutConditionalBranchesCleanerTest is a test class for testing the behavi
 "
 Class {
 	#name : #ChanelCutConditionalBranchesCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

@@ -3,7 +3,7 @@ A ChanelRemoveUnecesaryNotCleanerTest is a test class for testing the behavior o
 "
 Class {
 	#name : #ChanelRemoveUnecesaryNotCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

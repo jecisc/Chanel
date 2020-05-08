@@ -3,7 +3,7 @@ A ChanelConditionalSimplifierCleanerTest is a test class for testing the behavio
 "
 Class {
 	#name : #ChanelNilConditionalSimplifierCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
 

@@ -38,24 +38,6 @@ ChanelAbstractCleanerTest >> actualClass [
 ]
 
 { #category : #helpers }
-ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected [
-	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
-
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . original}).
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . expected})
-]
-
-{ #category : #helpers }
 ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
 	^ self createSubclassOf: Object named: aSymbol
 ]
@@ -102,23 +84,6 @@ ChanelAbstractCleanerTest >> defaultClassName [
 { #category : #accessing }
 ChanelAbstractCleanerTest >> defaultTraitName [
 	^ ('T' , self defaultClassName) asSymbol
-]
-
-{ #category : #helpers }
-ChanelAbstractCleanerTest >> deny: original isRewrittenForPharo: anInteger [
-	| oldMethod |
-	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
-
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . original}).
-
-	oldMethod := class >> self selector.
-
-	self runCleanerForPharo: anInteger.
-
-	self assert: class >> self selector identicalTo: oldMethod
 ]
 
 { #category : #running }
