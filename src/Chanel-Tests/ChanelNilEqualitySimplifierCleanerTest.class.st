@@ -115,20 +115,5 @@ ChanelNilEqualitySimplifierCleanerTest >> testReplacementOnClassSide [
 
 { #category : #tests }
 ChanelNilEqualitySimplifierCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '10 isNil'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '10 isNil'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: '10 isNil'
 ]

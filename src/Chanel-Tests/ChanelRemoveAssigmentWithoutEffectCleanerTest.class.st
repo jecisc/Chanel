@@ -84,40 +84,10 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementOnClassSide [
 
 { #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'test := test foo'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'test := test foo'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: 'test := test foo'
 ]
 
 { #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testWithNothingToReplace2 [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'test := 3'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'test := 3'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: 'test := 3'
 ]

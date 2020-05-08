@@ -233,20 +233,5 @@ ChanelRemoveUnecesaryNotCleanerTest >> testWhileTrueNot2 [
 
 { #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self toto not'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self toto not'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: 'self toto not'
 ]

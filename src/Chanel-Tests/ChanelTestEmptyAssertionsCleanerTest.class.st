@@ -118,36 +118,10 @@ ChanelTestEmptyAssertionsCleanerTest >> testShouldNotReplaceIfNotATestCase [
 
 	class := self createDefaultClass.
 
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self assert: #() isEmpty'})
+	self denyIsRewritten: 'self assert: #() isEmpty'
 ]
 
 { #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: 'self assert: 3 equals: 2'
 ]

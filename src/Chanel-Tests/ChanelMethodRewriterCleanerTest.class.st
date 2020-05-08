@@ -46,3 +46,25 @@ ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger
 
 	self assert: class >> self selector identicalTo: oldMethod
 ]
+
+{ #category : #helpers }
+ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
+	| oldMethod |
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	class
+		compile:
+			('{1}
+	{2}' format: {self selector . aString}).
+
+	oldMethod := class >> self selector.
+	self runCleaner.
+
+	self
+		assert: (class >> self selector) sourceCode
+		equals:
+			('{1}
+	{2}' format: {self selector . aString}).
+
+	self assert: class >> self selector identicalTo: oldMethod
+]

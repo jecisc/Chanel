@@ -138,22 +138,7 @@ ChanelMethodAliasesCleanerTest >> testReplacementOnClassSide [
 
 { #category : #tests }
 ChanelMethodAliasesCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '#() isNotEmpty'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '#() isNotEmpty'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: '#() isNotEmpty'
 ]
 
 { #category : #tests }
