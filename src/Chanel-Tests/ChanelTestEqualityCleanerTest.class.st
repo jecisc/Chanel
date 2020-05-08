@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelTestEqualityCleanerTest >> expressionWithNoReplacement [
+	^ 'self assert: 3 equals: 2'
+]
+
+{ #category : #helpers }
 ChanelTestEqualityCleanerTest >> replacementPair [
 	^ 'self assert: 3 = 2' -> 'self assert: 3 equals: 2'
 ]
@@ -164,9 +169,4 @@ ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	class := self createDefaultClass.
 
 	self denyIsRewritten: 'self assert: 3 = 2'
-]
-
-{ #category : #tests }
-ChanelTestEqualityCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: 'self assert: 3 equals: 2'
 ]

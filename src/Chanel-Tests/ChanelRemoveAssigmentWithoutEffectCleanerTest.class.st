@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelRemoveAssigmentWithoutEffectCleanerTest >> expressionWithNoReplacement [
+	^ 'test := test foo'
+]
+
+{ #category : #helpers }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> replacementPair [
 	 ^ 'test := test' -> ''
 ]
@@ -50,11 +55,6 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelRemoveAssigmentWithoutEffectCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: 'test := test foo'
 ]
 
 { #category : #tests }

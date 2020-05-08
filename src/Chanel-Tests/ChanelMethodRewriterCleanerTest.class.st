@@ -75,6 +75,11 @@ ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
 ]
 
 { #category : #helpers }
+ChanelMethodRewriterCleanerTest >> expressionWithNoReplacement [
+	^ self subclassResponsibility
+]
+
+{ #category : #helpers }
 ChanelMethodRewriterCleanerTest >> replacementPair [
 	"Should return an association of a replacement the cleaner should be able to do."
 
@@ -105,4 +110,9 @@ ChanelMethodRewriterCleanerTest >> testReplacementOnClassSide [
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
 
 	self assert: self replacementPair key isRewrittenAs: self replacementPair value in: class class
+]
+
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> testWithNothingToReplace [
+	self denyIsRewritten: self expressionWithNoReplacement
 ]

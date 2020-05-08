@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelEmptyConditionalSimplifierCleanerTest >> expressionWithNoReplacement [
+	^ '#() ifEmpty: [ false ]'
+]
+
+{ #category : #helpers }
 ChanelEmptyConditionalSimplifierCleanerTest >> replacementPair [
 	^ '#() isEmpty ifTrue: [ false ]' -> '#() ifEmpty: [ false ]'
 ]
@@ -182,9 +187,4 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: '#() ifEmpty: [ false ]'
 ]

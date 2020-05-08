@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelNilEqualitySimplifierCleanerTest >> expressionWithNoReplacement [
+	^ '10 isNil'
+]
+
+{ #category : #helpers }
 ChanelNilEqualitySimplifierCleanerTest >> replacementPair [
 	^ '10 = nil' -> '10 isNil'
 ]
@@ -81,9 +86,4 @@ ChanelNilEqualitySimplifierCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelNilEqualitySimplifierCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: '10 isNil'
 ]

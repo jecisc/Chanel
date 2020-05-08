@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelRemoveUnecesaryNotCleanerTest >> expressionWithNoReplacement [
+	^ 'self toto not'
+]
+
+{ #category : #helpers }
 ChanelRemoveUnecesaryNotCleanerTest >> replacementPair [
 	^ 'true not' -> 'false'
 ]
@@ -199,9 +204,4 @@ ChanelRemoveUnecesaryNotCleanerTest >> testWhileTrueNot [
 { #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testWhileTrueNot2 [
 	self assert: '[ self toto not ] whileTrue' isRewrittenAs: '[ self toto ] whileFalse'
-]
-
-{ #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: 'self toto not'
 ]

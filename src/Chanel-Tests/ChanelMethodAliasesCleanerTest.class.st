@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelMethodAliasesCleanerTest >> expressionWithNoReplacement [
+	^ '#() isNotEmpty'
+]
+
+{ #category : #helpers }
 ChanelMethodAliasesCleanerTest >> replacementPair [
 	^ '#() notEmpty' -> '#() isNotEmpty'
 ]
@@ -104,11 +109,6 @@ ChanelMethodAliasesCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: '#() isNotEmpty'
 ]
 
 { #category : #tests }

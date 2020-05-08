@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelCutConditionalBranchesCleanerTest >> expressionWithNoReplacement [
+	^ '10 ifNotNil: [ false ]'
+]
+
+{ #category : #helpers }
 ChanelCutConditionalBranchesCleanerTest >> replacementPair [
 	^ '10 ifNil: [ nil ]' -> '10'
 ]
@@ -131,9 +136,4 @@ ChanelCutConditionalBranchesCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten:  '10 ifNotNil: [ false ]'
 ]

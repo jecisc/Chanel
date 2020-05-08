@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #helpers }
+ChanelNilConditionalSimplifierCleanerTest >> expressionWithNoReplacement [
+	^ '10 ifNotNil: [ false ]'
+]
+
+{ #category : #helpers }
 ChanelNilConditionalSimplifierCleanerTest >> replacementPair [
 	^ '10 isNil ifFalse: [ false ]' -> '10 ifNotNil: [ false ]'
 ]
@@ -122,9 +127,4 @@ ChanelNilConditionalSimplifierCleanerTest >> testReplacementInTraits [
 
 	self assert: (trait localSelectors includes: self selector).
 	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testWithNothingToReplace [
-	self denyIsRewritten: '10 ifNotNil: [ false ]'
 ]
