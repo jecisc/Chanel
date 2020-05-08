@@ -3,9 +3,19 @@ A ChanelRemoveUnecesaryNotCleanerTest is a test class for testing the behavior o
 "
 Class {
 	#name : #ChanelRemoveUnecesaryNotCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelRemoveUnecesaryNotCleanerTest >> expressionWithNoReplacement [
+	^ 'self toto not'
+]
+
+{ #category : #helpers }
+ChanelRemoveUnecesaryNotCleanerTest >> replacementPair [
+	^ 'true not' -> 'false'
+]
 
 { #category : #running }
 ChanelRemoveUnecesaryNotCleanerTest >> setUp [
@@ -133,65 +143,6 @@ ChanelRemoveUnecesaryNotCleanerTest >> testRejectNotDoesNotRemoveIntermediateSta
 ]
 
 { #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'true not'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'false'})
-]
-
-{ #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testSelectNot [
 	self assert: '#() select: [:e | e odd not ]' isRewrittenAs: '#() reject: [:e |  e odd ]'
 ]
@@ -229,24 +180,4 @@ ChanelRemoveUnecesaryNotCleanerTest >> testWhileTrueNot [
 { #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testWhileTrueNot2 [
 	self assert: '[ self toto not ] whileTrue' isRewrittenAs: '[ self toto ] whileFalse'
-]
-
-{ #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self toto not'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self toto not'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
 ]

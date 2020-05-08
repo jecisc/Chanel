@@ -3,9 +3,19 @@ A ChanelConditionalSimplifierCleanerTest is a test class for testing the behavio
 "
 Class {
 	#name : #ChanelNilConditionalSimplifierCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelNilConditionalSimplifierCleanerTest >> expressionWithNoReplacement [
+	^ '10 ifNotNil: [ false ]'
+]
+
+{ #category : #helpers }
+ChanelNilConditionalSimplifierCleanerTest >> replacementPair [
+	^ '10 isNil ifFalse: [ false ]' -> '10 ifNotNil: [ false ]'
+]
 
 { #category : #running }
 ChanelNilConditionalSimplifierCleanerTest >> setUp [
@@ -93,83 +103,4 @@ ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrue [
 { #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testIsNotNilIfTrueIfFalse [
 	self assert: '10 isNotNil ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '10 ifNil: [ true ] ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 isNil ifFalse: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10 ifNotNil: [ false ]'})
-]
-
-{ #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
 ]

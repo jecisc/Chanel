@@ -3,9 +3,24 @@ A ChanelTestEmptyAssertionsCleanerTest is a test class for testing the behavior 
 "
 Class {
 	#name : #ChanelTestEmptyAssertionsCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelTestEmptyAssertionsCleanerTest >> expressionWithNoReplacement [
+	^ 'self assert: 3 equals: 2'
+]
+
+{ #category : #helpers }
+ChanelTestEmptyAssertionsCleanerTest >> replaceInTraits [
+	^ false
+]
+
+{ #category : #helpers }
+ChanelTestEmptyAssertionsCleanerTest >> replacementPair [
+	^ 'self assert: #() isEmpty' -> 'self assertEmpty: #()'
+]
 
 { #category : #running }
 ChanelTestEmptyAssertionsCleanerTest >> setUp [
@@ -54,100 +69,10 @@ ChanelTestEmptyAssertionsCleanerTest >> testDenyEmptyNotReplacedForPharo7 [
 ]
 
 { #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assertEmpty: #()'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testDoesNotReplaceInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . 'self assertEmpty: #()'})
-]
-
-{ #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 
 	class := self createDefaultClass.
 
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self assert: #() isEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self assert: #() isEmpty'})
-]
-
-{ #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . 'self assert: 3 equals: 2'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
+	self denyIsRewritten: 'self assert: #() isEmpty'
 ]

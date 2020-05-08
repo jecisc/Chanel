@@ -3,9 +3,19 @@ A ChanelEmptyConditionalSimplifierCleanerTest is a test class for testing the be
 "
 Class {
 	#name : #ChanelEmptyConditionalSimplifierCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelEmptyConditionalSimplifierCleanerTest >> expressionWithNoReplacement [
+	^ '#() ifEmpty: [ false ]'
+]
+
+{ #category : #helpers }
+ChanelEmptyConditionalSimplifierCleanerTest >> replacementPair [
+	^ '#() isEmpty ifTrue: [ false ]' -> '#() ifEmpty: [ false ]'
+]
 
 { #category : #running }
 ChanelEmptyConditionalSimplifierCleanerTest >> setUp [
@@ -153,83 +163,4 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse2 [
 { #category : #tests }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse3 [
 	self assert: '#() isNotEmpty ifTrue: [ true ] ifFalse: [ false ]' isRewrittenAs: '#() isNotEmpty'
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() isEmpty ifTrue: [ false ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() ifEmpty: [ false ]'})
-]
-
-{ #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '#() ifEmpty: [ false ]'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
 ]

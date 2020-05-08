@@ -1,8 +1,18 @@
 Class {
 	#name : #ChanelMethodAliasesCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelMethodAliasesCleanerTest >> expressionWithNoReplacement [
+	^ '#() isNotEmpty'
+]
+
+{ #category : #helpers }
+ChanelMethodAliasesCleanerTest >> replacementPair [
+	^ '#() notEmpty' -> '#() isNotEmpty'
+]
 
 { #category : #running }
 ChanelMethodAliasesCleanerTest >> setUp [
@@ -75,85 +85,6 @@ ChanelMethodAliasesCleanerTest >> testNotEmpty [
 { #category : #tests }
 ChanelMethodAliasesCleanerTest >> testNotNil [
 	self assert: 'nil notNil' isRewrittenAs: 'nil isNotNil'
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '#() notEmpty'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '#() isNotEmpty'})
-]
-
-{ #category : #tests }
-ChanelMethodAliasesCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '#() isNotEmpty'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '#() isNotEmpty'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
 ]
 
 { #category : #tests }

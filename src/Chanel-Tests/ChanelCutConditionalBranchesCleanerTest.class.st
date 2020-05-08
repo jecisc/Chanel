@@ -3,9 +3,19 @@ A ChanelCutConditionalBranchesCleanerTest is a test class for testing the behavi
 "
 Class {
 	#name : #ChanelCutConditionalBranchesCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#superclass : #ChanelMethodRewriterCleanerTest,
 	#category : #'Chanel-Tests'
 }
+
+{ #category : #helpers }
+ChanelCutConditionalBranchesCleanerTest >> expressionWithNoReplacement [
+	^ '10 ifNotNil: [ false ]'
+]
+
+{ #category : #helpers }
+ChanelCutConditionalBranchesCleanerTest >> replacementPair [
+	^ '10 ifNil: [ nil ]' -> '10'
+]
 
 { #category : #running }
 ChanelCutConditionalBranchesCleanerTest >> setUp [
@@ -102,83 +112,4 @@ ChanelCutConditionalBranchesCleanerTest >> testIfTrueIfFalse [
 { #category : #tests }
 ChanelCutConditionalBranchesCleanerTest >> testIfTrueIfFalse2 [
 	self assert: 'true ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: 'true not'
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 ifNil: [ nil ]'})
-		classified: self extensionProtocol.
-
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10'}).
-
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testReplacementInTraits [
-	| trait |
-	trait := self createDefaultTrait.
-
-	class setTraitComposition: trait.
-
-	trait
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 ifNil: [ nil ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (trait >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10'}).
-
-	self assert: (trait localSelectors includes: self selector).
-	self deny: (class localSelectors includes: self selector)
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testReplacementOnClassSide [
-	class class
-		compile:
-			('{1}
-  {2}' format: {self selector . '10 ifNil: [ nil ]'}).
-
-	self runCleaner.
-
-	self
-		assert: (class class >> self selector) sourceCode
-		equals:
-			('{1}
-  {2}' format: {self selector . '10'})
-]
-
-{ #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testWithNothingToReplace [
-	| oldMethod |
-	class
-		compile:
-			('{1}
-	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self
-		assert: (class >> self selector) sourceCode
-		equals:
-			('{1}
-	{2}' format: {self selector . '10 ifNotNil: [ false ]'}).
-	
-	self assert: class >> self selector identicalTo: oldMethod
 ]
