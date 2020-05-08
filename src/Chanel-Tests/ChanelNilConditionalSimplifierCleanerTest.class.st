@@ -125,11 +125,6 @@ ChanelNilConditionalSimplifierCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelNilConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: '10 isNil ifFalse: [ false ]' isRewrittenAs: '10 ifNotNil: [ false ]'
-]
-
-{ #category : #tests }
 ChanelNilConditionalSimplifierCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: '10 ifNotNil: [ false ]'
 ]

@@ -36,13 +36,6 @@ ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected in: 
 ]
 
 { #category : #helpers }
-ChanelMethodRewriterCleanerTest >> assertClassSide: original isRewrittenAs: expected [
-	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
-
-	self assert: original isRewrittenAs: expected in: class class
-]
-
-{ #category : #helpers }
 ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger [
 	| oldMethod |
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
@@ -105,4 +98,11 @@ ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
   {2}' format: {self selector . self replacementPair value}).
 
 	self assert: (class >> self selector) protocol equals: self extensionProtocol
+]
+
+{ #category : #tests }
+ChanelMethodRewriterCleanerTest >> testReplacementOnClassSide [
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	self assert: self replacementPair key isRewrittenAs: self replacementPair value in: class class
 ]

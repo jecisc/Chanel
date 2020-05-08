@@ -185,11 +185,6 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelEmptyConditionalSimplifierCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: '#() isEmpty ifTrue: [ false ]' isRewrittenAs: '#() ifEmpty: [ false ]'
-]
-
-{ #category : #tests }
 ChanelEmptyConditionalSimplifierCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: '#() ifEmpty: [ false ]'
 ]

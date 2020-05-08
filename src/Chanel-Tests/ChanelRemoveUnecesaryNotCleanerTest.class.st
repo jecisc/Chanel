@@ -162,11 +162,6 @@ ChanelRemoveUnecesaryNotCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelRemoveUnecesaryNotCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: 'true not' isRewrittenAs: 'false'
-]
-
-{ #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testSelectNot [
 	self assert: '#() select: [:e | e odd not ]' isRewrittenAs: '#() reject: [:e |  e odd ]'
 ]

@@ -107,11 +107,6 @@ ChanelMethodAliasesCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelMethodAliasesCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: '#() notEmpty' isRewrittenAs: '#() isNotEmpty'
-]
-
-{ #category : #tests }
 ChanelMethodAliasesCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: '#() isNotEmpty'
 ]

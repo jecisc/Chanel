@@ -53,11 +53,6 @@ ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelRemoveAssigmentWithoutEffectCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: 'test := test' isRewrittenAs: ''
-]
-
-{ #category : #tests }
 ChanelRemoveAssigmentWithoutEffectCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: 'test := test foo'
 ]

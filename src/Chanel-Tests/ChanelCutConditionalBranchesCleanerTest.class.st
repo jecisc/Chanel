@@ -134,11 +134,6 @@ ChanelCutConditionalBranchesCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelCutConditionalBranchesCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: '10 ifNil: [ nil ]' isRewrittenAs: '10'
-]
-
-{ #category : #tests }
 ChanelCutConditionalBranchesCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten:  '10 ifNotNil: [ false ]'
 ]

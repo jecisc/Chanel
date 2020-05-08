@@ -83,11 +83,6 @@ ChanelTestEmptyAssertionsCleanerTest >> testDoesNotReplaceInTraits [
 ]
 
 { #category : #tests }
-ChanelTestEmptyAssertionsCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: 'self assert: #() isEmpty' isRewrittenAs: 'self assertEmpty: #()'
-]
-
-{ #category : #tests }
 ChanelTestEmptyAssertionsCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 

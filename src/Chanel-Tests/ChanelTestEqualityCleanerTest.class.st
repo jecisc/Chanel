@@ -158,11 +158,6 @@ ChanelTestEqualityCleanerTest >> testDoesNotReplaceInTraits [
 ]
 
 { #category : #tests }
-ChanelTestEqualityCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: 'self assert: 3 = 2' isRewrittenAs: 'self assert: 3 equals: 2'
-]
-
-{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testShouldNotReplaceIfNotATestCase [
 	"We only replace the assertion of TestCase because other objects are much poorer in term of assertions."
 

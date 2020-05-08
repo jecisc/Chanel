@@ -84,11 +84,6 @@ ChanelNilEqualitySimplifierCleanerTest >> testReplacementInTraits [
 ]
 
 { #category : #tests }
-ChanelNilEqualitySimplifierCleanerTest >> testReplacementOnClassSide [
-	self assertClassSide: '10 = nil' isRewrittenAs: '10 isNil'
-]
-
-{ #category : #tests }
 ChanelNilEqualitySimplifierCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: '10 isNil'
 ]
