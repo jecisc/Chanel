@@ -19,7 +19,7 @@ ChanelTestEmptyAssertionsCleaner class >> isAvailableForPharo: anInteger [
 
 { #category : #accessing }
 ChanelTestEmptyAssertionsCleaner class >> priority [
-	^ 1100
+	^ 1300
 ]
 
 { #category : #cleaning }

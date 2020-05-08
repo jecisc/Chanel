@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 ChanelRemoveUnecesaryNotCleaner class >> priority [
-	^ 1700
+	^ 1200
 ]
 
 { #category : #cleaning }

@@ -78,6 +78,12 @@ ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNot [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeEmptyAssertions [
+	class := self createDefaultTestClass.
+	self assert: 'self assert: #() notEmpty not' isRewrittenAs: 'self assertEmpty: #()' using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner. ChanelTestEmptyAssertionsCleaner}
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeEmptySimplifier [
 	self assert: 'self toto notEmpty not ifTrue: [ 1 ]' isRewrittenAs: 'self toto ifEmpty: [ 1 ]' using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner . ChanelEmptyConditionalSimplifierCleaner}
 ]
