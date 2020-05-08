@@ -235,6 +235,15 @@ Chanel simplifies some conditionals by cutting branches. For example it will rew
 | `x ifNotNil: [ x ] ifNil: y` | `x ifNil: y` |
 | `x ifNil: y ifNotNil: [ x ]` | `x ifNil: y` |
 | `x ifEmpty: [ y ] ifNotEmpty: [ x ]` | `x ifEmpty: [ y ]` |
+| `x ifNotNil: [ :e | e ] ifNil: y` | `x ifNil: y` |
+| `x ifNil: y ifNotNil: [ :e | e ]` | `x ifNil: y` |
+| `x ifNotEmpty: [ x ] ifEmpty: y` | `x ifEmpty: y` |
+| `x ifEmpty: y ifNotEmpty: [ :e | e ]` | `x ifEmpty: y` |
+| `x ifNotEmpty: [ :e | e ] ifEmpty: y` | `x ifEmpty: y` |	
+| `x detect: y ifFound: [ :e | e ] ifNone: z ` | `x detect: y ifNone: z` |
+| `x at: y ifPresent: [ :e | e ] ifAbsent: z ` | `x at: y ifAbsent: z` |
+| `x at: y ifPresent: [ x at: y ] ifAbsent: z ` | `x at: y ifAbsent: z` |
+| `x at: y ifPresent: [ :e | x at: y ] ifAbsent: z ` | `x at: y ifAbsent: z` |
 
 *Conditions for the cleanings to by applied:*
 - Can be applied on any classes and traits.
@@ -242,7 +251,7 @@ Chanel simplifies some conditionals by cutting branches. For example it will rew
 - Does not apply if the application of the pattern would cause an infinit loop. For example it will **not** rewrite:
 
 *Warnings:*
-The only danger of this cleaning happens for projects working on multiple Smalltalks
+The only danger of this cleaning happens for projects working on multiple Smalltalks or if an object implements parts of common Pharo API but not all
 
 
 ### Methods with alias unification
@@ -520,8 +529,8 @@ Chanel remove some unecessary call to `not` to make code easier to read. Here is
 | `x isNotEmpty not` | `x isEmpty` |
 | `x isNil not` | `x isNotNil` |
 | `x isNotNil not` | `x isNil` |
-| `x select: [:temp | a not]` | `x reject: [:temp |  a]` |
-| `x reject: [:temp | a not]` | `x select: [:temp |  a]` |
+| `x select: [:temp \| a not]` | `x reject: [:temp \| a]` |
+| `x reject: [:temp \| a not]` | `x select: [:temp \| a]` |
 | `(x <= y) not` | `x > y` |
 | `(x < y) not` | `x >= y` |
 | `(x = y) not` | `x ~= y` |
@@ -530,8 +539,8 @@ Chanel remove some unecessary call to `not` to make code easier to read. Here is
 | `(x ~~ y) not` | `x == y` |
 | `(x >= y) not` | `x < y` |
 | `(x > y) not` | `x <= y` |
-| `[ a not] whileTrue: ``@block` | `[ a] whileFalse: ``@block` |
-| `[ a not] whileFalse: ``@block` | `[ a] whileTrue: ``@block` |
+| `[ a not] whileTrue: y` | `[ a] whileFalse: y` |
+| `[ a not] whileFalse: y` | `[ a] whileTrue: y` |
 | `[ a not] whileTrue` | `[ a] whileFalse` |
 | `[ a not] whileFalse` | `[ a] whileTrue` |
 
