@@ -26,9 +26,10 @@ BaselineOfChanel >> baseline: spec [
 
 	spec
 		for: #(#'pharo7.x')
-		do: [ spec
+		do: [ self pharoBackwardCompatibility: spec.
+			spec
 				package: 'Chanel-Pharo7';
-				package: 'Chanel-Tests' with: [ spec requires: 'Chanel-Pharo7' ] ]
+				package: 'Chanel-Tests' with: [ spec requires: #('Chanel-Pharo7' 'PharoBackwardCompatibility') ] ]
 ]
 
 { #category : #dependencies }
@@ -38,6 +39,13 @@ BaselineOfChanel >> iterators: spec [
 		with: [ spec
 				loads: #('core' 'collections' 'shell-dsl' 'inspector-extensions');
 				repository: 'github://juliendelplanque/Iterators:v1.x.x/src' ]
+]
+
+{ #category : #dependencies }
+BaselineOfChanel >> pharoBackwardCompatibility: spec [
+   spec
+    	baseline: 'PharoBackwardCompatibility'
+    	with: [ spec repository: 'github://jecisc/PharoBackwardCompatibility:v1.x.x/src' ]
 ]
 
 { #category : #accessing }
