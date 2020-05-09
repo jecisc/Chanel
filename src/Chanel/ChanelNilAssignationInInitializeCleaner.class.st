@@ -11,11 +11,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelNilAssignationInInitializeCleaner class >> priority [
-	^ 6000
-]
-
 { #category : #cleaning }
 ChanelNilAssignationInInitializeCleaner >> clean [
 	self configuration localMethods iterator

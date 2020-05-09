@@ -47,11 +47,6 @@ ChanelProtocolsCleaner class >> methodsInSpecificProtocolMap [
 ]
 
 { #category : #accessing }
-ChanelProtocolsCleaner class >> priority [
-	^ 2000
-]
-
-{ #category : #accessing }
 ChanelProtocolsCleaner class >> protocolsToCleanMap [
 	^ ProtocolsToCleanMap
 		ifNil: [ ProtocolsToCleanMap := Dictionary new

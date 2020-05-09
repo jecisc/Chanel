@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelNilEqualitySimplifierCleaner class >> priority [
-	^ 2500
+ChanelNilEqualitySimplifierCleaner class >> requirements [
+	^ { ChanelMethodAliasesCleaner }
 ]
 
 { #category : #cleaning }

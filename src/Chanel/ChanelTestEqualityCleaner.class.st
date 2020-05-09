@@ -37,8 +37,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelTestEqualityCleaner class >> priority [
-	^ 1000
+ChanelTestEqualityCleaner class >> requirements [
+	^ { ChanelRemoveUnecesaryNotCleaner }
 ]
 
 { #category : #cleaning }

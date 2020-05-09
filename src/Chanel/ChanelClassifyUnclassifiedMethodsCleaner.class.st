@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelClassifyUnclassifiedMethodsCleaner class >> priority [
-	^ 10000
+ChanelClassifyUnclassifiedMethodsCleaner class >> requirements [
+	^ { ChanelProtocolsCleaner }
 ]
 
 { #category : #cleaning }

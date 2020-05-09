@@ -10,11 +10,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelDuplicatedMethodFromTraitCleaner class >> priority [
-	^ 100
-]
-
 { #category : #cleaning }
 ChanelDuplicatedMethodFromTraitCleaner >> clean [
 	self configuration definedClasses iterator

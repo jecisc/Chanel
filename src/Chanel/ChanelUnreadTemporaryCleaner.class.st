@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelUnreadTemporaryCleaner class >> priority [
-	^ 7000
+ChanelUnreadTemporaryCleaner class >> requirements [
+	^ { ChanelCutConditionalBranchesCleaner . ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
 { #category : #cleaning }

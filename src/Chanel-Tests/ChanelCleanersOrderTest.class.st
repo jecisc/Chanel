@@ -20,6 +20,16 @@ ChanelCleanersOrderTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasAndExtractReturnBeforeNilConditionalsBeforeCutConditionalBranches [
+	self
+		assert: 'self patate notNil ifFalse: [ ^ nil ] ifTrue: [ ^ 3 ].'
+		isRewrittenAs: '^self patate ifNotNil: [ 3 ]'
+		using:
+			{ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner.
+			ChanelMethodAliasesCleaner}
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeEmptyAssertions [
 	"The alias cleaner needs to run before the empty assertions cleaner."
 
@@ -33,16 +43,6 @@ ChanelCleanersOrderTest >> testAliasBeforeEmptyConditionals [
 	"The alias cleaner needs to run before the empty conditionals cleaner."
 
 	self assert: '#() notEmpty ifTrue: [ 1 ]' isRewrittenAs: '#() ifNotEmpty: [ 1 ]' using: {ChanelEmptyConditionalSimplifierCleaner . ChanelMethodAliasesCleaner}
-]
-
-{ #category : #tests }
-ChanelCleanersOrderTest >> testAliasBeforeExtractReturnBeforeNilConditionalsBeforeCutConditionalBranches [
-	self
-		assert: 'self patate notNil ifFalse: [ ^ nil ] ifTrue: [ ^ 3 ].'
-		isRewrittenAs: '^self patate ifNotNil: [ 3 ]'
-		using:
-			{ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner.
-			ChanelMethodAliasesCleaner}
 ]
 
 { #category : #tests }
@@ -83,6 +83,11 @@ ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalBra
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeNilConditionalsBeforeCutConditionalsBeforeRemoveUselessAsignment [
+	self assert: 'test := test notNil ifTrue: [ test ]' isRewrittenAs: '' using: { ChanelCutConditionalBranchesCleaner . ChanelMethodAliasesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNot [
 	self assert: 'self toto notEmpty not' isRewrittenAs: 'self toto isEmpty' using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner}
 ]
@@ -101,6 +106,11 @@ ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeEmptySimplifier [
 { #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeNilSimplifier [
 	self assert: 'self toto notNil not ifTrue: [ 1 ]' isRewrittenAs: 'self toto ifNil: [ 1 ]' using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner . ChanelNilConditionalSimplifierCleaner}
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testCutConditionalsBeforeRemoveUselessAssignment [
+	self assert: 'test := test ifNotNil: [ test ]' isRewrittenAs: '' using: { ChanelCutConditionalBranchesCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
 { #category : #tests }
@@ -123,6 +133,12 @@ ChanelCleanersOrderTest >> testNilEqualityBeforeNilConditionalsBeforeCutConditio
 	"The nil equality cleaner needs to run before the nil conditionals cleaner which need to run before the cut conditional branches."
 
 	self assert: '(10 ~= nil) ifFalse: [ nil ]' isRewrittenAs: '10' using: {ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner . ChanelNilEqualitySimplifierCleaner}
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testUnecessaryNotBeforeTestEquality [
+	class := self createDefaultTestClass.
+	self assert: 'self assert: x equals: true not' isRewrittenAs: 'self deny: x' using: {ChanelRemoveUnecesaryNotCleaner . ChanelTestEqualityCleaner }
 ]
 
 { #category : #tests }

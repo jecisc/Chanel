@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelRemoveUnecesaryNotCleaner class >> priority [
-	^ 1200
+ChanelRemoveUnecesaryNotCleaner class >> requirements [
+	^ { ChanelMethodAliasesCleaner }
 ]
 
 { #category : #cleaning }

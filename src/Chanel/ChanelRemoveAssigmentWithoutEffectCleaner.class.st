@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelRemoveAssigmentWithoutEffectCleaner class >> priority [
-	^ 300
+ChanelRemoveAssigmentWithoutEffectCleaner class >> requirements [
+	^ { ChanelCutConditionalBranchesCleaner }
 ]
 
 { #category : #cleaning }

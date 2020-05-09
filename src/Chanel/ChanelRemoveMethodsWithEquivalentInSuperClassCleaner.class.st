@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelRemoveMethodsWithEquivalentInSuperClassCleaner class >> priority [
-	^ 1500
+ChanelRemoveMethodsWithEquivalentInSuperClassCleaner class >> requirements [
+	^ { ChanelRemoveUnusedNodesFromASTCleaner . ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
 { #category : #cleaning }

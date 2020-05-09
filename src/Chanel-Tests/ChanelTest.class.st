@@ -3,7 +3,7 @@ A ChanelTest is a test class for testing the behavior of Chanel
 "
 Class {
 	#name : #ChanelTest,
-	#superclass : #TestCase,
+	#superclass : #ChanelAbstractTest,
 	#category : #'Chanel-Tests'
 }
 

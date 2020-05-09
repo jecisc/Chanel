@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelEmptyConditionalSimplifierCleaner class >> priority [
-	^ 3500
+ChanelEmptyConditionalSimplifierCleaner class >> requirements [
+	^ { ChanelMethodAliasesCleaner . ChanelRemoveUnecesaryNotCleaner }
 ]
 
 { #category : #cleaning }

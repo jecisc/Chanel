@@ -54,8 +54,10 @@ ChanelAbstractCleaner class >> isAvailableForPharo: anInteger [
 ]
 
 { #category : #accessing }
-ChanelAbstractCleaner class >> priority [
-	^ self subclassResponsibility
+ChanelAbstractCleaner class >> requirements [
+	"Returns the list of cleaners that should run before this cleaner"
+
+	^ #()
 ]
 
 { #category : #cleaning }
