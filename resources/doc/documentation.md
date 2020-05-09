@@ -564,3 +564,27 @@ into:
 *Warnings:*
 This cleaner can be dangerous if you have classes implementing #`isEmpty` without #`isNotEmpty` for example.
 
+### Extract return from conditionals
+
+In case a conditional ends with a return in all its branches, `Chanel` tries to extract it.
+
+List of supported conditionals:
+- `#ifTrue:ifFalse:` 
+- `#ifFalse:ifTrue:` 
+- `#ifNil:ifNotNil:` 
+- `#ifNotNil:ifNil:` 
+- `#ifEmpty:ifNotEmpty:` 
+- `#ifNotEmpty:ifEmpty:`
+-  `#ifExists:ifAbsent:`
+
+*Conditions for the cleanings to by applied:*
+- The AST node is a message.
+- The node is not in a cascade.
+- The node is the last node of the parent (if not, it would not be possible to compile a return at this place).
+- The node selector matches a selector above.
+- All arguments are blocks (none should be symbol).
+- All arguments should have a return as last statement.
+
+*Warnings:*
+This cleaning should not have any counter indication.
+

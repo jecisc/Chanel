@@ -4,3 +4,8 @@ Extension { #name : #RBReturnNode }
 RBReturnNode >> canHaveUselessChildren [
 	^ false
 ]
+
+{ #category : #'*Chanel' }
+RBReturnNode >> inline [
+	self replaceWith: self value
+]
