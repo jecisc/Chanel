@@ -17,8 +17,14 @@ ChanelExtractReturnFromAllBranchesCleaner class >> priority [
 
 { #category : #cleaning }
 ChanelExtractReturnFromAllBranchesCleaner >> clean [
-	(self configuration localMethods iterator
-		| #ast collectIt
+  (self cleanASTs: (self configuration localMethods collect: #ast)) do: #install
+]
+
+{ #category : #cleaning }
+ChanelExtractReturnFromAllBranchesCleaner >> cleanASTs: aCollectionOfMethods [
+	"In the end we run again the cleaning on ASTs because we can have case of nested conditionals each of the having returns in their branches."
+
+	^ (aCollectionOfMethods iterator
 		| #allChildren flatCollectIt
 		| #isMessage selectIt
 		| #isCascaded rejectIt
@@ -29,5 +35,5 @@ ChanelExtractReturnFromAllBranchesCleaner >> clean [
 		| [ :node | node arguments do: #inlineLastReturn ] doIt
 		| #wrapsInReturn doIt
 		| #methodNode collectIt
-		> Set) do: #install
+		> Set) ifNotEmpty: [ :updatedASTs | self cleanASTs: updatedASTs. updatedASTs ]
 ]
