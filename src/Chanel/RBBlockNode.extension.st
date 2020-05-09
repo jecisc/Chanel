@@ -4,3 +4,8 @@ Extension { #name : #RBBlockNode }
 RBBlockNode >> inlineLastReturn [
 	self statements last inline
 ]
+
+{ #category : #'*Chanel' }
+RBBlockNode >> lastStatementIsReturn [
+	^ self statements last isReturn
+]

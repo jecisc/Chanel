@@ -137,6 +137,17 @@ ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfRetur
 ]
 
 { #category : #tests }
+ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnDoesNotFailForConditonsInConditions [
+	class compile: 'method
+	self toto1 ifTrue: [ self toto2 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ] ifFalse: [ 3 ]'.
+
+	self runCleaner.
+	
+	self assert: (class >> #method) sourceCode equals: 'method
+  self toto1 ifTrue: [ ^self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
+]
+
+{ #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnDoesNotFailIfThereIsAlreadyAReturn [
 	class compile: 'method
   ^self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]'.
@@ -247,6 +258,17 @@ ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnIfTheLastState
 	self assert: (class >> #method) sourceCode equals: 'method
   self foo ifTrue: [ ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ] ].
   self bar'
+]
+
+{ #category : #tests }
+ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnInNestedConditions [
+	class compile: 'method
+	self toto1 ifTrue: [ self toto2 ifTrue: [ ^1 ] ifFalse: [ ^2 ] ] ifFalse: [ ^3 ]'.
+
+	self runCleaner.
+	
+	self assert: (class >> #method) sourceCode equals: 'method
+  ^self toto1 ifTrue: [ self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
 ]
 
 { #category : #tests }
