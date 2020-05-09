@@ -76,14 +76,3 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeExtensionMetho
 	
 	self assert: (class >> #initialize) protocol equals: self extensionProtocol
 ]
-
-{ #category : #tests }
-ChanelClassifyUnclassifiedMethodsCleanerTest >> testRemoveUselessBlock [
-	class compile: 'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^1'
-]
