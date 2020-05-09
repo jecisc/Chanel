@@ -98,6 +98,11 @@ ChanelAbstractCleanerTest >> methodBodyFor: aString [
 ]
 
 { #category : #running }
+ChanelAbstractCleanerTest >> runCase [
+	EpMonitor disableDuring: [ super runCase ]
+]
+
+{ #category : #running }
 ChanelAbstractCleanerTest >> runCleaner [
 	Chanel perfume: {package} using: {self actualClass}
 ]
