@@ -10,11 +10,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelTestCaseNameCleaner class >> priority [
-	^ 4500
-]
-
 { #category : #cleaning }
 ChanelTestCaseNameCleaner >> clean [
 	self configuration definedTestCases iterator

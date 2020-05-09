@@ -12,7 +12,7 @@ List of special cases to take into account when writing a new cleaner (add tests
 "
 Class {
 	#name : #ChanelAbstractCleanerTest,
-	#superclass : #TestCase,
+	#superclass : #ChanelAbstractTest,
 	#instVars : [
 		'previousFormater',
 		'package',
@@ -25,11 +25,6 @@ Class {
 { #category : #testing }
 ChanelAbstractCleanerTest class >> isAbstract [
 	^ self = ChanelAbstractCleanerTest
-]
-
-{ #category : #testing }
-ChanelAbstractCleanerTest class >> shouldInheritSelectors [
-	^ true
 ]
 
 { #category : #accessing }
@@ -95,11 +90,6 @@ ChanelAbstractCleanerTest >> extensionProtocol [
 ChanelAbstractCleanerTest >> methodBodyFor: aString [
 	^ '{1}
   {2}' format: {self selector . aString}
-]
-
-{ #category : #running }
-ChanelAbstractCleanerTest >> runCase [
-	EpMonitor disableDuring: [ super runCase ]
 ]
 
 { #category : #running }

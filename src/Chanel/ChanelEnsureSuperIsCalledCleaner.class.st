@@ -14,11 +14,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelEnsureSuperIsCalledCleaner class >> priority [
-	^ 5000
-]
-
 { #category : #cleaning }
 ChanelEnsureSuperIsCalledCleaner >> clean [
 	self configuration localMethods

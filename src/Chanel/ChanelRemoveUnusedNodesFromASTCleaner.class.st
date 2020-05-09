@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelRemoveUnusedNodesFromASTCleaner class >> priority [
-	^ 7500
+ChanelRemoveUnusedNodesFromASTCleaner class >> requirements [
+	^ { ChanelUnreadTemporaryCleaner }
 ]
 
 { #category : #cleaning }

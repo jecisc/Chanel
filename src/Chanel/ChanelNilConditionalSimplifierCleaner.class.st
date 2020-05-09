@@ -28,8 +28,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelNilConditionalSimplifierCleaner class >> priority [
-	^ 3000
+ChanelNilConditionalSimplifierCleaner class >> requirements [
+	^ { ChanelMethodAliasesCleaner . ChanelRemoveUnecesaryNotCleaner . ChanelNilEqualitySimplifierCleaner }
 ]
 
 { #category : #cleaning }

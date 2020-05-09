@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelCutConditionalBranchesCleaner class >> priority [
-	^ 4000
+ChanelCutConditionalBranchesCleaner class >> requirements [
+	^ { ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelEmptyConditionalSimplifierCleaner }
 ]
 
 { #category : #cleaning }

@@ -14,13 +14,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelMethodAliasesCleaner class >> priority [
-	"I need to be high in the priority since I'll simplify next cleaners."
-
-	^ 500
-]
-
 { #category : #cleaning }
 ChanelMethodAliasesCleaner >> rewriter [
 	^ RBParseTreeRewriter new

@@ -10,11 +10,6 @@ Class {
 	#category : #Chanel
 }
 
-{ #category : #accessing }
-ChanelExtractReturnFromAllBranchesCleaner class >> priority [
-	^ 3500
-]
-
 { #category : #cleaning }
 ChanelExtractReturnFromAllBranchesCleaner >> clean [
   (self cleanASTs: (self configuration localMethods collect: #ast)) do: #install

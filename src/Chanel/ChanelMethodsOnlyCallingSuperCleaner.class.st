@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #accessing }
-ChanelMethodsOnlyCallingSuperCleaner class >> priority [
-	^ 8000
+ChanelMethodsOnlyCallingSuperCleaner class >> requirements [
+	^ { ChanelRemoveUnusedNodesFromASTCleaner. ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
 { #category : #cleaning }
