@@ -31,7 +31,7 @@ ChanelExtractReturnFromAllBranchesCleaner >> cleanASTs: aCollectionOfMethods [
 		| [ :node | node parent isLast: node ] selectIt
 		| #isConditionNecessarilyExecutingABranch selectIt
 		| [ :node | node arguments allSatisfy: #isBlock ] selectIt
-		| [ :node | node arguments allSatisfy: #hasBlockReturn ] selectIt
+		| [ :node | node arguments allSatisfy: #lastStatementIsReturn ] selectIt
 		| [ :node | node arguments do: #inlineLastReturn ] doIt
 		| #wrapsInReturn doIt
 		| #methodNode collectIt
