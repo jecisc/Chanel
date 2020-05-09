@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 ChanelExtractReturnFromAllBranchesCleaner class >> priority [
-	^ 15000
+	^ 3500
 ]
 
 { #category : #cleaning }

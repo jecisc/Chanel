@@ -36,6 +36,16 @@ ChanelCleanersOrderTest >> testAliasBeforeEmptyConditionals [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasBeforeExtractReturnBeforeNilConditionalsBeforeCutConditionalBranches [
+	self
+		assert: 'self patate notNil ifFalse: [ ^ nil ] ifTrue: [ ^ 3 ].'
+		isRewrittenAs: '^self patate ifNotNil: [ 3 ]'
+		using:
+			{ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner.
+			ChanelMethodAliasesCleaner}
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeNilConditionals [
 	"The alias cleaner needs to run before the nil conditionals cleaner."
 
@@ -91,6 +101,14 @@ ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeEmptySimplifier [
 { #category : #tests }
 ChanelCleanersOrderTest >> testAliasBeforeUnecessaryNotBeforeNilSimplifier [
 	self assert: 'self toto notNil not ifTrue: [ 1 ]' isRewrittenAs: 'self toto ifNil: [ 1 ]' using: {ChanelRemoveUnecesaryNotCleaner . ChanelMethodAliasesCleaner . ChanelNilConditionalSimplifierCleaner}
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testExtractReturnBeforeCutConditionals [
+	self
+		assert: 'self toto ifNil: [ ^ 1 ] ifNotNil: [ :e | ^ e ]'
+		isRewrittenAs: '^self toto ifNil: [ 1 ]'
+		using: {ChanelCutConditionalBranchesCleaner . ChanelExtractReturnFromAllBranchesCleaner}
 ]
 
 { #category : #tests }
