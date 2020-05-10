@@ -24,6 +24,46 @@ ChanelRemoveUnecesaryNotCleanerTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testAssertEquals2NotNotReplacedForPharo6 [
+	self deny: 'self assert: self toto not equals: self tata' isRewrittenForPharo: 6
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testAssertEqualsNot [
+	self assert: 'self assert: self toto equals: self tata not' isRewrittenAs: 'self deny: self toto equals: self tata'
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testAssertEqualsNot2 [
+	self assert: 'self assert: self toto not equals: self tata' isRewrittenAs: 'self deny: self toto equals: self tata'
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testAssertEqualsNotNotReplacedForPharo6 [
+	self deny: 'self assert: self toto equals: self tata not' isRewrittenForPharo: 6
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testAssertNot [
+	self assert: 'self assert: self toto not' isRewrittenAs: 'self deny: self toto'
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testDenyEqualsNot [
+	self assert: 'self deny: self toto equals: self tata not' isRewrittenAs: 'self assert: self toto equals: self tata'
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testDenyEqualsNot2 [
+	self assert: 'self deny: self toto not equals: self tata' isRewrittenAs: 'self assert: self toto equals: self tata'
+]
+
+{ #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testDenyNot [
+	self assert: 'self deny: self toto not' isRewrittenAs: 'self assert: self toto'
+]
+
+{ #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testDifferent2Not [
 	self assert: '(self toto ~~ self tata) not' isRewrittenAs: 'self toto == self tata'
 ]
