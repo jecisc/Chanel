@@ -138,13 +138,9 @@ Chanel class >> worldMenuOn: aBuilder [
 
 { #category : #cleaning }
 Chanel >> cleanUsing: cleaners [
-	| availableCleaners sortResult |
 	"Use topological sort to sort the cleaners to get the best effect possible with this set of cleaners."
-	availableCleaners := cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ].
 
-	sortResult := (MalTopologicalSorting nodes: availableCleaners incomingEdgesProperty: #requirements) run.
-
-	self cleanWithSelectedCleaners: (sortResult collect: #model)
+	self cleanWithSelectedCleaners: (MalTopologicalSorting sort: (cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ]) followingIncomingProperty: #requirements)
 ]
 
 { #category : #cleaning }
