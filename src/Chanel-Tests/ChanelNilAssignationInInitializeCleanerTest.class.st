@@ -144,3 +144,20 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentsAroundReal
   super initialize.
   notTest := 1'
 ]
+
+{ #category : #tests }
+ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilChainedAssigments [
+	class
+		compile:
+			'initialize
+  super initialize.
+  test := test2 := test3 := test4 := nil'.
+
+	self runCleaner.
+
+	self
+		assert: (class >> #initialize) sourceCode
+		equals:
+			'initialize
+  super initialize'
+]
