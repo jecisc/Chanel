@@ -49,6 +49,13 @@ ChanelRemoveUnecesaryNotCleaner >> rewriter [
 		replace: '[| `@temps | ``@.Statements. ``@object not] whileFalse: ``@block' with: '[| `@temps | ``@.Statements. ``@object] whileTrue: ``@block';
 		replace: '[| `@temps | ``@.Statements. ``@object not] whileTrue' with: '[| `@temps | ``@.Statements. ``@object] whileFalse';
 		replace: '[| `@temps | ``@.Statements. ``@object not] whileFalse' with: '[| `@temps | ``@.Statements. ``@object] whileTrue';
+		
+		replace: 'self assert: `@arg not' with: 'self deny: `@arg';
+		replace: 'self deny: `@arg not' with: 'self assert: `@arg';
+		replace: 'self assert: `@arg1 equals: `@arg2 not' with: 'self deny: `@arg1 equals: `@arg2' when: [ :n | self minimalPharoVersion >= 7 ];
+		replace: 'self assert: `@arg1 not equals: `@arg2' with: 'self deny: `@arg1 equals: `@arg2' when: [ :n | self minimalPharoVersion >= 7 ];
+		replace: 'self deny: `@arg1 equals: `@arg2 not' with: 'self assert: `@arg1 equals: `@arg2';
+		replace: 'self deny: `@arg1 not equals: `@arg2' with: 'self assert: `@arg1 equals: `@arg2';
 	
 		yourself
 ]

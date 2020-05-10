@@ -543,6 +543,12 @@ Chanel remove some unecessary call to `not` to make code easier to read. Here is
 | `[ a not] whileFalse: y` | `[ a] whileTrue: y` |
 | `[ a not] whileTrue` | `[ a] whileFalse` |
 | `[ a not] whileFalse` | `[ a] whileTrue` |
+| `self assert: x not` | `self deny: x` |
+| `self deny: x not` | `self assert: x` |
+| `self assert: x equals: y not` | `self deny: x equals: y` |
+| `self assert: x not equals: y` | `self deny: x equals: y` |
+| `self deny: x equals: y not` | `self assert: x equals: y` |
+| `self deny: x not equals: y` | `self assert: x equals: y` |
 
 *Conditions for the cleanings to by applied:*
 - Can be applied on any classes and traits.
