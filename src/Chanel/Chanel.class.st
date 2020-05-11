@@ -82,7 +82,7 @@ Chanel
 	perfume: packages
 	using: {
 		' , ('.
-		' join: ((ChanelAbstractCleaner cleaners sort: #priority ascending) collect: #name)) , '
+		' join: ((MalTopologicalSorting sort: (ChanelAbstractCleaner cleaners) followingIncomingProperty: #requirements) collect: #name)) , '
 	}
 	forPharo: minimalPharoVersion'
 ]
