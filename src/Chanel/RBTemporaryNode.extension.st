@@ -23,7 +23,7 @@ RBTemporaryNode >> inlineAssignment [
 	"Replace the assignment in which I am by its value without the assignation to the temporary."
 
 	self parent isAssignment
-		ifTrue: [ self parent replaceWith: self parent value ]
+		ifTrue: [ self parent inline ]
 		ifFalse: [ "This might happen for dead temporaries. See testRemoveTemporary2." self removeFromTree ]
 ]
 

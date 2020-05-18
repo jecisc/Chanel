@@ -6,6 +6,11 @@ RBAssignmentNode >> canHaveUselessChildren [
 ]
 
 { #category : #'*Chanel' }
+RBAssignmentNode >> inline [
+	self replaceWith: self value
+]
+
+{ #category : #'*Chanel' }
 RBAssignmentNode >> removeAssignations [
 	"In case the assignation is in an assignation, we want to remove the parent aswel."
 
