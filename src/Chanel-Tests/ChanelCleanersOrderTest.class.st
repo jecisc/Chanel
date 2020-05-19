@@ -20,6 +20,16 @@ ChanelCleanersOrderTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelCleanersOrderTest >> testAliasAndExtractAssignationBeforeNilConditionalsBeforeCutConditionalBranches [
+	self
+		assert: 'self patate notNil ifFalse: [ test := nil ] ifTrue: [ test := 3 ].'
+		isRewrittenAs: 'test := self patate ifNotNil: [ 3 ]'
+		using:
+			{ChanelExtractAssignationsFromConditionals . ChanelNilConditionalSimplifierCleaner . ChanelCutConditionalBranchesCleaner.
+			ChanelMethodAliasesCleaner}
+]
+
+{ #category : #tests }
 ChanelCleanersOrderTest >> testAliasAndExtractReturnBeforeNilConditionalsBeforeCutConditionalBranches [
 	self
 		assert: 'self patate notNil ifFalse: [ ^ nil ] ifTrue: [ ^ 3 ].'
@@ -119,6 +129,14 @@ ChanelCleanersOrderTest >> testExtractReturnBeforeCutConditionals [
 		assert: 'self toto ifNil: [ ^ 1 ] ifNotNil: [ :e | ^ e ]'
 		isRewrittenAs: '^self toto ifNil: [ 1 ]'
 		using: {ChanelCutConditionalBranchesCleaner . ChanelExtractReturnFromAllBranchesCleaner}
+]
+
+{ #category : #tests }
+ChanelCleanersOrderTest >> testExtractassignationBeforeCutConditionals [
+	self
+		assert: 'self toto ifNil: [ test := 1 ] ifNotNil: [ :e | test := e ]'
+		isRewrittenAs: 'test := self toto ifNil: [ 1 ]'
+		using: {ChanelCutConditionalBranchesCleaner . ChanelExtractAssignationsFromConditionals}
 ]
 
 { #category : #tests }

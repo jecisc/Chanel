@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 ChanelCutConditionalBranchesCleaner class >> requirements [
-	^ { ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelEmptyConditionalSimplifierCleaner }
+	^ { ChanelExtractAssignationsFromConditionals . ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelEmptyConditionalSimplifierCleaner }
 ]
 
 { #category : #cleaning }

@@ -15,260 +15,104 @@ ChanelExtractReturnFromAllBranchesCleanerTest >> setUp [
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfABranchIsASymbol [
-	| oldMethod |
-	class
-		compile:
-			'method
-  self toto ifNil: [ ^ 1 ] ifNotNil: #yourself'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-
-	self
-		assert: (class >> #method) sourceCode
-		equals:
-			'method
-  self toto ifNil: [ ^ 1 ] ifNotNil: #yourself'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: 'self toto ifNil: [ ^ 1 ] ifNotNil: #yourself'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfAlreadyOutside [
-	| oldMethod |
-	class
-		compile:
-			'method
-  ^ self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-
-	self
-		assert: (class >> #method) sourceCode
-		equals:
-			'method
-  ^ self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: '^ self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfInACascade [
-	| oldMethod |
-	class compile: 'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]; bar'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]; bar'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]; bar'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfMessageIsNotTheLastStatement [
-	| oldMethod |
-	class
-		compile:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ].
-  self bar'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-
-	self
-		assert: (class >> #method) sourceCode
-		equals:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ].
-  self bar'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ].
+  self bar'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfOnBranchDoesNotHaveOne [
-	| oldMethod |
-	class
-		compile:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ 2 ]'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-
-	self
-		assert: (class >> #method) sourceCode
-		equals:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ 2 ]'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ 2 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfReturnIsNotTheLastStatement [
-	| oldMethod |
-	class
-		compile:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ self foo ifTrue: [ ^ 2 ] ]'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-
-	self
-		assert: (class >> #method) sourceCode
-		equals:
-			'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ self foo ifTrue: [ ^ 2 ] ]'.
-
-	self assert: oldMethod identicalTo: class >> #method
+	self denyIsRewritten: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ self foo ifTrue: [ ^ 2 ] ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnDoesNotFailForConditonsInConditions [
-	class compile: 'method
-	self toto1 ifTrue: [ self toto2 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ] ifFalse: [ 3 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  self toto1 ifTrue: [ ^self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
+	self
+		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ] ifFalse: [ 3 ]'
+		isRewrittenAs: 'self toto1 ifTrue: [ ^self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnDoesNotFailIfThereIsAlreadyAReturn [
-	class compile: 'method
-  ^self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
+	self assert: '^self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]' isRewrittenAs: '^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfEmptyIfNotEmpty [
-	class compile: 'method
-  self toto ifEmpty: [ ^ 2 ] ifNotEmpty: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifEmpty: [ 2 ] ifNotEmpty: [ 1 ]'
+	self assert: 'self toto ifEmpty: [ ^ 2 ] ifNotEmpty: [ ^ 1 ]' isRewrittenAs: '^self toto ifEmpty: [ 2 ] ifNotEmpty: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfExistsIfAbsent [
-	class compile: 'method
-  self toto ifExists: [ ^ 2 ] ifAbsent: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifExists: [ 2 ] ifAbsent: [ 1 ]'
+	self assert: 'self toto ifExists: [ ^ 2 ] ifAbsent: [ ^ 1 ]' isRewrittenAs: '^self toto ifExists: [ 2 ] ifAbsent: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfFalseIfTrue [
-	class compile: 'method
-  self toto ifFalse: [ ^ 2 ] ifTrue: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifFalse: [ 2 ] ifTrue: [ 1 ]'
+	self assert: 'self toto ifFalse: [ ^ 2 ] ifTrue: [ ^ 1 ]' isRewrittenAs: '^self toto ifFalse: [ 2 ] ifTrue: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfNilIfNotNil [
-	class compile: 'method
-  self toto ifNil: [ ^ 2 ] ifNotNil: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifNil: [ 2 ] ifNotNil: [ 1 ]'
+	self assert: 'self toto ifNil: [ ^ 2 ] ifNotNil: [ ^ 1 ]' isRewrittenAs: '^self toto ifNil: [ 2 ] ifNotNil: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfNotEmptyIfEmpty [
-	class compile: 'method
-  self toto ifNotEmpty: [ ^ 2 ] ifEmpty: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifNotEmpty: [ 2 ] ifEmpty: [ 1 ]'
+	self assert: 'self toto ifNotEmpty: [ ^ 2 ] ifEmpty: [ ^ 1 ]' isRewrittenAs: '^self toto ifNotEmpty: [ 2 ] ifEmpty: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfNotNilIfNil [
-	class compile: 'method
-  self toto ifNotNil: [ ^ 2 ] ifNil: [ ^ 1 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifNotNil: [ 2 ] ifNil: [ 1 ]'
+	self assert: 'self toto ifNotNil: [ ^ 2 ] ifNil: [ ^ 1 ]' isRewrittenAs: '^self toto ifNotNil: [ 2 ] ifNil: [ 1 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfTrueIfFalse [
-	class compile: 'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
+	self assert: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]' isRewrittenAs: '^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnFromIfTrueIfFalseWithOtherStatements [
-	class compile: 'method
-  self toto ifTrue: [ self foo. ^ 1 ] ifFalse: [ ^ self bar ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto ifTrue: [ self foo.
+	self assert: 'self toto ifTrue: [ self foo. ^ 1 ] ifFalse: [ ^ self bar ]' isRewrittenAs: '^self toto ifTrue: [ self foo.
         1 ] ifFalse: [ self bar ]'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnIfTheLastStatementOfABlock [
-	class compile: 'method
-  self foo ifTrue: [ self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ].
-  self bar'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  self foo ifTrue: [ ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ] ].
+	self
+		assert:
+			'self foo ifTrue: [ self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ].
+  self bar'
+		isRewrittenAs:
+			'self foo ifTrue: [ ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ] ].
   self bar'
 ]
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnInNestedConditions [
-	class compile: 'method
-	self toto1 ifTrue: [ self toto2 ifTrue: [ ^1 ] ifFalse: [ ^2 ] ] ifFalse: [ ^3 ]'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^self toto1 ifTrue: [ self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
+	self
+		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ ^1 ] ifFalse: [ ^2 ] ] ifFalse: [ ^3 ]'
+		isRewrittenAs: '^self toto1 ifTrue: [ self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
 ]
 
 { #category : #tests }
@@ -297,11 +141,5 @@ ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnInTrait [
 
 { #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnOnClassSide [
-	class class compile: 'method
-  self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]'.
-
-	self runCleaner.
-	
-	self assert: (class class >> #method) sourceCode equals: 'method
-  ^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
+	self assert: 'self toto ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]' isRewrittenAs: '^self toto ifTrue: [ 1 ] ifFalse: [ 2 ]' in: class class
 ]

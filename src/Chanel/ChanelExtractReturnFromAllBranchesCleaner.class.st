@@ -27,7 +27,7 @@ ChanelExtractReturnFromAllBranchesCleaner >> cleanASTs: aCollectionOfMethods [
 		| #isConditionNecessarilyExecutingABranch selectIt
 		| [ :node | node arguments allSatisfy: #isBlock ] selectIt
 		| [ :node | node arguments allSatisfy: #lastStatementIsReturn ] selectIt
-		| [ :node | node arguments do: #inlineLastReturn ] doIt
+		| [ :node | node arguments do: #inlineLastStatement ] doIt
 		| #wrapsInReturn doIt
 		| #methodNode collectIt
 		> Set) ifNotEmpty: [ :updatedASTs | self cleanASTs: updatedASTs. updatedASTs ]

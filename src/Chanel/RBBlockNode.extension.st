@@ -1,8 +1,20 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Chanel' }
-RBBlockNode >> inlineLastReturn [
+RBBlockNode >> inlineLastStatement [
 	self statements last inline
+]
+
+{ #category : #'*Chanel' }
+RBBlockNode >> lastAssignmentVariable [
+	"We know that the last statement is an assignment. We want to return its value."
+
+	^ self statements last variable
+]
+
+{ #category : #'*Chanel' }
+RBBlockNode >> lastStatementIsAssignment [
+	^ self statements last isAssignment
 ]
 
 { #category : #'*Chanel' }
