@@ -33,6 +33,22 @@ ChanelAbstractCleanerTest >> actualClass [
 ]
 
 { #category : #helpers }
+ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected [
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	self assert: original isRewrittenAs: expected in: class
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> assert: original isRewrittenAs: expected in: aClass [
+	aClass compile: (self methodBodyFor: original).
+
+	self runCleaner.
+
+	self assert: (aClass >> self selector) sourceCode equals: (self methodBodyFor: expected)
+]
+
+{ #category : #helpers }
 ChanelAbstractCleanerTest >> createClassNamed: aSymbol [
 	^ self createSubclassOf: Object named: aSymbol
 ]
@@ -79,6 +95,21 @@ ChanelAbstractCleanerTest >> defaultClassName [
 { #category : #accessing }
 ChanelAbstractCleanerTest >> defaultTraitName [
 	^ ('T' , self defaultClassName) asSymbol
+]
+
+{ #category : #helpers }
+ChanelAbstractCleanerTest >> denyIsRewritten: aString [
+	| oldMethod |
+	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
+
+	class compile: (self methodBodyFor: aString).
+
+	oldMethod := class >> self selector.
+	self runCleaner.
+
+	self assert: (class >> self selector) sourceCode equals: (self methodBodyFor: aString).
+
+	self assert: class >> self selector identicalTo: oldMethod
 ]
 
 { #category : #running }

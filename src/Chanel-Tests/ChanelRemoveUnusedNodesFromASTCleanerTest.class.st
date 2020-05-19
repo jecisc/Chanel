@@ -15,247 +15,137 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> setUp [
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInAssignation [
-	| oldMethod |
-	class compile: 'method
-  test := 1'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  test := 1'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: 'test := 1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInByteArray [
-	| oldMethod |
-	class compile: 'method
-  ^#[1]'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^#[1]'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '^#[1]'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInDynamicArray [
-	| oldMethod |
-	class compile: 'method
-  ^{ 1 }'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^{ 1 }'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '^{ 1 }'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInLiteralArray [
-	| oldMethod |
-	class compile: 'method
-  ^#(1)'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^#(1)'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '^#(1)'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInPragma [
-	| oldMethod |
-	class compile: 'method
-  <test: 1>'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  <test: 1>'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '<test: 1>'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInReturn [
-	| oldMethod |
-	class compile: 'method
-  ^1'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  ^1'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesReceivingMessages [
-	| oldMethod |
-	class compile: 'method
-  1 asString'.
-
-	oldMethod := class >> #method.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  1 asString'.
-
-	self assert: (class >> #method) equals: oldMethod
+	self denyIsRewritten: '1 asString'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemove2UselessNodes [
-	class compile: 'method
-  ''test''.
+	self
+		assert:
+			'''test''.
   #test2.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessArgumentRead [
-	class compile: 'method: test
-  test.
-  ^test'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method:) sourceCode equals: 'method: test
+	self
+		assert:
+			'test.
   ^test'
+		isRewrittenAs: '^test'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBlock [
-	class compile: 'method
-  [ ^ 2 ].
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'[ ^ 2 ].
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBoolean [
-	class compile: 'method
-  true.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'true.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessByteArray [
-	class compile: 'method
-  #[1].
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'#[1].
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessDynamicArray [
-	class compile: 'method
-  { 1 . 2 }.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'{ 1 . 2 }.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessGlobal [
-	class compile: 'method
-  Object.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'Object.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessInstanceVariableRead [
-	class compile: 'method
-  test.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'test.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessLiteralArray [
-	class compile: 'method
-  #(1 2).
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'#(1 2).
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNil [
-	class compile: 'method
-  nil.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'nil.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInAnUnselessNode [
-	class compile: 'method
-  [''test''].
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'[''test''].
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
@@ -279,100 +169,78 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInTrait [
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeOnClassSide [
-	class class compile: 'method
-  ''test''.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'''test''.
   ^1'
+		isRewrittenAs: '^1'
+		in: class class
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNumber [
-	class compile: 'method
-  10.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'10.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSelf [
-	class compile: 'method
-  self.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'self.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessString [
-	class compile: 'method
-  ''test''.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'''test''.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSuper [
-	class compile: 'method
-  super.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'super.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSymbol [
-	class compile: 'method
-  #test.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'#test.
   ^1'
+		isRewrittenAs: '^1'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessTemporaryRead [
-	class compile: 'method
-  | test |
+	self
+		assert:
+			'| test |
   test := 2.
   test.
-  ^test'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
-  | test |
+  ^test'
+		isRewrittenAs:
+			'| test |
   test := 2.
   ^test'
 ]
 
 { #category : #tests }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessThisContext [
-	class compile: 'method
-  thisContext.
-  ^1'.
-
-	self runCleaner.
-	
-	self assert: (class >> #method) sourceCode equals: 'method
+	self
+		assert:
+			'thisContext.
   ^1'
+		isRewrittenAs: '^1'
 ]

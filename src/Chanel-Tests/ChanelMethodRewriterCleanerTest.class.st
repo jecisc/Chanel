@@ -12,22 +12,6 @@ ChanelMethodRewriterCleanerTest class >> isAbstract [
 	^ self = ChanelMethodRewriterCleanerTest
 ]
 
-{ #category : #helpers }
-ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected [
-	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
-
-	self assert: original isRewrittenAs: expected in: class
-]
-
-{ #category : #helpers }
-ChanelMethodRewriterCleanerTest >> assert: original isRewrittenAs: expected in: aClass [
-	aClass compile: (self methodBodyFor: original).
-
-	self runCleaner.
-
-	self assert: (aClass >> self selector) sourceCode equals: (self methodBodyFor: expected)
-]
-
 { #category : #tests }
 ChanelMethodRewriterCleanerTest >> assertReplacementWasDoneIn: trait [
 	self assert: (trait >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair value).
@@ -46,21 +30,6 @@ ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger
 	oldMethod := class >> self selector.
 
 	self runCleanerForPharo: anInteger.
-
-	self assert: class >> self selector identicalTo: oldMethod
-]
-
-{ #category : #helpers }
-ChanelMethodRewriterCleanerTest >> denyIsRewritten: aString [
-	| oldMethod |
-	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
-
-	class compile: (self methodBodyFor: aString).
-
-	oldMethod := class >> self selector.
-	self runCleaner.
-
-	self assert: (class >> self selector) sourceCode equals: (self methodBodyFor: aString).
 
 	self assert: class >> self selector identicalTo: oldMethod
 ]

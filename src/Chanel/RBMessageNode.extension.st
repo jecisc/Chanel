@@ -10,6 +10,9 @@ RBMessageNode >> inlineAssignationFromArguments [
 	| variable |
 	variable := self arguments anyOne lastAssignmentVariable.
 	self arguments do: #inlineLastStatement.
+
+	"If my parent is an assignment with the same name, then it's useless to wrap me in another assigment."
+	(self parent isAssignment and: [ self parent variable = variable ]) ifTrue: [ ^ self ].
 	self replaceWith: (RBAssignmentNode variable: variable value: self copy)
 ]
 

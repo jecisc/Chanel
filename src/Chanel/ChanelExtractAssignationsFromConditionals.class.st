@@ -23,7 +23,6 @@ ChanelExtractAssignationsFromConditionals >> cleanASTs: aCollectionOfMethods [
 		| #allChildren flatCollectIt
 		| #isMessage selectIt
 		| #isCascaded rejectIt
-		| [ :node | node parent isLast: node ] selectIt
 		| #isConditionNecessarilyExecutingABranch selectIt
 		| [ :node | node arguments allSatisfy: #isBlock ] selectIt
 		| [ :node | node arguments allSatisfy: #lastStatementIsAssignment ] selectIt
