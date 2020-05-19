@@ -594,3 +594,25 @@ List of supported conditionals:
 *Warnings:*
 This cleaning should not have any counter indication.
 
+### Extract assignations from conditionals
+
+In case a conditional ends with an assignation to the same variable in all its branches, `Chanel` tries to extract it.
+
+List of supported conditionals:
+- `#ifTrue:ifFalse:` 
+- `#ifFalse:ifTrue:` 
+- `#ifNil:ifNotNil:` 
+- `#ifNotNil:ifNil:` 
+- `#ifEmpty:ifNotEmpty:` 
+- `#ifNotEmpty:ifEmpty:`
+-  `#ifExists:ifAbsent:`
+
+*Conditions for the cleanings to by applied:*
+- The AST node is a message.
+- The node is not in a cascade.
+- The node selector matches a selector above.
+- All arguments are blocks (none should be symbol).
+- All arguments should have an assignation of the same name as last statement.
+
+*Warnings:*
+This cleaning should not have any counter indication.
