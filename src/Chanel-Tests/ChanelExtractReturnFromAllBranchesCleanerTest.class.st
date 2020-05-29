@@ -45,6 +45,11 @@ ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotExtractReturnIfRetur
 ]
 
 { #category : #tests }
+ChanelExtractReturnFromAllBranchesCleanerTest >> testDoesNotFailIfWeHaveEmptyBlocks [
+	self denyIsRewritten: 'self toto ifNil: [ ] ifNotNil: [ ^ 1 ]'
+]
+
+{ #category : #tests }
 ChanelExtractReturnFromAllBranchesCleanerTest >> testExtractReturnDoesNotFailForConditonsInConditions [
 	self
 		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ] ] ifFalse: [ 3 ]'

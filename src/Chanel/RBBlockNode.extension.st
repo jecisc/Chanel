@@ -14,10 +14,10 @@ RBBlockNode >> lastAssignmentVariable [
 
 { #category : #'*Chanel' }
 RBBlockNode >> lastStatementIsAssignment [
-	^ self statements last isAssignment
+	^ self statements ifEmpty: [ false ] ifNotEmpty: [ :s | s last isAssignment ]
 ]
 
 { #category : #'*Chanel' }
 RBBlockNode >> lastStatementIsReturn [
-	^ self statements last isReturn
+	^ self statements ifEmpty: [ false ] ifNotEmpty: [ :s | s last isReturn ]
 ]

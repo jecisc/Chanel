@@ -39,6 +39,11 @@ ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIf
 ]
 
 { #category : #tests }
+ChanelExtractAssignationsFromConditionalsTest >> testDoesNotFailIfWeHaveEmptyBlocks [
+	self denyIsRewritten: 'self toto ifNil: [ ] ifNotNil: [ toto := 1 ]'
+]
+
+{ #category : #tests }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationDoesNotFailForConditonsInConditions [
 	self
 		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ test := 1 ] ifFalse: [ test := 2 ] ] ifFalse: [ 3 ]'
