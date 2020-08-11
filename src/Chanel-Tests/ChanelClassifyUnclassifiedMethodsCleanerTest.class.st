@@ -13,7 +13,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> setUp [
 	class := self createDefaultClass
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCannotCategorizeUncategorizedMethodNotPresentInProtocolOrganizer [
 	class compile: 'badetitou'. 
 	
@@ -24,7 +24,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testCannotCategorizeUncategorize
 	self assert: (class >> #badetitou) protocol equals: 'as yet unclassified'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedClassMethod [
 	class class compile: 'initialize'. 
 	
@@ -35,7 +35,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedClass
 	self deny: (class class >> #initialize) protocol equals: 'as yet unclassified'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMethod [
 	class compile: 'initialize'. 
 	
@@ -46,7 +46,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMetho
 	self deny: (class >> #initialize) protocol equals: 'as yet unclassified'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMethodFromTrait [
 	class := self createDefaultTrait.
 
@@ -59,7 +59,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMetho
 	self deny: (class >> #initialize) protocol equals: 'as yet unclassified'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeCategorizedMethod [
 	class compile: 'initialize' classified: 'peacock'. 
 	
@@ -68,7 +68,7 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeCategorizedMet
 	self assert: (class >> #initialize) protocol equals: 'peacock'
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeExtensionMethods [
 	class compile: 'initialize' classified: self extensionProtocol. 
 	

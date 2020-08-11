@@ -7,29 +7,32 @@ Class {
 	#category : #BaselineOfChanel
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfChanel >> baseline: spec [
 	<baseline>
-	spec
-		for: #common
-		do: [ self
-				iterators: spec;
-				tinyLogger: spec.
+	spec for: #common do: [ 
+		self
+			iterators: spec;
+			tinyLogger: spec.
 
-			spec
-				package: 'Chanel' with: [ spec requires: #('Iterators' 'TinyLogger') ];
-				package: 'Chanel-Tests' with: [ spec requires: #('Chanel') ].
+		spec
+			package: 'Chanel' with: [ spec requires: #( 'Iterators' 'TinyLogger' ) ];
+			package: 'Chanel-Tests' with: [ spec requires: #( 'Chanel' ) ].
 
-			spec
-				group: 'Core' with: #('Chanel');
-				group: 'Tests' with: #('Chanel-Tests') ].
+		spec
+			group: 'Core' with: #( 'Chanel' );
+			group: 'Tests' with: #( 'Chanel-Tests' ) ].
 
-	spec
-		for: #(#'pharo7.x')
-		do: [ self pharoBackwardCompatibility: spec.
-			spec
-				package: 'Chanel-Pharo7';
-				package: 'Chanel-Tests' with: [ spec requires: #('Chanel-Pharo7' 'PharoBackwardCompatibility') ] ]
+	spec for: #( #'pharo7.x' ) do: [ 
+		self pharoBackwardCompatibility: spec.
+		spec
+			package: 'Chanel-Pharo7';
+			package: 'Chanel-Tests' with: [ spec requires: #( 'Chanel-Pharo7' 'PharoBackwardCompatibility' ) ] ].
+
+	spec for: #( #'pharo7.x' #'pharo8.x' ) do: [ 
+		spec
+			package: 'Chanel-Pharo8';
+			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo8' ) ] ]
 ]
 
 { #category : #dependencies }
