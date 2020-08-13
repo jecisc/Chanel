@@ -1,7 +1,13 @@
 <!--
-git log --pretty="* %s ([%h](https://github.com/jecisc/Chanel/commit/%H))" v1.1.0...HEAD --grep="Merge pull" 
+git log --pretty="* %s ([%h](https://github.com/jecisc/Chanel/commit/%H))" v1.1.1...HEAD --grep="Merge pull" 
 ('Content' copyWithRegex: 'Merge pull request #[0-9]+ from [^/]+/[0-9]*' matchesReplacedWith: '') copyReplaceAll: '-' with: ' '
 -->
+
+# [v1.1.1](https://github.com/jecisc/TinyLogger/compare/v1.1.0...v1.1.1) (2020-08-13)
+
+## Bug fixes
+
+* Fix Pharo 9 compatibility ([23e5380](https://github.com/jecisc/Chanel/commit/23e53808e0f10083f660bee1a1a615c9f765d837))
 
 # [v1.1.0](https://github.com/jecisc/TinyLogger/compare/v1.0.0...v1.1.0) (2020-06-01)
 
