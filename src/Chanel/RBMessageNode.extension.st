@@ -35,7 +35,7 @@ RBMessageNode >> isSuperSendTo: aSelector [
 
 { #category : #'*Chanel' }
 RBMessageNode class >> superSendTo: aSelector [
-	^ self receiver: (RBVariableNode named: #super) selector: aSelector
+  ^self receiver: RBVariableNode superNode selector: aSelector
 ]
 
 { #category : #'*Chanel' }
