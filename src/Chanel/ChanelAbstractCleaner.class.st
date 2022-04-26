@@ -54,6 +54,13 @@ ChanelAbstractCleaner class >> isAvailableForPharo: anInteger [
 ]
 
 { #category : #accessing }
+ChanelAbstractCleaner class >> model [
+  self flag: #pharo10.
+  
+  "This is because in P9 and before AITopologicalSorting class>>#sort:followingIncomingProperty: was returning nodes and now is returning the elements. Thus we keep that for compatibility until P10 is the latest version supported."^self
+]
+
+{ #category : #accessing }
 ChanelAbstractCleaner class >> requirements [
 	"Returns the list of cleaners that should run before this cleaner"
 
