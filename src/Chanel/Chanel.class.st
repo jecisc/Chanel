@@ -82,7 +82,7 @@ Chanel
 	perfume: packages
 	using: {
 		' , ('.
-		' join: ((MalTopologicalSorting sort: (ChanelAbstractCleaner cleaners) followingIncomingProperty: #requirements) collect: #name)) , '
+		' join: ((AITopologicalSorting sort: (ChanelAbstractCleaner cleaners) followingIncomingProperty: #requirements) collect: #name)) , '
 	}
 	forPharo: minimalPharoVersion'
 ]
@@ -140,7 +140,7 @@ Chanel class >> worldMenuOn: aBuilder [
 Chanel >> cleanUsing: cleaners [
 	"Use topological sort to sort the cleaners to get the best effect possible with this set of cleaners."
 
-	self cleanWithSelectedCleaners: (MalTopologicalSorting sort: (cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ]) followingIncomingProperty: #requirements)
+	self cleanWithSelectedCleaners: (AITopologicalSorting sort: (cleaners select: [ :each | each isAvailableForPharo: self minimalPharoVersion ]) followingIncomingProperty: #requirements)
 ]
 
 { #category : #cleaning }
