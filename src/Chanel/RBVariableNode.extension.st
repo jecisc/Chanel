@@ -6,10 +6,10 @@ RBVariableNode >> canBeUselessNode [
 	Pharo AST has a bug to know if a temporary is a declaration or a usage. See https://github.com/pharo-project/pharo/issues/6277
 	
 	This hack checks if the temporary is directly in its parent statements since declarations are not in the statements. In that case it's a candidate for removal."
-	self isTemp ifTrue: [ ^ self parent statements includes: self ].
+	self isTempVariable ifTrue: [ ^ self parent statements includes: self ].
 	
 	"If the parent of an arg is a method node, then it's probably the argument definition."
-	self isArgument  ifTrue: [ ^ self parent isMethod not ].
+	self isArgumentVariable  ifTrue: [ ^ self parent isMethod not ].
 	
 	^ super canBeUselessNode
 ]
