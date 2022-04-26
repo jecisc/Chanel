@@ -47,5 +47,5 @@ RBVariableNode >> isNotReadOnce [
 
 { #category : #'*Chanel' }
 RBVariableNode >> isTempNamed: aSymbol [
-	^ self isTemp and: [ self name = aSymbol ]
+	^ self isTempVariable and: [ self name = aSymbol ]
 ]
