@@ -49,5 +49,9 @@ RBVariableNode >> isNotReadOnce [
 
 { #category : #'*Chanel' }
 RBVariableNode >> isTempNamed: aSymbol [
-	^ self isTempVariable and: [ self name = aSymbol ]
+
+	^ self class environment
+		  at: #CopiedLocalVariable
+		  ifPresent: [ :c | (self isTempVariable or: [ variable isKindOf: c ]) and: [ self name = aSymbol ] ]
+		  ifAbsent: [ self isTempVariable and: [ self name = aSymbol ] ]
 ]
