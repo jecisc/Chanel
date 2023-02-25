@@ -21,5 +21,6 @@ ChanelTestCaseNameCleaner >> clean [
 { #category : #cleaning }
 ChanelTestCaseNameCleaner >> rename: class as: aString [
 	('Renaming ' , class name , ' to ' , aString) record.
-	(RBRenameClassRefactoring rename: class to: aString) execute
+	self flag: #pharo11.
+	(RBRenameClassRefactoring rename: (SystemVersion current major < 11 ifTrue: [ class ] ifFalse: [ class name ]) to: aString) execute
 ]
