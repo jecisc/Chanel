@@ -165,6 +165,14 @@ ChanelRemoveUnecesaryNotCleanerTest >> testNotNot [
 ]
 
 { #category : #tests }
+ChanelRemoveUnecesaryNotCleanerTest >> testRegression1 [
+	self denyIsRewritten: '| rewriter |
+	rewriter := self rewriter.
+	(self scope flatCollect: [ :class | class localMethods , class class localMethods ])
+		do: [ :method | (rewriter executeTree: method ast) ifTrue: [ method installAST ] ]'
+]
+
+{ #category : #tests }
 ChanelRemoveUnecesaryNotCleanerTest >> testRejectNot [
 	self assert: '#() reject: [:e | e odd not ]' isRewrittenAs: '#() select: [:e |  e odd ]'
 ]
