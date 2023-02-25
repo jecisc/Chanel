@@ -59,10 +59,10 @@ Chanel class >> logger: anObject [
 
 { #category : #'world menu' }
 Chanel class >> openWorkspaceToCleanProject [
-	GTPlayground
-		openContents:
-			'projectName := ''Chanel''. "The project name in Iceberg"
-minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
+
+	Smalltalk tools workspace openContents: 'projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := ' , SystemVersion current major asString
+		, '. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
@@ -71,10 +71,10 @@ Chanel perfume: packages forPharo: minimalPharoVersion'
 
 { #category : #'world menu' }
 Chanel class >> openWorkspaceToCleanProjectWithSomeCleaners [
-	GTPlayground
-		openContents:
-			'projectName := ''Chanel''. "The project name in Iceberg"
-minimalPharoVersion := 9. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
+
+	Smalltalk tools workspace openContents: 'projectName := ''Chanel''. "The project name in Iceberg"
+minimalPharoVersion := ' , SystemVersion current major asString
+		, '. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
 			
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
@@ -82,7 +82,7 @@ Chanel
 	perfume: packages
 	using: {
 		' , ('.
-		' join: ((AITopologicalSorting sort: (ChanelAbstractCleaner cleaners) followingIncomingProperty: #requirements) reverse collect: #name)) , '
+		' join: ((AITopologicalSorting sort: ChanelAbstractCleaner cleaners followingIncomingProperty: #requirements) reverse collect: #name)) , '
 	}
 	forPharo: minimalPharoVersion'
 ]
