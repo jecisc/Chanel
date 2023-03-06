@@ -616,3 +616,13 @@ List of supported conditionals:
 
 *Warnings:*
 This cleaning should not have any counter indication.
+
+### Condense sources
+
+A cleaner will take care of removing the useless spaces at the end of lines and the final dots of methods.
+
+*Conditions for the cleanings to by applied:*
+- It exists a useless space at the end of a line or a final dot at the end of the method.
+
+*Warnings:*
+This can remove final spaces at the end of a line in a String.
