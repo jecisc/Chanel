@@ -2,9 +2,9 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Chanel' }
 RBProgramNode >> allParents [
-	^ parent 
+	^ parent
 		ifNil: [ OrderedCollection new ]
-		ifNotNil: [ 
+		ifNotNil: [
 			parent allParents
 				addLast: parent;
 				yourself ]

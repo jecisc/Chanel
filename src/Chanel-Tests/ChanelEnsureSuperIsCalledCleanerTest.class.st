@@ -183,7 +183,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpInTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
 
 	trait compile: 'setUp
@@ -200,7 +200,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpInTrait [
 
 	self assert: (trait localSelectors includes: #setUp).
 	self deny: (class localSelectors includes: #setUp)
-
 ]
 
 { #category : #'tests - setup' }
@@ -285,7 +284,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownInTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
 
 	trait compile: 'tearDown
@@ -302,7 +301,6 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownInTrait [
 
 	self assert: (trait localSelectors includes: #tearDown).
 	self deny: (class localSelectors includes: #tearDown)
-
 ]
 
 { #category : #'tests - teardown' }

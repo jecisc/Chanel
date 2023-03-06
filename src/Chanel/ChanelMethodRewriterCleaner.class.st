@@ -26,7 +26,7 @@ ChanelMethodRewriterCleaner >> clean [
 { #category : #cleaning }
 ChanelMethodRewriterCleaner >> rewriter [
 	"Return the rewriter to use to clean the methods."
-	
+
 	^ self subclassResponsibility
 ]
 

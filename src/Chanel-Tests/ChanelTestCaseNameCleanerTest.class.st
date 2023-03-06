@@ -37,7 +37,7 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferenc
 
 	self class environment
 		at: 'ChanelMockTest' asSymbol
-		ifPresent: [ :c | 
+		ifPresent: [ :c |
 			self
 				assert: (c >> #test1) sourceCode
 				equals:

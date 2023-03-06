@@ -63,7 +63,7 @@ Chanel class >> openWorkspaceToCleanProject [
 	Smalltalk tools workspace openContents: 'projectName := ''Chanel''. "The project name in Iceberg"
 minimalPharoVersion := ' , SystemVersion current major asString
 		, '. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
-			
+
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
 Chanel perfume: packages forPharo: minimalPharoVersion'
@@ -75,7 +75,7 @@ Chanel class >> openWorkspaceToCleanProjectWithSomeCleaners [
 	Smalltalk tools workspace openContents: 'projectName := ''Chanel''. "The project name in Iceberg"
 minimalPharoVersion := ' , SystemVersion current major asString
 		, '. "The minimal Pharo version on which the project should run. This disable some cleanings using API introduced in recent Pharo versions."
-			
+
 packages := ((IceRepository registry select: [ :e | e name = projectName ]) flatCollect: [ :e | e workingCopy packageNames collect: [:s | s asPackageIfAbsent: [ nil ] ]]) reject: #isNil.
 
 Chanel
@@ -152,9 +152,9 @@ Chanel >> cleanWithSelectedCleaners: cleaners [
 						displayProgress: 'Running Chanel'
 						from: 1
 						to: cleaners size
-						during: [ :bar | 
+						during: [ :bar |
 							cleaners
-								doWithIndex: [ :cleaner :index | 
+								doWithIndex: [ :cleaner :index |
 									bar
 										value: index;
 										title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.

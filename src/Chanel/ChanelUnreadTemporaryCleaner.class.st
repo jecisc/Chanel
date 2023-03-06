@@ -18,9 +18,9 @@ ChanelUnreadTemporaryCleaner class >> requirements [
 { #category : #cleaning }
 ChanelUnreadTemporaryCleaner >> clean [
 	self configuration localMethods
-		do: [ :method | 
+		do: [ :method |
 			(method ast allTemporaries select: #isNotReadOnce)
-				ifNotEmpty: [ :temporariesToRemove | 
+				ifNotEmpty: [ :temporariesToRemove |
 					temporariesToRemove do: #inlineTemporary.
 					method installAST ] ]
 ]

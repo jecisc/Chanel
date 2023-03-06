@@ -86,7 +86,7 @@ ChanelProtocolsCleaner >> clean [
 { #category : #cleaning }
 ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 	self protocolsToCleanMap
-		keysAndValuesDo: [ :olds :new | 
+		keysAndValuesDo: [ :olds :new |
 			methods
 				select: [ :meth | olds includes: meth protocol ]
 				thenDo: [ :meth | meth ensureProtocol: new ] ]

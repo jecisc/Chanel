@@ -159,7 +159,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInTrait [
   ^1'.
 
 	self runCleaner.
-	
+
 	self assert: (trait >> #method) sourceCode equals: 'method
   ^1'.
 

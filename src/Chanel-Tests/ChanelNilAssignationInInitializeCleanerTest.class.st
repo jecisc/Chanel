@@ -73,9 +73,9 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigment [
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentInTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
-	
+
 	trait
 		compile:
 			'initialize

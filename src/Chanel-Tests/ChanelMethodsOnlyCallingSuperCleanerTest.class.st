@@ -145,9 +145,9 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperEven
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperInTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
-	
+
 	trait
 		compile:
 			'initialize

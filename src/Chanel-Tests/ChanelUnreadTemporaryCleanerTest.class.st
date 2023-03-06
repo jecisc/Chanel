@@ -130,7 +130,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopesWithOneRe
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryInTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
 
 	trait

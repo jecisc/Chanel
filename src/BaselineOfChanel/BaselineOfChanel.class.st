@@ -10,7 +10,7 @@ Class {
 { #category : #baselines }
 BaselineOfChanel >> baseline: spec [
 	<baseline>
-	spec for: #common do: [ 
+	spec for: #common do: [
 		self
 			iterators: spec;
 			tinyLogger: spec.
@@ -23,18 +23,18 @@ BaselineOfChanel >> baseline: spec [
 			group: 'Core' with: #( 'Chanel' );
 			group: 'Tests' with: #( 'Chanel-Tests' ) ].
 
-	spec for: #( #'pharo7.x' ) do: [ 
+	spec for: #( #'pharo7.x' ) do: [
 		self pharoBackwardCompatibility: spec.
 		spec
 			package: 'Chanel-Pharo7';
 			package: 'Chanel-Tests' with: [ spec requires: #( 'Chanel-Pharo7' 'PharoBackwardCompatibility' ) ] ].
 
-	spec for: #( #'pharo7.x' #'pharo8.x' ) do: [ 
+	spec for: #( #'pharo7.x' #'pharo8.x' ) do: [
 		spec
 			package: 'Chanel-Pharo8';
 			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo8' ) ] ].
 
-	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' ) do: [ 
+	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' ) do: [
 		spec
 			package: 'Chanel-Pharo9';
 			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo9' ) ] ]

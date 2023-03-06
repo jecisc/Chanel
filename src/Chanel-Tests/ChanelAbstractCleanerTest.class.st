@@ -146,7 +146,7 @@ ChanelAbstractCleanerTest >> setUp [
 	RBProgramNode formatterClass = RBSimpleFormatter ifTrue: [ ^ self ].
 
 	previousFormater := RBProgramNode formatterClass.
-	RBProgramNode formatterClass: RBSimpleFormatter 
+	RBProgramNode formatterClass: RBSimpleFormatter
 ]
 
 { #category : #running }

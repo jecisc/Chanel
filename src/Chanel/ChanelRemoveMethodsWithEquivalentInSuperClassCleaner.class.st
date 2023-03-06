@@ -20,7 +20,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleaner >> clean [
 	| overridenMethod |
 	self configuration definedClasses iterator
 		| #isTrait rejectIt
-		| [ :class | class localMethods, class class localMethods ] flatCollectIt 
+		| [ :class | class localMethods, class class localMethods ] flatCollectIt
 		| [ :method | method methodClass superclass isNil ] rejectIt
 		| [ :method | (overridenMethod := (method methodClass superclass lookupSelector: method selector)) isNil ] rejectIt
 		| [ :method | method ast = overridenMethod ast ] selectIt

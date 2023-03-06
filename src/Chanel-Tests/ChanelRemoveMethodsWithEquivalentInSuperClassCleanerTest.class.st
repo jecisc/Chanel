@@ -14,19 +14,19 @@ Class {
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> setUp [
 	super setUp.
 	superClass := self createDefaultClass.
-	class := self createSubclassOf: superClass named: #ChanelRemoveMethodssWithSuperEquavalentSubClassFake.
+	class := self createSubclassOf: superClass named: #ChanelRemoveMethodssWithSuperEquavalentSubClassFake
 ]
 
 { #category : #tests }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testClassRemoveMethodWithEquivalentInSuperClass [
 	superClass class compile: 'methodTest
 	^2'.
-	
+
 	class class compile: 'methodTest
 	^2'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass class localSelectors includes: #methodTest).
 	self deny: (class class localSelectors includes: #methodTest)
 ]
@@ -35,9 +35,9 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testClassRemoveMetho
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMethodIfNotPresentInSuperClass [
 	class compile: 'method
 	^3'.
-	
+
 	self runCleaner.
-	
+
 	self deny: (superClass localSelectors includes: #method).
 	self assert: (class localSelectors includes: #method)
 ]
@@ -46,17 +46,17 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMet
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMethodsFromTrait [
 	| trait |
 	trait := self createDefaultTrait.
-	
+
 	class setTraitComposition: trait.
-	
+
 	superClass compile: 'method
 	^2'.
-	
+
 	trait compile: 'method
 	^3'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self deny: (class localSelectors includes: #method).
 	self assert: (trait localSelectors includes: #method)
@@ -66,12 +66,12 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMet
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNotEquivalentMethod [
 	superClass compile: 'method
 	^2'.
-	
+
 	class compile: 'method
 	^3'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self assert: (class localSelectors includes: #method)
 ]
@@ -80,13 +80,13 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNot
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNotEquivalentMethodWithPragma [
 	superClass compile: 'method
 	^2'.
-	
+
 	class compile: 'method
 	<pragma>
 	^2'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self assert: (class localSelectors includes: #method)
 ]
@@ -95,12 +95,12 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNot
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClass [
 	superClass compile: 'method
 	^2'.
-	
+
 	class compile: 'method
 	^2'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self deny: (class localSelectors includes: #method)
 ]
@@ -109,13 +109,13 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWith
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClassWithComment [
 	superClass compile: 'method
 	^2'.
-	
+
 	class compile: 'method
 	"I don''t care about comments."
 	^2'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self deny: (class localSelectors includes: #method)
 ]
@@ -124,13 +124,13 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWith
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClassWithJustCommentDifference [
 	superClass compile: 'method
 	^2'.
-	
+
 	class compile: 'method
 	"I don''t care about comments."
 	^2'.
-	
+
 	self runCleaner.
-	
+
 	self assert: (superClass localSelectors includes: #method).
 	self deny: (class localSelectors includes: #method)
 ]

@@ -22,7 +22,7 @@ ChanelCondenseMethodsCleanerTest >> testCondenseMethodsWithFinalDot [
 
 { #category : #tests }
 ChanelCondenseMethodsCleanerTest >> testCondenseMethodsWithSpaces [
-	self assert: 'self toto 
+	self assert: 'self toto
 	ifFalse: [ 2 ]
 	ifTrue: [ 1 ]' isRewrittenAs: 'self toto
 	ifFalse: [ 2 ]

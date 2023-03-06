@@ -17,7 +17,7 @@ Class {
 { #category : #cleaning }
 ChanelEnsureSuperIsCalledCleaner >> clean [
 	self configuration localMethods
-		in: [ :methods | 
+		in: [ :methods |
 			self
 				ensureSuperSetUpForMethods: methods;
 				ensureSuperTearDownForMethods: methods;
