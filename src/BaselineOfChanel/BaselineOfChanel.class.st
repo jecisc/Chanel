@@ -9,6 +9,7 @@ Class {
 
 { #category : #baselines }
 BaselineOfChanel >> baseline: spec [
+
 	<baseline>
 	spec for: #common do: [
 		self
@@ -22,6 +23,16 @@ BaselineOfChanel >> baseline: spec [
 		spec
 			group: 'Core' with: #( 'Chanel' );
 			group: 'Tests' with: #( 'Chanel-Tests' ) ].
+
+	spec for: (self pharoVersionsFrom: 11) do: [
+		spec
+			package: 'Chanel-Pharo11Plus' with: [ spec requires: #( 'Chanel' ) ];
+			package: 'Chanel-Pharo11Plus-Tests' with: [ spec requires: #( 'Chanel-Tests' 'Chanel-Pharo11Plus' ) ].
+
+
+		spec
+			group: 'Core' with: #( 'Chanel-Pharo11Plus' );
+			group: 'Tests' with: #( 'Chanel-Pharo11Plus-Tests' ) ].
 
 	spec for: #( #'pharo7.x' ) do: [
 		self pharoBackwardCompatibility: spec.
@@ -54,6 +65,11 @@ BaselineOfChanel >> pharoBackwardCompatibility: spec [
    spec
     	baseline: 'PharoBackwardCompatibility'
     	with: [ spec repository: 'github://jecisc/PharoBackwardCompatibility:v1.x.x/src' ]
+]
+
+{ #category : #baselines }
+BaselineOfChanel >> pharoVersionsFrom: aVersion [
+	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]
 
 { #category : #accessing }

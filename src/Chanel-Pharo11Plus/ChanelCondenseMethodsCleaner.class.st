@@ -7,7 +7,7 @@ I am a cleaner that removes useless spaces at the end of lines and final dots of
 Class {
 	#name : #ChanelCondenseMethodsCleaner,
 	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#category : #'Chanel-Pharo11Plus'
 }
 
 { #category : #cleaning }

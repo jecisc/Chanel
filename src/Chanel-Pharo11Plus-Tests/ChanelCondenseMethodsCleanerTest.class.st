@@ -1,7 +1,7 @@
 Class {
 	#name : #ChanelCondenseMethodsCleanerTest,
 	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#category : #'Chanel-Pharo11Plus-Tests'
 }
 
 { #category : #running }
