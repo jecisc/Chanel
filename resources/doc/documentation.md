@@ -2,6 +2,33 @@
 
 This page will list the cleanings produced by Chanel and explain the possible cases where cleanings should not be applied.
 
+- [Documentation](#documentation)
+  * [Quick start](#quick-start)
+  * [Logging changes](#logging-changes)
+  * [Cleaners descriptions](#cleaners-descriptions)
+    + [Tests equality](#tests-equality)
+    + [Clean protocols](#clean-protocols)
+    + [Nil conditional simplifications](#nil-conditional-simplifications)
+    + [Empty conditional simplifications](#empty-conditional-simplifications)
+    + [Cut conditionals branches](#cut-conditionals-branches)
+    + [Methods with alias unification](#methods-with-alias-unification)
+    + [Test case names](#test-case-names)
+    + [Ensure right super are call](#ensure-right-super-are-call)
+    + [Remove nil assignments in initialization](#remove-nil-assignments-in-initialization)
+    + [Remove methods only calling super](#remove-methods-only-calling-super)
+    + [Remove unread temporaries](#remove-unread-temporaries)
+    + [Remove duplicated methods from traits](#remove-duplicated-methods-from-traits)
+    + [Remove methods with equivalent in super classes.](#remove-methods-with-equivalent-in-super-classes)
+    + [Categorize unclassified methods](#categorize-unclassified-methods)
+    + [Empty assertions](#empty-assertions)
+    + [Remove useless nodes from AST](#remove-useless-nodes-from-ast)
+    + [Remove unecessary assignments](#remove-unecessary-assignments)
+    + [Nil equality cleaner](#nil-equality-cleaner)
+    + [Remove unecessary not](#remove-unecessary-not)
+    + [Extract return from conditionals](#extract-return-from-conditionals)
+    + [Extract assignations from conditionals](#extract-assignations-from-conditionals)
+    + [Condense sources](#condense-sources)
+
 ## Quick start
 
 It is possible to clean a collection of packages using the #perfume: method.
