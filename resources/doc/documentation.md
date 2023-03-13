@@ -111,6 +111,8 @@ Here is the list of rewrites it will apply:
 | `x deny: y == true` | `x deny: y` |
 | `x assert: y == false` | `x deny: y` |
 | `x deny: y == false` | `x assert: y` |
+| `x assert: (y closeTo: z)` | `x assert: y closeTo: z` |
+| `x deny: (y closeTo: z)` | `x deny: y closeTo: z` |
 
 *Conditions for the cleanings to by applied:*
 - Only subclasses of TestCase are cleaned.
