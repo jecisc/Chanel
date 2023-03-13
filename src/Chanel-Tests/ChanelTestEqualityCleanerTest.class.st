@@ -29,6 +29,11 @@ ChanelTestEqualityCleanerTest >> setUp [
 ]
 
 { #category : #tests }
+ChanelTestEqualityCleanerTest >> testAssertCloseTo [
+	self assert: 'self assert: (3 closeTo: 2)' isRewrittenAs: 'self assert: 3 closeTo: 2'
+]
+
+{ #category : #tests }
 ChanelTestEqualityCleanerTest >> testAssertEquals [
 	self assert: 'self assert: 3 = 2' isRewrittenAs: 'self assert: 3 equals: 2'
 ]
@@ -81,6 +86,11 @@ ChanelTestEqualityCleanerTest >> testAssertIdenticalToTrue [
 { #category : #tests }
 ChanelTestEqualityCleanerTest >> testAssertIdenticalToTrue2 [
 	self assert: 'self assert: 3 identicalTo: true' isRewrittenAs: 'self assert: 3'
+]
+
+{ #category : #tests }
+ChanelTestEqualityCleanerTest >> testDenyCloseTo [
+	self assert: 'self deny: (3 closeTo: 2)' isRewrittenAs: 'self deny: 3 closeTo: 2'
 ]
 
 { #category : #tests }

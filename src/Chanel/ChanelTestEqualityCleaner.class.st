@@ -68,6 +68,9 @@ ChanelTestEqualityCleaner >> rewriter [
 		replace: '`@receiver deny: `@arg = `@arg2' with: '`@receiver deny: `@arg equals: `@arg2' when: [ :n | self minimalPharoVersion >= 7 ];
 		replace: '`@receiver assert: `@arg == `@arg2' with: '`@receiver assert: `@arg identicalTo: `@arg2' when: [ :n | self minimalPharoVersion >= 7 ];
 		replace: '`@receiver deny: `@arg == `@arg2' with: '`@receiver deny: `@arg identicalTo: `@arg2' when: [ :n | self minimalPharoVersion >= 7 ];
+
+		replace: '`@receiver assert: (`@arg closeTo: `@arg2)' with: '`@receiver assert: `@arg closeTo: `@arg2';
+		replace: '`@receiver deny: (`@arg closeTo: `@arg2)' with: '`@receiver deny: `@arg closeTo: `@arg2';
 		yourself
 ]
 
