@@ -7,15 +7,19 @@
 [![Pharo version](https://img.shields.io/badge/Pharo-9.0-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-10-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-11-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo version](https://img.shields.io/badge/Pharo-12-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo version](https://img.shields.io/badge/Pharo-13-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo version](https://img.shields.io/badge/Pharo-14-%23aac9ff.svg)](https://pharo.org/download)
 
 Chanel is a code cleaner for Pharo. 
 
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [Documentation](#documentation)
-- [Version management](#version-management)
-- [Smalltalk versions compatibility](#smalltalk-versions-compatibility)
-- [Contact](#contact)
+- [Chanel ](#chanel-)
+	- [Installation](#installation)
+	- [Quick start](#quick-start)
+	- [Documentation](#documentation)
+	- [Version management](#version-management)
+	- [Smalltalk versions compatibility](#smalltalk-versions-compatibility)
+	- [Contact](#contact)
 
 ## Installation
 
@@ -91,8 +95,8 @@ Thus, it should be safe to depend on a fixed major version and moving minor vers
 
 | Version 	| Compatible Pharo versions 		|
 |-------------	|---------------------------	|
-| 1.x.x       	| Pharo 70, 80, 90, 10, 11		|
+| 1.x.x       	| Pharo 70, 80, 90, 10, 11, 12, 13, 14		|
 
 ## Contact
 
-If you have any questions or problems do not hesitate to open an issue or contact cyril (a) ferlicot.me 
+If you have any questions or problems do not hesitate to open an issue or contact cyril (a) ferlicot.fr
