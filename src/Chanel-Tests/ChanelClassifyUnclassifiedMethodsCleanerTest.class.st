@@ -17,33 +17,33 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> setUp [
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCannotCategorizeUncategorizedMethodNotPresentInProtocolOrganizer [
 	class compile: 'badetitou'.
 
-	self assert: (class >> #badetitou) protocol equals: 'as yet unclassified'.
+	self assert: (class >> #badetitou) protocolName equals: 'as yet unclassified'.
 
 	self runCleaner.
 
-	self assert: (class >> #badetitou) protocol equals: 'as yet unclassified'
+	self assert: (class >> #badetitou) protocolName equals: 'as yet unclassified'
 ]
 
 { #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedClassMethod [
 	class class compile: 'initialize'.
 
-	self assert: (class class >> #initialize) protocol equals: 'as yet unclassified'.
+	self assert: (class class >> #initialize) protocolName equals: 'as yet unclassified'.
 
 	self runCleaner.
 
-	self deny: (class class >> #initialize) protocol equals: 'as yet unclassified'
+	self deny: (class class >> #initialize) protocolName equals: 'as yet unclassified'
 ]
 
 { #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMethod [
 	class compile: 'initialize'.
 
-	self assert: (class >> #initialize) protocol equals: 'as yet unclassified'.
+	self assert: (class >> #initialize) protocolName equals: 'as yet unclassified'.
 
 	self runCleaner.
 
-	self deny: (class >> #initialize) protocol equals: 'as yet unclassified'
+	self deny: (class >> #initialize) protocolName equals: 'as yet unclassified'
 ]
 
 { #category : #tests }
@@ -52,11 +52,11 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testCategorizeUncategorizedMetho
 
 	class compile: 'initialize'.
 
-	self assert: (class >> #initialize) protocol equals: 'as yet unclassified'.
+	self assert: (class >> #initialize) protocolName equals: 'as yet unclassified'.
 
 	self runCleaner.
 
-	self deny: (class >> #initialize) protocol equals: 'as yet unclassified'
+	self deny: (class >> #initialize) protocolName equals: 'as yet unclassified'
 ]
 
 { #category : #tests }
@@ -65,14 +65,14 @@ ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeCategorizedMet
 
 	self runCleaner.
 
-	self assert: (class >> #initialize) protocol equals: 'peacock'
+	self assert: (class >> #initialize) protocolName equals: 'peacock'
 ]
 
 { #category : #tests }
 ChanelClassifyUnclassifiedMethodsCleanerTest >> testDontCategorizeExtensionMethods [
-	class compile: 'initialize' classified: self extensionProtocol.
+	class compile: 'initialize' classified: self extensionProtocolName.
 
 	self runCleaner.
 
-	self assert: (class >> #initialize) protocol equals: self extensionProtocol
+	self assert: (class >> #initialize) protocolName equals: self extensionProtocolName
 ]

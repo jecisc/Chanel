@@ -2,9 +2,9 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*Chanel' }
 CompiledMethod >> ensureProtocol: aSymbol [
-	self protocol = aSymbol ifTrue: [ ^ self ].
+	self protocolName = aSymbol ifTrue: [ ^ self ].
 
-	('Updating protocol of: ' , self printString , ' from ' , self protocol , ' to ' , aSymbol) record.
+	('Updating protocol of: ' , self printString , ' from ' , self protocolName , ' to ' , aSymbol) record.
 	self protocol: aSymbol
 ]
 
