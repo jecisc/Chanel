@@ -113,7 +113,7 @@ ChanelAbstractCleanerTest >> denyIsRewritten: aString [
 ]
 
 { #category : #running }
-ChanelAbstractCleanerTest >> extensionProtocol [
+ChanelAbstractCleanerTest >> extensionProtocolName [
 	^ '*' , extensionPackage name
 ]
 

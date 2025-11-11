@@ -34,11 +34,7 @@ BaselineOfChanel >> baseline: spec [
 			group: 'Core' with: #( 'Chanel-Pharo11Plus' );
 			group: 'Tests' with: #( 'Chanel-Pharo11Plus-Tests' ) ].
 
-	spec for: #( #'pharo7.x' ) do: [
-		self pharoBackwardCompatibility: spec.
-		spec
-			package: 'Chanel-Pharo7';
-			package: 'Chanel-Tests' with: [ spec requires: #( 'Chanel-Pharo7' 'PharoBackwardCompatibility' ) ] ].
+	spec for: #( #'pharo7.x' ) do: [ spec package: 'Chanel-Pharo7' ].
 
 	spec for: #( #'pharo7.x' #'pharo8.x' ) do: [
 		spec
@@ -48,7 +44,11 @@ BaselineOfChanel >> baseline: spec [
 	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' ) do: [
 		spec
 			package: 'Chanel-Pharo9';
-			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo9' ) ] ]
+			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo9' ) ] ].
+
+	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' #'pharo10.x' #'pharo11.x' ) do: [
+		self pharoBackwardCompatibility: spec.
+		spec package: 'Chanel' with: [ spec requires: #( 'PharoBackwardCompatibility')] ]
 ]
 
 { #category : #dependencies }

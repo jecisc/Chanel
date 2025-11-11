@@ -63,13 +63,13 @@ ChanelMethodRewriterCleanerTest >> replacementPair [
 
 { #category : #tests }
 ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
-	class compile: (self methodBodyFor: self replacementPair key) classified: self extensionProtocol.
+	class compile: (self methodBodyFor: self replacementPair key) classified: self extensionProtocolName.
 
 	self runCleaner.
 
 	self assert: (class >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair value).
 
-	self assert: (class >> self selector) protocol equals: self extensionProtocol
+	self assert: (class >> self selector) protocolName equals: self extensionProtocolName
 ]
 
 { #category : #tests }
