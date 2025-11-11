@@ -138,8 +138,8 @@ ChanelAbstractCleanerTest >> runCleanerForPharo: anInteger [
 ChanelAbstractCleanerTest >> setUp [
 	super setUp.
 
-	package := RPackageOrganizer default createPackageNamed: 'Package-Test-For-Chanel'.
-	extensionPackage := RPackageOrganizer default createPackageNamed: 'ExtensionPackage-Test-For-Chanel'.
+	package := self class packageOrganizer default ensurePackage: 'Package-Test-For-Chanel'.
+	extensionPackage := self class packageOrganizer default ensurePackage: 'ExtensionPackage-Test-For-Chanel'.
 
 	"We only save the formatter if it is not the one used in the tests.
 	The reason is that, while debugging a test, if it fails and is rerun, the set up is runned twice and the formatter used in tests will be saved in `previousFormatter`.
