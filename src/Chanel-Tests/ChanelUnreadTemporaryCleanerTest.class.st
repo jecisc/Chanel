@@ -2,18 +2,19 @@
 A ChanelUnreadTemporaryCleanerTest is a test class for testing the behavior of ChanelUnreadTemporaryCleaner
 "
 Class {
-	#name : #ChanelUnreadTemporaryCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelUnreadTemporaryCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelUnreadTemporaryCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testDoesNotRemoveTemporaryReadFromDeeperScope [
 	self denyIsRewritten: 'true ifTrue: [ | test |
   test := self toto.
@@ -21,14 +22,14 @@ ChanelUnreadTemporaryCleanerTest >> testDoesNotRemoveTemporaryReadFromDeeperScop
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testDontRemoveTemporaryRead [
 	self denyIsRewritten: '| test |
   test := self toto.
   ^test'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaries [
 	self
 		assert:
@@ -42,7 +43,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaries [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporariesOnClassSide [
 	self
 		assert:
@@ -56,7 +57,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporariesOnClassSide [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
 	self
 		assert:
@@ -68,7 +69,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary2 [
 	self
 		assert:
@@ -81,7 +82,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporary2 [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScope [
 	self
 		assert:
@@ -94,7 +95,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScope [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopes [
 	self
 		assert:
@@ -109,7 +110,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopes [
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopesWithOneRead [
 	self
 		assert:
@@ -126,7 +127,7 @@ ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryFromDeeperScopesWithOneRe
   ^#one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelUnreadTemporaryCleanerTest >> testRemoveTemporaryInTrait [
 	| trait |
 	trait := self createDefaultTrait.

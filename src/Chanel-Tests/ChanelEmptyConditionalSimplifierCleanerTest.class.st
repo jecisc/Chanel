@@ -2,28 +2,29 @@
 A ChanelEmptyConditionalSimplifierCleanerTest is a test class for testing the behavior of ChanelEmptyConditionalSimplifierCleaner
 "
 Class {
-	#name : #ChanelEmptyConditionalSimplifierCleanerTest,
-	#superclass : #ChanelMethodRewriterCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelEmptyConditionalSimplifierCleanerTest',
+	#superclass : 'ChanelMethodRewriterCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelEmptyConditionalSimplifierCleanerTest >> expressionWithNoReplacement [
 	^ '#() ifEmpty: [ false ]'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelEmptyConditionalSimplifierCleanerTest >> replacementPair [
 	^ '#() isEmpty ifTrue: [ false ]' -> '#() ifEmpty: [ false ]'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelEmptyConditionalSimplifierCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	| oldMethod |
 	class
@@ -44,7 +45,7 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAn
 	self assert: class >> #ifEmpty: identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
 	| oldMethod |
 	class
@@ -65,102 +66,102 @@ ChanelEmptyConditionalSimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAn
 	self assert: class >> #ifEmpty: identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIfEmptyIfNotEmpty [
 	self assert: '#() ifEmpty: [ true ] ifNotEmpty: [ false ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIfEmptyIfNotEmpty2 [
 	self assert: '#() ifEmpty: [ false ] ifNotEmpty: [ true ]' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIfNotEmptyIfEmpty [
 	self assert: '#() ifNotEmpty: [ false ] ifEmpty: [ true ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIfNotEmptyIfEmpty2 [
 	self assert: '#() ifNotEmpty: [ true ] ifEmpty: [ false ]' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfFalse [
 	self assert: '#() isEmpty ifFalse: [ 2 ]' isRewrittenAs: '#() ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfFalseIfTrue [
 	self assert: '#() isEmpty ifFalse: [ 2 ] ifTrue: [ 1 ]' isRewrittenAs: '#() ifEmpty: [ 1 ] ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfFalseIfTrue2 [
 	self assert: '#() isEmpty ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfFalseIfTrue3 [
 	self assert: '#() isEmpty ifFalse: [ true ] ifTrue: [ false ]' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfTrue [
 	self assert: '#() isEmpty ifTrue: [ 2 ]' isRewrittenAs: '#() ifEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfTrueIfFalse [
 	self assert: '#() isEmpty ifTrue: [ 1 ] ifFalse: [ 2 ]' isRewrittenAs: '#() ifEmpty: [ 1 ] ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfTrueIfFalse2 [
 	self assert: '#() isEmpty ifTrue: [ true ] ifFalse: [ false ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsEmptyIfTrueIfFalse3 [
 	self assert: '#() isEmpty ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfFalse [
 	self assert: '#() isNotEmpty ifFalse: [ 2 ]' isRewrittenAs: '#() ifEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfFalseIfTrue [
 	self assert: '#() isNotEmpty ifFalse: [ 1 ] ifTrue: [ 2 ]' isRewrittenAs: '#() ifEmpty: [ 1 ] ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfFalseIfTrue2 [
 	self assert: '#() isNotEmpty ifFalse: [ true ] ifTrue: [ false ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfFalseIfTrue3 [
 	self assert: '#() isNotEmpty ifFalse: [ false ] ifTrue: [ true ]' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrue [
 	self assert: '#() isNotEmpty ifTrue: [ 2 ]' isRewrittenAs: '#() ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse [
 	self assert: '#() isNotEmpty ifTrue: [ 2 ] ifFalse: [ 1 ]' isRewrittenAs: '#() ifEmpty: [ 1 ] ifNotEmpty: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse2 [
 	self assert: '#() isNotEmpty ifTrue: [ false ] ifFalse: [ true ]' isRewrittenAs: '#() isEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelEmptyConditionalSimplifierCleanerTest >> testIsNotEmptyIfTrueIfFalse3 [
 	self assert: '#() isNotEmpty ifTrue: [ true ] ifFalse: [ false ]' isRewrittenAs: '#() isNotEmpty'
 ]

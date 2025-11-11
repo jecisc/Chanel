@@ -2,22 +2,23 @@
 A ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest is a test class for testing the behavior of ChanelRemoveMethodsWithEquivalentInSuperClassCleaner
 "
 Class {
-	#name : #ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#name : 'ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
 	#instVars : [
 		'superClass'
 	],
-	#category : #'Chanel-Tests'
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> setUp [
 	super setUp.
 	superClass := self createDefaultClass.
 	class := self createSubclassOf: superClass named: #ChanelRemoveMethodssWithSuperEquavalentSubClassFake
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testClassRemoveMethodWithEquivalentInSuperClass [
 	superClass class compile: 'methodTest
 	^2'.
@@ -31,7 +32,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testClassRemoveMetho
 	self deny: (class class localSelectors includes: #methodTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMethodIfNotPresentInSuperClass [
 	class compile: 'method
 	^3'.
@@ -42,7 +43,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMet
 	self assert: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMethodsFromTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -62,7 +63,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveMet
 	self assert: (trait localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNotEquivalentMethod [
 	superClass compile: 'method
 	^2'.
@@ -76,7 +77,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNot
 	self assert: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNotEquivalentMethodWithPragma [
 	superClass compile: 'method
 	^2'.
@@ -91,7 +92,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testDoesNotRemoveNot
 	self assert: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClass [
 	superClass compile: 'method
 	^2'.
@@ -105,7 +106,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWith
 	self deny: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClassWithComment [
 	superClass compile: 'method
 	^2'.
@@ -120,7 +121,7 @@ ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWith
 	self deny: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleanerTest >> testRemoveMethodWithEquivalentInSuperClassWithJustCommentDifference [
 	superClass compile: 'method
 	^2'.

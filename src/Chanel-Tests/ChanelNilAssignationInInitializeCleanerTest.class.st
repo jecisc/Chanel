@@ -2,23 +2,25 @@
 A ChanelNilAssignationInInitializeCleanerTest is a test class for testing the behavior of ChanelNilAssignationInInitializeCleaner
 "
 Class {
-	#name : #ChanelNilAssignationInInitializeCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelNilAssignationInInitializeCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelNilAssignationInInitializeCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testDoesNothingIfNoNilAssigment [
 	| oldMethod |
 	class
 		compile:
 			'initialize
+  | test |
   super initialize.
   test := 1'.
 
@@ -30,6 +32,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testDoesNothingIfNoNilAssigment [
 		assert: (class >> #initialize) sourceCode
 		equals:
 			'initialize
+  | test |
   super initialize.
   test := 1'.
 
@@ -37,7 +40,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testDoesNothingIfNoNilAssigment [
 	self assert: (class >> #initialize) identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testDoesNothingOnEmptyMethod [
 	| oldMethod |
 	class compile: 'initialize'.
@@ -52,7 +55,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testDoesNothingOnEmptyMethod [
 	self assert: class >> #initialize identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigment [
 	class
 		compile:
@@ -69,7 +72,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigment [
   super initialize'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -94,7 +97,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentInTrait [
 	self assert: (trait localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentOnClassSide [
 	class class
 		compile:
@@ -107,7 +110,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentOnClassSide
   '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigments [
 	class
 		compile:
@@ -125,7 +128,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigments [
   super initialize'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentsAroundRealAssigments [
 	class
 		compile:
@@ -145,7 +148,7 @@ ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilAssigmentsAroundReal
   notTest := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilAssignationInInitializeCleanerTest >> testRemoveNilChainedAssigments [
 	class
 		compile:

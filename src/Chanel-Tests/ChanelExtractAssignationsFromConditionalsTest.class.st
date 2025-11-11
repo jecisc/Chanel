@@ -2,60 +2,67 @@
 A ChanelExtractAssignationsFromConditionalsTest is a test class for testing the behavior of ChanelExtractAssignationsFromConditionals
 "
 Class {
-	#name : #ChanelExtractAssignationsFromConditionalsTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelExtractAssignationsFromConditionalsTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelExtractAssignationsFromConditionalsTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIfABranchIsASymbol [
-	self denyIsRewritten: 'self toto ifNil: [ test := 1 ] ifNotNil: #yourself'
+	self denyIsRewritten: '| test |
+self toto ifNil: [ test := 1 ] ifNotNil: #yourself'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIfAlreadyOutside [
-	self denyIsRewritten: 'test := self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
+	self denyIsRewritten: '| test |
+test := self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIfAssignationIsNotTheLastStatement [
-	self denyIsRewritten: 'self toto ifTrue: [ test := 1 ] ifFalse: [ self foo ifTrue: [ test := 2 ] ]'
+	self denyIsRewritten: '| test |
+self toto ifTrue: [ test := 1 ] ifFalse: [ self foo ifTrue: [ test := 2 ] ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIfInACascade [
-	self denyIsRewritten: 'self toto ifTrue: [ test := 1 ] ifFalse: [ test := 2 ]; bar'
+	self denyIsRewritten: '| test |
+self toto ifTrue: [ test := 1 ] ifFalse: [ test := 2 ]; bar'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotExtractAssignationIfOnBranchDoesNotHaveOne [
-	self denyIsRewritten: 'self toto ifTrue: [ test := 1 ] ifFalse: [ 2 ]'
+	self denyIsRewritten: '| test |
+self toto ifTrue: [ test := 1 ] ifFalse: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testDoesNotFailIfWeHaveEmptyBlocks [
-	self denyIsRewritten: 'self toto ifNil: [ ] ifNotNil: [ toto := 1 ]'
+	self denyIsRewritten: '| toto |
+self toto ifNil: [ ] ifNotNil: [ toto := 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationDoesNotFailForConditonsInConditions [
 	self
 		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ test := 1 ] ifFalse: [ test := 2 ] ] ifFalse: [ 3 ]'
 		isRewrittenAs: 'self toto1 ifTrue: [ test := self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationDoesNotFailIfThereIsAlreadyAAssignation [
 	self assert: 'test := self toto ifTrue: [ test := 1 ] ifFalse: [ test := 2 ]' isRewrittenAs: 'test := self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationEvenIfMessageIsNotTheLastStatement [
 	self
 		assert:
@@ -66,48 +73,48 @@ ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationEvenIfMes
   self bar'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfEmptyIfNotEmpty [
 	self assert: 'self toto ifEmpty: [ test := 2 ] ifNotEmpty: [ test := 1 ]' isRewrittenAs: 'test := self toto ifEmpty: [ 2 ] ifNotEmpty: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfExistsIfAbsent [
 	self assert: 'self toto ifExists: [ test := 2 ] ifAbsent: [ test := 1 ]' isRewrittenAs: 'test := self toto ifExists: [ 2 ] ifAbsent: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfFalseIfTrue [
 	self assert: 'self toto ifFalse: [ test := 2 ] ifTrue: [ test := 1 ]' isRewrittenAs: 'test := self toto ifFalse: [ 2 ] ifTrue: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfNilIfNotNil [
 	self assert: 'self toto ifNil: [ test := 2 ] ifNotNil: [ test := 1 ]' isRewrittenAs: 'test := self toto ifNil: [ 2 ] ifNotNil: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfNotEmptyIfEmpty [
 	self assert: 'self toto ifNotEmpty: [ test := 2 ] ifEmpty: [ test := 1 ]' isRewrittenAs: 'test := self toto ifNotEmpty: [ 2 ] ifEmpty: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfNotNilIfNil [
 	self assert: 'self toto ifNotNil: [ test := 2 ] ifNil: [ test := 1 ]' isRewrittenAs: 'test := self toto ifNotNil: [ 2 ] ifNil: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfTrueIfFalse [
 	self assert: 'self toto ifTrue: [ test := 1 ] ifFalse: [ test := 2 ]' isRewrittenAs: 'test := self toto ifTrue: [ 1 ] ifFalse: [ 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationFromIfTrueIfFalseWithOtherStatements [
 	self assert: 'self toto ifTrue: [ self foo. test := 1 ] ifFalse: [ test := self bar ]' isRewrittenAs: 'test := self toto ifTrue: [ self foo.
         1 ] ifFalse: [ self bar ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationIfTheLastStatementOfABlock [
 	self
 		assert:
@@ -118,14 +125,14 @@ ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationIfTheLast
   self bar'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationInNestedConditions [
 	self
 		assert: 'self toto1 ifTrue: [ self toto2 ifTrue: [ test := 1 ] ifFalse: [ test := 2 ] ] ifFalse: [ test := 3 ]'
 		isRewrittenAs: 'test := self toto1 ifTrue: [ self toto2 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ifFalse: [ 3 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -149,7 +156,7 @@ ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationInTrait [
 	self deny: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelExtractAssignationsFromConditionalsTest >> testExtractAssignationOnClassSide [
 	self assert: 'self toto ifTrue: [ test := 1 ] ifFalse: [ test := 2 ]' isRewrittenAs: 'test := self toto ifTrue: [ 1 ] ifFalse: [ 2 ]' in: class class
 ]

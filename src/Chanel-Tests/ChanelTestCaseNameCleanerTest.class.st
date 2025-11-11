@@ -2,12 +2,13 @@
 A ChanelTestCaseNameCleanerTest is a test class for testing the behavior of ChanelTestCaseNameCleaner
 "
 Class {
-	#name : #ChanelTestCaseNameCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelTestCaseNameCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTests [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -19,7 +20,7 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTests [
 	self class environment at: 'ChanelMockTest' asSymbol ifAbsent: [ self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferences [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -52,7 +53,7 @@ ChanelTestCaseNameCleanerTest >> testRenameTestCaseEndingWithTestsUpdateReferenc
 		ifAbsent: [ self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameIfTheNewClassNameAlreadyExistsInTheSystem [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -67,7 +68,7 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameIfTheNewClassNameAlreadyExis
 	self class environment at: 'ChanelMockTests' asSymbol ifAbsent: [ self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTest [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -79,7 +80,7 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTest [
 	self class environment at: 'ChanelMockTest' asSymbol ifAbsent: [ self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTests [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -92,7 +93,7 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTestCaseEndingWithTests [
 	self class environment at: 'ChanelMockTest' asSymbol ifPresent: [ :c | self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTraitEndingWithTests [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 
@@ -105,7 +106,7 @@ ChanelTestCaseNameCleanerTest >> testShouldNotRenameNonTraitEndingWithTests [
 	self class environment at: 'TChanelMockTest' asSymbol ifPresent: [ :c | self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelTestCaseNameCleanerTest >> testShouldNotRenameTestCaseEndingWithTest [
 	"/!\ /!\ We use #asSymbol instead of writing symbols because the renaming will update the references in the image, thus, it will rename the symbols in the test. /!\ /!\ "
 

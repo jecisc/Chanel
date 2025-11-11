@@ -2,17 +2,18 @@
 A ChanelMethodRewriterCleanerTest is a test class for testing the behavior of ChanelMethodRewriterCleaner
 "
 Class {
-	#name : #ChanelMethodRewriterCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelMethodRewriterCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelMethodRewriterCleanerTest class >> isAbstract [
 	^ self = ChanelMethodRewriterCleanerTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> assertReplacementWasDoneIn: trait [
 	self assert: (trait >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair value).
 
@@ -20,7 +21,7 @@ ChanelMethodRewriterCleanerTest >> assertReplacementWasDoneIn: trait [
 	self deny: (class localSelectors includes: self selector)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger [
 	| oldMethod |
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
@@ -34,7 +35,7 @@ ChanelMethodRewriterCleanerTest >> deny: original isRewrittenForPharo: anInteger
 	self assert: class >> self selector identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> denyReplacementWasDoneIn: trait [
 	self assert: (trait >> self selector) sourceCode equals: (self methodBodyFor: self replacementPair key).
 
@@ -42,26 +43,26 @@ ChanelMethodRewriterCleanerTest >> denyReplacementWasDoneIn: trait [
 	self deny: (class localSelectors includes: self selector)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodRewriterCleanerTest >> expressionWithNoReplacement [
 	^ self subclassResponsibility
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodRewriterCleanerTest >> replaceInTraits [
 	"Override and return false if the cleaner should not do the replacements in traits."
 
 	^ true
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodRewriterCleanerTest >> replacementPair [
 	"Should return an association of a replacement the cleaner should be able to do."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
 	class compile: (self methodBodyFor: self replacementPair key) classified: self extensionProtocolName.
 
@@ -72,7 +73,7 @@ ChanelMethodRewriterCleanerTest >> testReplacementDoesNotRemoveExtensions [
 	self assert: (class >> self selector) protocolName equals: self extensionProtocolName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> testReplacementInTraits [
 	| trait |
 	trait := self createDefaultTrait.
@@ -88,14 +89,14 @@ ChanelMethodRewriterCleanerTest >> testReplacementInTraits [
 		ifFalse: [ self denyReplacementWasDoneIn: trait ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> testReplacementOnClassSide [
 	class ifNil: [ self error: 'To use this method you need to setup the class variable' ].
 
 	self assert: self replacementPair key isRewrittenAs: self replacementPair value in: class class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodRewriterCleanerTest >> testWithNothingToReplace [
 	self denyIsRewritten: self expressionWithNoReplacement
 ]
