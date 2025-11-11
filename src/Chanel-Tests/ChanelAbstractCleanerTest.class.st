@@ -71,11 +71,12 @@ ChanelAbstractCleanerTest >> createDefaultTrait [
 
 { #category : 'helpers' }
 ChanelAbstractCleanerTest >> createSubclassOf: aClass named: aSymbol [
-	^ aClass
-		subclass: aSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: package name
+
+	^ aClass classInstaller make: [ :builder |
+		  builder
+			  superclass: aClass;
+			  name: aSymbol;
+			  package: package name ]
 ]
 
 { #category : 'helpers' }
@@ -85,7 +86,12 @@ ChanelAbstractCleanerTest >> createTestCaseNamed: aSymbol [
 
 { #category : 'helpers' }
 ChanelAbstractCleanerTest >> createTraitNamed: aSymbol [
-	^ Trait named: aSymbol uses: {} package: package name
+
+	^ Trait classInstaller make: [ :builder |
+		  builder
+			  beTrait;
+			  name: aSymbol;
+			  package: package name ]
 ]
 
 { #category : 'accessing' }
