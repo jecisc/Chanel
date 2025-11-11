@@ -88,7 +88,7 @@ ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 	self protocolsToCleanMap
 		keysAndValuesDo: [ :olds :new |
 			methods
-				select: [ :meth | olds includes: meth protocol ]
+				select: [ :meth | olds includes: meth protocolName ]
 				thenDo: [ :meth | meth ensureProtocol: new ] ]
 ]
 
@@ -96,7 +96,7 @@ ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
 	methods iterator
 		| #isTestMethod selectIt
-		| [ :method | method protocol beginsWith: 'test' ] rejectIt
+		| [ :method | method protocolName beginsWith: 'test' ] rejectIt
 		> [ :method | method ensureProtocol: #tests ] doIt
 ]
 

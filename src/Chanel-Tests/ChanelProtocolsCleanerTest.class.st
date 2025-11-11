@@ -19,7 +19,7 @@ ChanelProtocolsCleanerTest >> testDoesNotUpdateCloseProtocolIfAlreadyRight [
 
 	self runCleaner.
 
-	self assert: (class >> #method) protocol equals: 'instance creation'
+	self assert: (class >> #method) protocolName equals: 'instance creation'
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 
 	self runCleaner.
 
-	self assert: (class >> #initialize) protocol equals: 'initialization'
+	self assert: (class >> #initialize) protocolName equals: 'initialization'
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolInTrait [
 
 	self runCleaner.
 
-	self assert: (trait >> #initialize) protocol equals: 'initialization'.
+	self assert: (trait >> #initialize) protocolName equals: 'initialization'.
 
 	self deny: (class localSelectors includes: #initialize).
 	self assert: (trait localSelectors includes: #initialize)
@@ -48,11 +48,11 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolInTrait [
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfExtension [
-	class compile: 'initialize' classified: self extensionProtocol.
+	class compile: 'initialize' classified: self extensionProtocolName.
 
 	self runCleaner.
 
-	self assert: (class >> #initialize) protocol equals: self extensionProtocol
+	self assert: (class >> #initialize) protocolName equals: self extensionProtocolName
 ]
 
 { #category : #tests }
@@ -61,7 +61,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheLis
 
 	self runCleaner.
 
-	self assert: (class >> #initialize2) protocol equals: 'random'
+	self assert: (class >> #initialize2) protocolName equals: 'random'
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolOnClassSide [
 
 	self runCleaner.
 
-	self assert: (class class>> #initialize) protocol equals: 'initialization'
+	self assert: (class class>> #initialize) protocolName equals: 'initialization'
 ]
 
 { #category : #tests }
@@ -80,17 +80,17 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 
 	self runCleaner.
 
-	self assert: (class >> #setUp) protocol equals: 'running'
+	self assert: (class >> #setUp) protocolName equals: 'running'
 ]
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtension [
 	class := self createDefaultTestClass.
-	class compile: 'setUp' classified: self extensionProtocol.
+	class compile: 'setUp' classified: self extensionProtocolName.
 
 	self runCleaner.
 
-	self assert: (class >> #setUp) protocol equals: self extensionProtocol
+	self assert: (class >> #setUp) protocolName equals: self extensionProtocolName
 ]
 
 { #category : #tests }
@@ -99,7 +99,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 
 	self runCleaner.
 
-	self assert: (class >> #setUp) protocol equals: 'random'
+	self assert: (class >> #setUp) protocolName equals: 'random'
 ]
 
 { #category : #tests }
@@ -109,7 +109,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 
 	self runCleaner.
 
-	self assert: (class >> #toto) protocol equals: 'random'
+	self assert: (class >> #toto) protocolName equals: 'random'
 ]
 
 { #category : #tests }
@@ -124,7 +124,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedInTrait 
 
 	self runCleaner.
 
-	self assert: (trait >> #setUp) protocol equals: 'random'.
+	self assert: (trait >> #setUp) protocolName equals: 'random'.
 
 	self deny: (class localSelectors includes: #setUp).
 	self assert: (trait localSelectors includes: #setUp)
@@ -137,17 +137,17 @@ ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 
 	self runCleaner.
 
-	self assert: (class >> #testMethod) protocol equals: 'tests'
+	self assert: (class >> #testMethod) protocolName equals: 'tests'
 ]
 
 { #category : #tests }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
 	class := self createDefaultTestClass.
-	class compile: 'testMethod' classified: self extensionProtocol.
+	class compile: 'testMethod' classified: self extensionProtocolName.
 
 	self runCleaner.
 
-	self assert: (class >> #testMethod) protocol equals: self extensionProtocol
+	self assert: (class >> #testMethod) protocolName equals: self extensionProtocolName
 ]
 
 { #category : #tests }
@@ -156,7 +156,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase
 
 	self runCleaner.
 
-	self assert: (class >> #testMethod) protocol equals: 'not a test'
+	self assert: (class >> #testMethod) protocolName equals: 'not a test'
 ]
 
 { #category : #tests }
@@ -166,7 +166,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTes
 
 	self runCleaner.
 
-	self assert: (class >> #testMethod) protocol equals: 'test - protocols'
+	self assert: (class >> #testMethod) protocolName equals: 'test - protocols'
 ]
 
 { #category : #tests }
@@ -175,7 +175,7 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 
 	self runCleaner.
 
-	self assert: (class >> #method) protocol equals: 'instance creation'
+	self assert: (class >> #method) protocolName equals: 'instance creation'
 ]
 
 { #category : #tests }
@@ -189,7 +189,7 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocolInTrait [
 
 	self runCleaner.
 
-	self assert: (trait >> #method) protocol equals: 'instance creation'.
+	self assert: (trait >> #method) protocolName equals: 'instance creation'.
 
 	self deny: (class localSelectors includes: #method ).
 	self assert: (trait localSelectors includes: #method)
@@ -201,5 +201,5 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocolOnClassSide [
 
 	self runCleaner.
 
-	self assert: (class class>> #method) protocol equals: 'instance creation'
+	self assert: (class class>> #method) protocolName equals: 'instance creation'
 ]
