@@ -8,8 +8,6 @@
 [![Pharo version](https://img.shields.io/badge/Pharo-10-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-11-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-12-%23aac9ff.svg)](https://pharo.org/download)
-[![Pharo version](https://img.shields.io/badge/Pharo-13-%23aac9ff.svg)](https://pharo.org/download)
-[![Pharo version](https://img.shields.io/badge/Pharo-14-%23aac9ff.svg)](https://pharo.org/download)
 
 Chanel is a code cleaner for Pharo. 
 
@@ -95,7 +93,7 @@ Thus, it should be safe to depend on a fixed major version and moving minor vers
 
 | Version 	| Compatible Pharo versions 		|
 |-------------	|---------------------------	|
-| 1.x.x       	| Pharo 70, 80, 90, 10, 11, 12, 13, 14		|
+| 1.x.x       	| Pharo 70, 80, 90, 10, 11, 12		|
 
 ## Contact
 
