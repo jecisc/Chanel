@@ -2,22 +2,23 @@
 A ChanelDuplicatedMethodFromTraitCleanerTest is a test class for testing the behavior of ChanelDuplicatedMethodFromTraitCleaner
 "
 Class {
-	#name : #ChanelDuplicatedMethodFromTraitCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#name : 'ChanelDuplicatedMethodFromTraitCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
 	#instVars : [
 		'trait'
 	],
-	#category : #'Chanel-Tests'
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass.
 	trait := self createDefaultTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfASTDifferent [
 	class setTraitComposition: trait.
 
@@ -37,7 +38,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 	self assert: (class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfEquivalentIsInSuperclasse [
 	| subClass |
 	subClass := self createSubclassOf: class named: #ChanelDuplicatedMethodFromTraitFake.
@@ -62,7 +63,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 	self deny: (subClass localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodFromTraitIfPragmaIsPresent [
 	class setTraitComposition: trait.
 
@@ -83,7 +84,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNotRemoveDuplicatedMethodF
 	self assert: (class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNothingToClassWithoutTraitComposition [
 	trait
 		compile:
@@ -101,7 +102,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testDoesNothingToClassWithoutTrait
 	self assert: (class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrait [
 	class setTraitComposition: trait.
 
@@ -121,7 +122,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 	self deny: (class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitIfFormattingDifferent [
 	class setTraitComposition: trait.
 
@@ -142,7 +143,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 	self deny: (class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitOnClassSide [
 	class setTraitComposition: trait.
 
@@ -162,7 +163,7 @@ ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTrai
 	self deny: (class class localSelectors includes: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelDuplicatedMethodFromTraitCleanerTest >> testRemoveDuplicatedMethodFromTraitUsingTrait [
 	| trait2 |
 	trait2 := self createTraitNamed: 'SecondTrait'.

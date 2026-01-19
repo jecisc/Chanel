@@ -2,18 +2,19 @@
 A ChanelMethodsOnlyCallingSuperCleanerTest is a test class for testing the behavior of ChanelMethodsOnlyCallingSuperCleaner
 "
 Class {
-	#name : #ChanelMethodsOnlyCallingSuperCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelMethodsOnlyCallingSuperCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotFailOnEmptyMethods [
 	| oldMethod |
 	class compile: 'initialize'.
@@ -27,7 +28,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotFailOnEmptyMethods [
 	self assert: class >> #initialize identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodCallingOtherSuper [
 	| oldMethod |
 	class
@@ -44,7 +45,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodCallingOtherS
 	self assert: (class >> #new) identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodWithOtherStatements [
 	| oldMethod |
 	class
@@ -62,7 +63,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodWithOtherStat
 	self assert: (class >> #initialize) identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodWithPragma [
 	| oldMethod |
 	class
@@ -80,7 +81,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testDoesNotRemoveMethodWithPragma [
 	self assert: (class >> #initialize) identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveBinaryMethodOnlyCallingSuper [
 	class
 		compile:
@@ -92,7 +93,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveBinaryMethodOnlyCallingSup
 	self deny: (class localSelectors includes: #=)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveKeywordMethodOnlyCallingSuper [
 	class
 		compile:
@@ -104,7 +105,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveKeywordMethodOnlyCallingSu
 	self deny: (class localSelectors includes: #initialize:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper [
 	class
 		compile:
@@ -116,7 +117,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper [
 	self deny: (class localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper2 [
 	class
 		compile:
@@ -129,7 +130,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuper2 [
 	self deny: (class localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperEvenIfThereIsAReturn [
 	class
 		compile:
@@ -141,7 +142,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperEven
 	self deny: (class localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -159,7 +160,7 @@ ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperInTr
 	self deny: (trait localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodsOnlyCallingSuperCleanerTest >> testRemoveMethodOnlyCallingSuperOnClassSide [
 	class class
 		compile:

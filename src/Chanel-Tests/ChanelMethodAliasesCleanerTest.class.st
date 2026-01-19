@@ -1,26 +1,27 @@
 Class {
-	#name : #ChanelMethodAliasesCleanerTest,
-	#superclass : #ChanelMethodRewriterCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelMethodAliasesCleanerTest',
+	#superclass : 'ChanelMethodRewriterCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodAliasesCleanerTest >> expressionWithNoReplacement [
 	^ '#() isNotEmpty'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelMethodAliasesCleanerTest >> replacementPair [
 	^ '#() notEmpty' -> '#() isNotEmpty'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelMethodAliasesCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	| oldMethod |
 	class
@@ -41,7 +42,7 @@ ChanelMethodAliasesCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	self assert: class >> #isNotEmpty identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 [
 	| oldMethod |
 	class
@@ -62,37 +63,37 @@ ChanelMethodAliasesCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop2 
 	self assert: class >> #isNotEmpty identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testIfNilIfNotNilDo [
 	self assert: 'nil ifNil: [ false ] ifNotNilDo: [ true ]' isRewrittenAs: 'nil ifNil: [ false ] ifNotNil: [ true ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testIfNotNilDo [
 	self assert: 'nil ifNotNilDo: [ true ]' isRewrittenAs: 'nil ifNotNil: [ true ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testIfNotNilDoIfNil [
 	self assert: 'nil ifNotNilDo: [ true ] ifNil: [ false ]' isRewrittenAs: 'nil ifNotNil: [ true ] ifNil: [ false ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testNotEmpty [
 	self assert: '#() notEmpty' isRewrittenAs: '#() isNotEmpty'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testNotNil [
 	self assert: 'nil notNil' isRewrittenAs: 'nil isNotNil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testincludesAllOf [
 	self assert: '#() includesAllOf: #()' isRewrittenAs: '#() includesAll: #()'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelMethodAliasesCleanerTest >> testincludesAnyOf [
 	self assert: '#() includesAnyOf: #()' isRewrittenAs: '#() includesAny: #()'
 ]

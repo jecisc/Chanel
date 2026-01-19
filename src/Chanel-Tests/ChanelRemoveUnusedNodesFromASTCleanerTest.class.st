@@ -2,53 +2,55 @@
 A ChanelRemoveUnusedNodesFromASTCleanerTest is a test class for testing the behavior of ChanelRemoveUnusedNodesFromASTCleaner
 "
 Class {
-	#name : #ChanelRemoveUnusedNodesFromASTCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelRemoveUnusedNodesFromASTCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInAssignation [
-	self denyIsRewritten: 'test := 1'
+	self denyIsRewritten: '|test|
+	test := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInByteArray [
 	self denyIsRewritten: '^#[1]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInDynamicArray [
 	self denyIsRewritten: '^{ 1 }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInLiteralArray [
 	self denyIsRewritten: '^#(1)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInPragma [
 	self denyIsRewritten: '<test: 1>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesInReturn [
 	self denyIsRewritten: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testDoesNotRemoveNodesReceivingMessages [
 	self denyIsRewritten: '1 asString'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemove2UselessNodes [
 	self
 		assert:
@@ -58,7 +60,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemove2UselessNodes [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessArgumentRead [
 	self
 		assert:
@@ -67,7 +69,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessArgumentRead [
 		isRewrittenAs: '^test'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBlock [
 	self
 		assert:
@@ -76,7 +78,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBlock [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBoolean [
 	self
 		assert:
@@ -85,7 +87,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessBoolean [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessByteArray [
 	self
 		assert:
@@ -94,7 +96,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessByteArray [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessDynamicArray [
 	self
 		assert:
@@ -103,7 +105,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessDynamicArray [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessGlobal [
 	self
 		assert:
@@ -112,7 +114,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessGlobal [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessInstanceVariableRead [
 	self
 		assert:
@@ -121,7 +123,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessInstanceVariableRe
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessLiteralArray [
 	self
 		assert:
@@ -130,7 +132,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessLiteralArray [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNil [
 	self
 		assert:
@@ -139,7 +141,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNil [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInAnUnselessNode [
 	self
 		assert:
@@ -148,7 +150,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInAnUnselessNo
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -167,7 +169,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeInTrait [
 	self deny: (class localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeOnClassSide [
 	self
 		assert:
@@ -177,7 +179,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNodeOnClassSide [
 		in: class class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNumber [
 	self
 		assert:
@@ -186,7 +188,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessNumber [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSelf [
 	self
 		assert:
@@ -195,7 +197,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSelf [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessString [
 	self
 		assert:
@@ -204,7 +206,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessString [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSuper [
 	self
 		assert:
@@ -213,7 +215,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSuper [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSymbol [
 	self
 		assert:
@@ -222,7 +224,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessSymbol [
 		isRewrittenAs: '^1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessTemporaryRead [
 	self
 		assert:
@@ -236,7 +238,7 @@ ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessTemporaryRead [
   ^test'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelRemoveUnusedNodesFromASTCleanerTest >> testRemoveUselessThisContext [
 	self
 		assert:

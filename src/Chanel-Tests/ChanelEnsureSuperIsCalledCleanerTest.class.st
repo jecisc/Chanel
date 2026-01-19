@@ -2,21 +2,22 @@
 A ChanelEnsureSuperIsCalledCleanerTest is a test class for testing the behavior of ChanelEnsureSuperIsCalledCleaner
 "
 Class {
-	#name : #ChanelEnsureSuperIsCalledCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
+	#name : 'ChanelEnsureSuperIsCalledCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
 	#instVars : [
 		'oldMethod'
 	],
-	#category : #'Chanel-Tests'
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelEnsureSuperIsCalledCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultTestClass
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
 	class compile: 'initialize
   self assert: true'.
@@ -35,7 +36,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitialize [
 	self deny: oldMethod identicalTo: class >> #initialize
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitializeInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -62,7 +63,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperInitializeInTrait [
 	self deny: (class localSelectors includes: #initialize)
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
 	class compile: 'setUp
   self assert: true'.
@@ -81,7 +82,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperSetUp [
 	self deny: oldMethod identicalTo: class >> #setUp
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
 	class compile: 'tearDown
   self assert: true'.
@@ -100,7 +101,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testAddSuperTearDown [
 	self deny: oldMethod identicalTo: class >> #tearDown
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeOnClassSide [
 	class class compile: 'initialize
 	self assert: true'.
@@ -119,7 +120,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeOnClassSide
 	self assert: oldMethod identicalTo: class class >> #initialize
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeWhenAlreadyThere [
 	class compile: 'initialize
 	super initialize.
@@ -139,7 +140,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperInitializeWhenAlready
 	self assert: oldMethod identicalTo: class >> #initialize
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfClassIsNotATestCase [
 	class := self createDefaultClass.
 
@@ -160,7 +161,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfClassIsNotATes
 	self assert: oldMethod identicalTo: class >> #setUp
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
 	class compile: 'setUp
 '.
@@ -179,7 +180,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpIfEmptyMethod [
 	self assert: oldMethod identicalTo: class >> #setUp
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -202,7 +203,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpInTrait [
 	self deny: (class localSelectors includes: #setUp)
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpOnClassSide [
 	class class compile: 'setUp
 	self assert: true'.
@@ -220,7 +221,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpOnClassSide [
 	self assert: oldMethod identicalTo: class class>> #setUp
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpWhenAlreadyThere [
 	class compile: 'setUp
 	super setUp.
@@ -240,7 +241,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperSetUpWhenAlreadyThere
 	self assert: oldMethod identicalTo: class >> #setUp
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfClassIsNotATestCase [
 	class := self createDefaultClass.
 
@@ -261,7 +262,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfClassIsNotA
 	self assert: oldMethod identicalTo: class >> #tearDown
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod [
 	class compile: 'tearDown
 '.
@@ -280,7 +281,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownIfEmptyMethod
 	self assert: oldMethod identicalTo: class >> #tearDown
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -303,7 +304,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownInTrait [
 	self deny: (class localSelectors includes: #tearDown)
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownOnClassSide [
 	class class compile: 'tearDown
 	self assert: true'.
@@ -321,7 +322,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownOnClassSide [
 	self assert: oldMethod identicalTo: class class>> #tearDown
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownWhenAlreadyThere [
 	class compile: 'tearDown
 	self assert: true.
@@ -341,7 +342,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotAddSuperTearDownWhenAlreadyTh
 	self assert: oldMethod identicalTo: class >> #tearDown
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotCreateSuperInitializeInEmptyMethod [
 	class compile: 'initialize
 '.
@@ -360,7 +361,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotCreateSuperInitializeInEmptyM
 	self assert: oldMethod identicalTo: class >> #initialize
 ]
 
-{ #category : #'tests - initialize' }
+{ #category : 'tests - initialize' }
 ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotMoveSuperInitializeIfNotTheFirstStatement [
 	class compile: 'initialize
 	self assert: true.
@@ -381,7 +382,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testDoesNotMoveSuperInitializeIfNotTheFi
 	self assert: oldMethod identicalTo: class >> #initialize
 ]
 
-{ #category : #'tests - setup' }
+{ #category : 'tests - setup' }
 ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
 	class compile: 'setUp
   self assert: true.
@@ -402,7 +403,7 @@ ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperSetUpIfNotFirstStatement [
 	self deny: oldMethod identicalTo: class >> #setUp
 ]
 
-{ #category : #'tests - teardown' }
+{ #category : 'tests - teardown' }
 ChanelEnsureSuperIsCalledCleanerTest >> testMoveSuperTearDownIfNotLastStatement [
 	class compile: 'tearDown
   super tearDown.

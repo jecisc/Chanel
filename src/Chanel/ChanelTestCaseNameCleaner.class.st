@@ -20,7 +20,14 @@ ChanelTestCaseNameCleaner >> clean [
 
 { #category : #cleaning }
 ChanelTestCaseNameCleaner >> rename: class as: aString [
+
+	| refactoringClass parameter |
 	('Renaming ' , class name , ' to ' , aString) record.
 	self flag: #pharo10.
-	(RBRenameClassRefactoring rename: (SystemVersion current major < 10 ifTrue: [ class ] ifFalse: [ class name ]) to: aString) execute
+	self flag: #pharo11.
+	parameter := SystemVersion current major < 10
+		             ifTrue: [ class ]
+		             ifFalse: [ class name ].
+	refactoringClass := self class environment at: #RBRenameClassRefactoring ifAbsent: [ self class environment at: #ReRenameClassRefactoring ].
+	(refactoringClass rename: parameter to: aString) execute
 ]

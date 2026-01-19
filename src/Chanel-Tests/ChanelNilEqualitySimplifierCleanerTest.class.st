@@ -2,28 +2,29 @@
 A ChanelNilEqualitySimplifierCleanerTest is a test class for testing the behavior of ChanelNilEqualitySimplifierCleaner
 "
 Class {
-	#name : #ChanelNilEqualitySimplifierCleanerTest,
-	#superclass : #ChanelMethodRewriterCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelNilEqualitySimplifierCleanerTest',
+	#superclass : 'ChanelMethodRewriterCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelNilEqualitySimplifierCleanerTest >> expressionWithNoReplacement [
 	^ '10 isNil'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ChanelNilEqualitySimplifierCleanerTest >> replacementPair [
 	^ '10 = nil' -> '10 isNil'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelNilEqualitySimplifierCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilEqualitySimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfinitLoop [
 	| oldMethod |
 	class
@@ -44,22 +45,22 @@ ChanelNilEqualitySimplifierCleanerTest >> testDoesNotReplaceIfItIntroduceAnInfin
 	self assert: class >> #isNil identicalTo: oldMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilEqualitySimplifierCleanerTest >> testEqualsNil [
 	self assert: '10 = nil' isRewrittenAs: '10 isNil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilEqualitySimplifierCleanerTest >> testIdenticalToNil [
 	self assert: '10 == nil' isRewrittenAs: '10 isNil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilEqualitySimplifierCleanerTest >> testNotEqualsNil [
 	self assert: '10 ~= nil' isRewrittenAs: '10 isNotNil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelNilEqualitySimplifierCleanerTest >> testNotIdenticalToNil [
 	self assert: '10 ~~ nil' isRewrittenAs: '10 isNotNil'
 ]

@@ -2,12 +2,13 @@
 I am a baseline to define the structure and dependencies of the Chanel project.
 "
 Class {
-	#name : #BaselineOfChanel,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfChanel
+	#name : 'BaselineOfChanel',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfChanel',
+	#package : 'BaselineOfChanel'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfChanel >> baseline: spec [
 
 	<baseline>
@@ -34,24 +35,22 @@ BaselineOfChanel >> baseline: spec [
 			group: 'Core' with: #( 'Chanel-Pharo11Plus' );
 			group: 'Tests' with: #( 'Chanel-Pharo11Plus-Tests' ) ].
 
-	spec for: #( #'pharo7.x' ) do: [ spec package: 'Chanel-Pharo7' ].
-
-	spec for: #( #'pharo7.x' #'pharo8.x' ) do: [
+	spec for: #'pharo8.x' do: [
 		spec
 			package: 'Chanel-Pharo8';
 			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo8' ) ] ].
 
-	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' ) do: [
+	spec for: #( #'pharo8.x' #'pharo9.x' ) do: [
 		spec
 			package: 'Chanel-Pharo9';
 			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo9' ) ] ].
 
-	spec for: #( #'pharo7.x' #'pharo8.x' #'pharo9.x' #'pharo10.x' #'pharo11.x' ) do: [
+	spec for: #( #'pharo8.x' #'pharo9.x' #'pharo10.x' #'pharo11.x' ) do: [
 		self pharoBackwardCompatibility: spec.
 		spec package: 'Chanel' with: [ spec requires: #( 'PharoBackwardCompatibility')] ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfChanel >> iterators: spec [
 	spec
 		baseline: 'Iterators'
@@ -60,24 +59,24 @@ BaselineOfChanel >> iterators: spec [
 				repository: 'github://juliendelplanque/Iterators:v1.x.x/src' ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfChanel >> pharoBackwardCompatibility: spec [
    spec
     	baseline: 'PharoBackwardCompatibility'
     	with: [ spec repository: 'github://jecisc/PharoBackwardCompatibility:v1.x.x/src' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfChanel >> pharoVersionsFrom: aVersion [
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfChanel >> projectClass [
 	^ MetacelloCypressBaselineProject
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfChanel >> tinyLogger: spec [
 	spec
 		baseline: 'TinyLogger'

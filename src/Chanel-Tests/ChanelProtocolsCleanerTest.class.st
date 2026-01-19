@@ -2,18 +2,19 @@
 A ChanelProtocolsCleanerTest is a test class for testing the behavior of ChanelProtocolsCleaner
 "
 Class {
-	#name : #ChanelProtocolsCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelProtocolsCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelProtocolsCleanerTest >> setUp [
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testDoesNotUpdateCloseProtocolIfAlreadyRight [
 	class compile: 'method' classified: 'instance creation'.
 
@@ -22,7 +23,7 @@ ChanelProtocolsCleanerTest >> testDoesNotUpdateCloseProtocolIfAlreadyRight [
 	self assert: (class >> #method) protocolName equals: 'instance creation'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 	class compile: 'initialize' classified: 'random'.
 
@@ -31,7 +32,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocol [
 	self assert: (class >> #initialize) protocolName equals: 'initialization'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -46,7 +47,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolInTrait [
 	self assert: (trait localSelectors includes: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfExtension [
 	class compile: 'initialize' classified: self extensionProtocolName.
 
@@ -55,7 +56,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfExtension [
 	self assert: (class >> #initialize) protocolName equals: self extensionProtocolName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheList [
 	class compile: 'initialize2' classified: 'random'.
 
@@ -64,7 +65,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolNotUpdateIfNotInTheLis
 	self assert: (class >> #initialize2) protocolName equals: 'random'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolOnClassSide [
 	class class compile: 'initialize' classified: 'random'.
 
@@ -73,7 +74,7 @@ ChanelProtocolsCleanerTest >> testMethodInSpecificProtocolOnClassSide [
 	self assert: (class class>> #initialize) protocolName equals: 'initialization'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 	class := self createDefaultTestClass.
 	class compile: 'setUp' classified: 'random'.
@@ -83,7 +84,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocol [
 	self assert: (class >> #setUp) protocolName equals: 'running'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtension [
 	class := self createDefaultTestClass.
 	class compile: 'setUp' classified: self extensionProtocolName.
@@ -93,7 +94,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfExtens
 	self assert: (class >> #setUp) protocolName equals: self extensionProtocolName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInTestCase [
 	class compile: 'setUp' classified: 'random'.
 
@@ -102,7 +103,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 	self assert: (class >> #setUp) protocolName equals: 'random'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInTheList [
 	class := self createDefaultTestClass.
 	class compile: 'toto' classified: 'random'.
@@ -112,7 +113,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedIfNotInT
 	self assert: (class >> #toto) protocolName equals: 'random'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -130,7 +131,7 @@ ChanelProtocolsCleanerTest >> testTestMethodInSpecificProtocolNotUpdatedInTrait 
 	self assert: (trait localSelectors includes: #setUp)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: 'not a test'.
@@ -140,7 +141,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsAreInRightProtocol [
 	self assert: (class >> #testMethod) protocolName equals: 'tests'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
 	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: self extensionProtocolName.
@@ -150,7 +151,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfExtension [
 	self assert: (class >> #testMethod) protocolName equals: self extensionProtocolName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase [
 	class compile: 'testMethod' classified: 'not a test'.
 
@@ -159,7 +160,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfNotInTestCase
 	self assert: (class >> #testMethod) protocolName equals: 'not a test'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTest [
 	class := self createDefaultTestClass.
 	class compile: 'testMethod' classified: 'test - protocols'.
@@ -169,7 +170,7 @@ ChanelProtocolsCleanerTest >> testTestMethodsProtocolAreNotUpdateIfStartingByTes
 	self assert: (class >> #testMethod) protocolName equals: 'test - protocols'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 	class compile: 'method' classified: 'instance-creation'.
 
@@ -178,7 +179,7 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocol [
 	self assert: (class >> #method) protocolName equals: 'instance creation'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testUpdateCloseProtocolInTrait [
 	| trait |
 	trait := self createDefaultTrait.
@@ -195,7 +196,7 @@ ChanelProtocolsCleanerTest >> testUpdateCloseProtocolInTrait [
 	self assert: (trait localSelectors includes: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelProtocolsCleanerTest >> testUpdateCloseProtocolOnClassSide [
 	class class compile: 'method' classified: 'instance-creation'.
 

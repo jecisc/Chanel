@@ -1,20 +1,21 @@
 Class {
-	#name : #ChanelAbstractTest,
-	#superclass : #TestCase,
-	#category : #'Chanel-Tests'
+	#name : 'ChanelAbstractTest',
+	#superclass : 'TestCase',
+	#category : 'Chanel-Tests',
+	#package : 'Chanel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelAbstractTest class >> isAbstract [
 	^ self = ChanelAbstractTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelAbstractTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelAbstractTest >> runCase [
 	EpMonitor disableDuring: [ super runCase ]
 ]
