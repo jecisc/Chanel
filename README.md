@@ -2,11 +2,11 @@
 
 [![CI](https://github.com/jecisc/Chanel/actions/workflows/continuous.yml/badge.svg)](https://github.com/jecisc/Chanel/actions/workflows/continuous.yml)
 [![Coverage Status](https://coveralls.io/repos/github/jecisc/Chanel/badge.svg?branch=master)](https://coveralls.io/github/jecisc/Chanel?branch=master)
-[![Pharo version](https://img.shields.io/badge/Pharo-8.0-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-9.0-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-10-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-11-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo version](https://img.shields.io/badge/Pharo-12-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo version](https://img.shields.io/badge/Pharo-13-%23aac9ff.svg)](https://pharo.org/download)
 
 Chanel is a code cleaner for Pharo. 
 
@@ -93,7 +93,7 @@ Thus, it should be safe to depend on a fixed major version and moving minor vers
 | Version 	| Compatible Pharo versions 		|
 |-------------	|---------------------------	|
 | 1.x.x       	| Pharo 70, 80, 90, 10, 11		|
-| 2.x.x       	| Pharo 80, 90, 10, 11, 12		|
+| 2.x.x       	| Pharo 90, 10, 11, 12, 13		|
 
 ## Contact
 

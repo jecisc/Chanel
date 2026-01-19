@@ -30,22 +30,16 @@ BaselineOfChanel >> baseline: spec [
 			package: 'Chanel-Pharo11Plus' with: [ spec requires: #( 'Chanel' ) ];
 			package: 'Chanel-Pharo11Plus-Tests' with: [ spec requires: #( 'Chanel-Tests' 'Chanel-Pharo11Plus' ) ].
 
-
 		spec
 			group: 'Core' with: #( 'Chanel-Pharo11Plus' );
 			group: 'Tests' with: #( 'Chanel-Pharo11Plus-Tests' ) ].
 
-	spec for: #'pharo8.x' do: [
-		spec
-			package: 'Chanel-Pharo8';
-			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo8' ) ] ].
-
-	spec for: #( #'pharo8.x' #'pharo9.x' ) do: [
+	spec for: #(#'pharo9.x' ) do: [
 		spec
 			package: 'Chanel-Pharo9';
 			package: 'Chanel' with: [ spec requires: #( 'Chanel-Pharo9' ) ] ].
 
-	spec for: #( #'pharo8.x' #'pharo9.x' #'pharo10.x' #'pharo11.x' ) do: [
+	spec for: #( #'pharo9.x' #'pharo10.x' #'pharo11.x' ) do: [
 		self pharoBackwardCompatibility: spec.
 		spec package: 'Chanel' with: [ spec requires: #( 'PharoBackwardCompatibility')] ]
 ]
