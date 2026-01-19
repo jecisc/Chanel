@@ -1,6 +1,6 @@
-Extension { #name : #RBLiteralArrayNode }
+Extension { #name : 'RBLiteralArrayNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBLiteralArrayNode >> canHaveUselessChildren [
 	^ false
 ]

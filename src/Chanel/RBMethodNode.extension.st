@@ -1,12 +1,12 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBMethodNode >> allTemporaries [
 	^ self allSequenceNodes flatCollect: #temporaries
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBMethodNode >> install [
-	('Updating: ' , self method printString) record.
+	('Updating: ' , self compiledMethod printString) record.
 	^ self methodClass compile: self formattedCode
 ]

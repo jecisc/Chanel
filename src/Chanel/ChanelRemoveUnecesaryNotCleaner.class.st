@@ -5,17 +5,18 @@ Description
 I am a cleaner simplifying statements using the #not method when possible to make the code more readable.
 "
 Class {
-	#name : #ChanelRemoveUnecesaryNotCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelRemoveUnecesaryNotCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelRemoveUnecesaryNotCleaner class >> requirements [
 	^ { ChanelMethodAliasesCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelRemoveUnecesaryNotCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: 'true not' with: 'false';

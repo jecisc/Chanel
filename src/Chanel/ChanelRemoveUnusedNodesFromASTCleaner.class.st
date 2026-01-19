@@ -5,17 +5,18 @@ Description
 I am a cleaner removing some useless nodes from methods asts.
 "
 Class {
-	#name : #ChanelRemoveUnusedNodesFromASTCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelRemoveUnusedNodesFromASTCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelRemoveUnusedNodesFromASTCleaner class >> requirements [
 	^ { ChanelUnreadTemporaryCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelRemoveUnusedNodesFromASTCleaner >> clean [
 	(self configuration localMethods iterator
 		| #ast collectIt

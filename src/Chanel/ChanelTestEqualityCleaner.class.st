@@ -31,17 +31,18 @@ x assert: y equals: false 		==> x deny: y
 x deny: y equals: false 			==> x assert: y
 "
 Class {
-	#name : #ChanelTestEqualityCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelTestEqualityCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelTestEqualityCleaner class >> requirements [
 	^ { ChanelRemoveUnecesaryNotCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestEqualityCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver assert: `@arg = true' with: '`@receiver assert: `@arg';
@@ -74,7 +75,7 @@ ChanelTestEqualityCleaner >> rewriter [
 		yourself
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestEqualityCleaner >> scope [
 	^ self configuration definedTestCases
 ]

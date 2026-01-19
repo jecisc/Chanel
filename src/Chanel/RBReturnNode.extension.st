@@ -1,11 +1,11 @@
-Extension { #name : #RBReturnNode }
+Extension { #name : 'RBReturnNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBReturnNode >> canHaveUselessChildren [
 	^ false
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBReturnNode >> inline [
 	self replaceWith: self value
 ]

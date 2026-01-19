@@ -1,16 +1,16 @@
-Extension { #name : #RBAssignmentNode }
+Extension { #name : 'RBAssignmentNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBAssignmentNode >> canHaveUselessChildren [
 	^ false
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBAssignmentNode >> inline [
 	self replaceWith: self value
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBAssignmentNode >> removeAssignations [
 	"In case the assignation is in an assignation, we want to remove the parent aswel."
 

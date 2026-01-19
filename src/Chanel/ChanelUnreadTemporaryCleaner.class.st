@@ -5,17 +5,18 @@ Description
 I remove all temporaries that are defined but not read.
 "
 Class {
-	#name : #ChanelUnreadTemporaryCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelUnreadTemporaryCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelUnreadTemporaryCleaner class >> requirements [
 	^ { ChanelCutConditionalBranchesCleaner . ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelUnreadTemporaryCleaner >> clean [
 	self configuration localMethods
 		do: [ :method |

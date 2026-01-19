@@ -5,17 +5,18 @@ Description
 I am a cleaner removing unecessary assigments.
 "
 Class {
-	#name : #ChanelRemoveAssigmentWithoutEffectCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelRemoveAssigmentWithoutEffectCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelRemoveAssigmentWithoutEffectCleaner class >> requirements [
 	^ { ChanelCutConditionalBranchesCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelRemoveAssigmentWithoutEffectCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`var := `var' with: '';

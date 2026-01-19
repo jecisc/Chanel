@@ -9,12 +9,13 @@ For example I'll replace `notEmpty` by `isNotEmpty` and `notNil` by `isNotNil`. 
 I'll also replace `ifNotNilDo:` because it is not an iteration and the name is missleading.
 "
 Class {
-	#name : #ChanelMethodAliasesCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelMethodAliasesCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelMethodAliasesCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver notEmpty' with: '`@receiver isNotEmpty';

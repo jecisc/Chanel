@@ -5,17 +5,18 @@ Description
 I am a cleaner simplifying conditionals related to emptyness of collections.
 "
 Class {
-	#name : #ChanelEmptyConditionalSimplifierCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelEmptyConditionalSimplifierCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelEmptyConditionalSimplifierCleaner class >> requirements [
 	^ { ChanelMethodAliasesCleaner . ChanelRemoveUnecesaryNotCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelEmptyConditionalSimplifierCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver ifEmpty: [ true ] ifNotEmpty: [ false ]' with: '`@receiver isEmpty';

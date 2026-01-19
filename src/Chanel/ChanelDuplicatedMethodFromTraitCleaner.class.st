@@ -5,12 +5,13 @@ Description
 If methods present on traits are duplicated on classes, I remove the duplicated version.
 "
 Class {
-	#name : #ChanelDuplicatedMethodFromTraitCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelDuplicatedMethodFromTraitCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelDuplicatedMethodFromTraitCleaner >> clean [
 	self configuration definedClasses iterator
 		| #hasTraitComposition selectIt

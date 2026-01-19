@@ -5,17 +5,18 @@ Description
 I remove each methods only doing a super call. Does not remove methods with pragmas.
 "
 Class {
-	#name : #ChanelMethodsOnlyCallingSuperCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelMethodsOnlyCallingSuperCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelMethodsOnlyCallingSuperCleaner class >> requirements [
 	^ { ChanelRemoveUnusedNodesFromASTCleaner. ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelMethodsOnlyCallingSuperCleaner >> clean [
 	| matcher |
 	matcher := RBParseTreeSearcher justSendsSuper.

@@ -5,17 +5,18 @@ Description
 I am a cleaner that tries to categorize via the method categorizer of the system unclassified methods.
 "
 Class {
-	#name : #ChanelClassifyUnclassifiedMethodsCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelClassifyUnclassifiedMethodsCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelClassifyUnclassifiedMethodsCleaner class >> requirements [
 	^ { ChanelProtocolsCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelClassifyUnclassifiedMethodsCleaner >> clean [
 	self configuration definedClasses iterator
 		| [ :class | { class . class class }  ] flatCollectIt

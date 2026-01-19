@@ -7,22 +7,23 @@ I am a cleaner replacing the invocation of #assert: with #isEmpty or #isNotEmpty
 The reason is that it gives better logs in case of failure.
 "
 Class {
-	#name : #ChanelTestEmptyAssertionsCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelTestEmptyAssertionsCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelTestEmptyAssertionsCleaner class >> isAvailableForPharo: anInteger [
 	^ anInteger >= 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelTestEmptyAssertionsCleaner class >> requirements [
 	^ { ChanelMethodAliasesCleaner . ChanelRemoveUnecesaryNotCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestEmptyAssertionsCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver assert: `@arg isEmpty' with: '`@receiver assertEmpty: `@arg';
@@ -32,7 +33,7 @@ ChanelTestEmptyAssertionsCleaner >> rewriter [
 		yourself
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestEmptyAssertionsCleaner >> scope [
 	^ self configuration definedTestCases
 ]

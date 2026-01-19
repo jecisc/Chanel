@@ -1,6 +1,6 @@
-Extension { #name : #RBPragmaNode }
+Extension { #name : 'RBPragmaNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBPragmaNode >> canHaveUselessChildren [
 	^ false
 ]
