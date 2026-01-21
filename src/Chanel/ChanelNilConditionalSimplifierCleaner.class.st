@@ -22,17 +22,18 @@ x isNotNil ifFalse: y ifTrue: z 		==> x ifNil: y ifNotNil: z
 
 "
 Class {
-	#name : #ChanelNilConditionalSimplifierCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelNilConditionalSimplifierCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelNilConditionalSimplifierCleaner class >> requirements [
 	^ { ChanelMethodAliasesCleaner . ChanelRemoveUnecesaryNotCleaner . ChanelNilEqualitySimplifierCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelNilConditionalSimplifierCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver isNil ifTrue: `@arg' with: '`@receiver ifNil: `@arg';

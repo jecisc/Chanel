@@ -5,17 +5,18 @@ Description
 I am a cleaner that will remove some useless conditional branches.
 "
 Class {
-	#name : #ChanelCutConditionalBranchesCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelCutConditionalBranchesCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelCutConditionalBranchesCleaner class >> requirements [
 	^ { ChanelExtractAssignationsFromConditionals . ChanelExtractReturnFromAllBranchesCleaner . ChanelNilConditionalSimplifierCleaner . ChanelEmptyConditionalSimplifierCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelCutConditionalBranchesCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@receiver ifNil: [ nil ]' with: '`@receiver';

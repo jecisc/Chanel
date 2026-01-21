@@ -5,12 +5,13 @@ Description
 I am a cleaner renaming each test case ending with ""Tests"" to end with ""Test"" since this is ""a XXTestCase"".
 "
 Class {
-	#name : #ChanelTestCaseNameCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelTestCaseNameCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestCaseNameCleaner >> clean [
 	self configuration definedTestCases iterator
 		| [ :class | class name endsWith: 'Tests' ] selectIt
@@ -18,7 +19,7 @@ ChanelTestCaseNameCleaner >> clean [
 		> [ :class | self rename: class as: class name allButLast ] doIt
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelTestCaseNameCleaner >> rename: class as: aString [
 
 	| refactoringClass parameter |

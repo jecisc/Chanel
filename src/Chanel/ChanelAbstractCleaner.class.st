@@ -23,66 +23,67 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ChanelAbstractCleaner,
-	#superclass : #Object,
+	#name : 'ChanelAbstractCleaner',
+	#superclass : 'Object',
 	#instVars : [
 		'configuration'
 	],
-	#category : #Chanel
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ChanelAbstractCleaner class >> cleaners [
 	^ self allSubclasses reject: #isAbstract
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner class >> configuration: aChanel [
 	^ self new
 		configuration: aChanel;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelAbstractCleaner class >> isAbstract [
 	^ self = ChanelAbstractCleaner
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelAbstractCleaner class >> isAvailableForPharo: anInteger [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner class >> model [
   self flag: #pharo10.
 
   "This is because in P9 and before AITopologicalSorting class>>#sort:followingIncomingProperty: was returning nodes and now is returning the elements. Thus we keep that for compatibility until P10 is the latest version supported."^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner class >> requirements [
 	"Returns the list of cleaners that should run before this cleaner"
 
 	^ #()
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelAbstractCleaner >> clean [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner >> configuration [
 	^ configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner >> configuration: anObject [
 	configuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelAbstractCleaner >> minimalPharoVersion [
 	^ self configuration minimalPharoVersion
 ]

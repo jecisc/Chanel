@@ -1,6 +1,6 @@
-Extension { #name : #RBVariableNode }
+Extension { #name : 'RBVariableNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> canBeUselessNode [
 	"This is an ugly hack.
 	Pharo AST has a bug to know if a temporary is a declaration or a usage. See https://github.com/pharo-project/pharo/issues/6277
@@ -16,7 +16,7 @@ RBVariableNode >> canBeUselessNode [
 	^ super canBeUselessNode
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> declaringScope [
 	| ancestor |
 	ancestor := self parent.
@@ -24,7 +24,7 @@ RBVariableNode >> declaringScope [
 	self error: 'Undeclared temporary'
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> inlineAssignment [
 	"Replace the assignment in which I am by its value without the assignation to the temporary."
 
@@ -33,7 +33,7 @@ RBVariableNode >> inlineAssignment [
 		ifFalse: [ "This might happen for dead temporaries. See testRemoveTemporary2." self removeFromTree ]
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> inlineTemporary [
 	"Can be called only if the temporary is not read. Will remove the temporary declaration and inline the assignments."
 
@@ -42,12 +42,12 @@ RBVariableNode >> inlineTemporary [
 		removeTemporaryNamed: self name
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> isNotReadOnce [
 	^ self declaringScope allChildren noneSatisfy: [ :node | (node isTempNamed: self name) and: [ node isRead ] ]
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBVariableNode >> isTempNamed: aSymbol [
 
 	^ self class environment

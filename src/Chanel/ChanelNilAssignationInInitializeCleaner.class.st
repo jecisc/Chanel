@@ -6,12 +6,13 @@ I remove all nil assignations in initialize methods because most of the time the
 Be careful, in some cases, they are. 
 "
 Class {
-	#name : #ChanelNilAssignationInInitializeCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelNilAssignationInInitializeCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelNilAssignationInInitializeCleaner >> clean [
 	self configuration localMethods iterator
 		| [ :method | method selector = #initialize ] selectIt

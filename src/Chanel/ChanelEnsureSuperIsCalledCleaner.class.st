@@ -9,12 +9,13 @@ I am a cleaner checking that we do not miss some super calls:
 
 "
 Class {
-	#name : #ChanelEnsureSuperIsCalledCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelEnsureSuperIsCalledCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelEnsureSuperIsCalledCleaner >> clean [
 	self configuration localMethods
 		in: [ :methods |
@@ -24,7 +25,7 @@ ChanelEnsureSuperIsCalledCleaner >> clean [
 				ensureSuperInitializeForMethods: methods ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 	methods iterator
 		| #isInstanceSide selectIt
@@ -36,7 +37,7 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperInitializeForMethods: methods [
 		> #installAST doIt
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
 	methods iterator
 		| [ :method | method methodClass isTestCase ] selectIt
@@ -49,7 +50,7 @@ ChanelEnsureSuperIsCalledCleaner >> ensureSuperSetUpForMethods: methods [
 		> #installAST doIt
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelEnsureSuperIsCalledCleaner >> ensureSuperTearDownForMethods: methods [
 	methods iterator
 		| [ :method | method methodClass isTestCase ] selectIt

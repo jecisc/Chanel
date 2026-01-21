@@ -5,17 +5,18 @@ Description
 I am an abstract cleaner for cleanings using Pharo's parse tree rewriter to update the contents of some methods.
 "
 Class {
-	#name : #ChanelMethodRewriterCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelMethodRewriterCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChanelMethodRewriterCleaner class >> isAbstract [
 	^ self = ChanelMethodRewriterCleaner
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelMethodRewriterCleaner >> clean [
 	| rewriter |
 	rewriter := self rewriter.
@@ -23,14 +24,14 @@ ChanelMethodRewriterCleaner >> clean [
 		do: [ :method | (rewriter executeTree: method ast) ifTrue: [ method installAST ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelMethodRewriterCleaner >> rewriter [
 	"Return the rewriter to use to clean the methods."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelMethodRewriterCleaner >> scope [
 	"Return all the classes whose methods needs to be cleaned. By default, all of them."
 

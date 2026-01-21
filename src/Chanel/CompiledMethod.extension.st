@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> ensureProtocol: aSymbol [
 	self protocolName = aSymbol ifTrue: [ ^ self ].
 
@@ -8,17 +8,17 @@ CompiledMethod >> ensureProtocol: aSymbol [
 	self protocol: aSymbol
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> hasMessages [
 	^ self ast hasMessages
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> hasPragma [
 	^ self pragmas isNotEmpty
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> installAST [
 	"In Chanel we update some ASTs. This method install the updated AST."
 
@@ -29,12 +29,12 @@ CompiledMethod >> installAST [
 	self ast install
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> isInstanceSide [
 	^ self methodClass isInstanceSide
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 CompiledMethod >> removeMethod [
 	('Removing: ' , self printString) record.
 	self removeFromSystem

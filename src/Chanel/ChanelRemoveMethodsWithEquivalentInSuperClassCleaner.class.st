@@ -5,17 +5,18 @@ Description
 I am a cleaner removing methods overriding another method with exactly the same AST.
 "
 Class {
-	#name : #ChanelRemoveMethodsWithEquivalentInSuperClassCleaner,
-	#superclass : #ChanelAbstractCleaner,
-	#category : #Chanel
+	#name : 'ChanelRemoveMethodsWithEquivalentInSuperClassCleaner',
+	#superclass : 'ChanelAbstractCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleaner class >> requirements [
 	^ { ChanelRemoveUnusedNodesFromASTCleaner . ChanelNilAssignationInInitializeCleaner . ChanelRemoveAssigmentWithoutEffectCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelRemoveMethodsWithEquivalentInSuperClassCleaner >> clean [
 	| overridenMethod |
 	self configuration definedClasses iterator

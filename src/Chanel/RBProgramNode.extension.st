@@ -1,6 +1,6 @@
-Extension { #name : #RBProgramNode }
+Extension { #name : 'RBProgramNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> allParents [
 	^ parent
 		ifNil: [ OrderedCollection new ]
@@ -10,34 +10,34 @@ RBProgramNode >> allParents [
 				yourself ]
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> canBeUselessNode [
 	^ self isImmediateNode
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> canHaveUselessChildren [
 	"Return false if all the children of this node can be important and should not be remove by Chanel."
 
 	^ true
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> hasMessages [
 	^ self sendNodes isNotEmpty
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> isTempNamed: aSymbol [
 	^ false
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> nilAssignmentNodes [
 	^ self assignmentNodes select: [ :assignment | assignment value value isNil ]
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBProgramNode >> removeFromTree [
 	self parent removeNode: self
 ]

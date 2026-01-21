@@ -1,10 +1,11 @@
 Class {
-	#name : #AITopologicalSorting,
-	#superclass : #MalTopologicalSorting,
-	#category : #'Chanel-Pharo9'
+	#name : 'AITopologicalSorting',
+	#superclass : 'MalTopologicalSorting',
+	#category : 'Chanel-Pharo9',
+	#package : 'Chanel-Pharo9'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AITopologicalSorting >> run [
 	^ super run reverse
 ]

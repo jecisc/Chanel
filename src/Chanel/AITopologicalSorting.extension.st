@@ -1,11 +1,11 @@
-Extension { #name : #AITopologicalSorting }
+Extension { #name : 'AITopologicalSorting' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 AITopologicalSorting >> addIncomingEdgesFollowing: aBlock [
 	self edges: (nodes flatCollect: [ :node | (aBlock value: node model) collect: [ :each | node model -> each ] ]) from: #key to: #value
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 AITopologicalSorting class >> nodes: aCollection incomingEdgesProperty: aValuable [
 	^ self new
 		nodes: aCollection;
@@ -13,7 +13,7 @@ AITopologicalSorting class >> nodes: aCollection incomingEdgesProperty: aValuabl
 		yourself
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 AITopologicalSorting class >> sort: nodes followingIncomingProperty: aValuable [
 	^ (self nodes: nodes incomingEdgesProperty: aValuable) run collect: #model
 ]

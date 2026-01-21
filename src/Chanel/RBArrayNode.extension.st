@@ -1,11 +1,11 @@
-Extension { #name : #RBArrayNode }
+Extension { #name : 'RBArrayNode' }
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBArrayNode >> canBeUselessNode [
 	^ true
 ]
 
-{ #category : #'*Chanel' }
+{ #category : '*Chanel' }
 RBArrayNode >> canHaveUselessChildren [
 	^ false
 ]

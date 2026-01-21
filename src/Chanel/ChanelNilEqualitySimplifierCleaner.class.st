@@ -5,17 +5,18 @@ Description
 I am a cleaner replacing equality to nil by calls to #isNil or #isNotNil.
 "
 Class {
-	#name : #ChanelNilEqualitySimplifierCleaner,
-	#superclass : #ChanelMethodRewriterCleaner,
-	#category : #Chanel
+	#name : 'ChanelNilEqualitySimplifierCleaner',
+	#superclass : 'ChanelMethodRewriterCleaner',
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelNilEqualitySimplifierCleaner class >> requirements [
 	^ { ChanelMethodAliasesCleaner }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelNilEqualitySimplifierCleaner >> rewriter [
 	^ RBParseTreeRewriter new
 		replace: '`@object = nil' with: '`@object isNil';

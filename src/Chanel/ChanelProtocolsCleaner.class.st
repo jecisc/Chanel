@@ -17,17 +17,18 @@ For example I'll update initialize-release to initialize. Find more in `self pro
 **I'll ensure tests are in a protocl starting with ""test""**
 "
 Class {
-	#name : #ChanelProtocolsCleaner,
-	#superclass : #ChanelAbstractCleaner,
+	#name : 'ChanelProtocolsCleaner',
+	#superclass : 'ChanelAbstractCleaner',
 	#classVars : [
 		'MethodsInSpecificProtocolMaps',
 		'ProtocolsToCleanMap',
 		'TestMethodsInSpecificProtocolMaps'
 	],
-	#category : #Chanel
+	#category : 'Chanel',
+	#package : 'Chanel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner class >> methodsInSpecificProtocolMap [
 	^ MethodsInSpecificProtocolMaps
 		ifNil: [ MethodsInSpecificProtocolMaps := Dictionary new
@@ -46,7 +47,7 @@ ChanelProtocolsCleaner class >> methodsInSpecificProtocolMap [
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner class >> protocolsToCleanMap [
 	^ ProtocolsToCleanMap
 		ifNil: [ ProtocolsToCleanMap := Dictionary new
@@ -58,7 +59,7 @@ ChanelProtocolsCleaner class >> protocolsToCleanMap [
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner class >> testMethodsInSpecificProtocolMap [
 	^ TestMethodsInSpecificProtocolMaps
 		ifNil: [ TestMethodsInSpecificProtocolMaps := Dictionary new
@@ -67,7 +68,7 @@ ChanelProtocolsCleaner class >> testMethodsInSpecificProtocolMap [
 				yourself ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelProtocolsCleaner >> clean [
 	| methods |
 	methods := self configuration localMethodsWithoutExtensions.
@@ -83,7 +84,7 @@ ChanelProtocolsCleaner >> clean [
 		thenDo: [ :method | self testMethodsInSpecificProtocolMap at: method selector ifPresent: [ :protocol | method ensureProtocol: protocol ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 	self protocolsToCleanMap
 		keysAndValuesDo: [ :olds :new |
@@ -92,7 +93,7 @@ ChanelProtocolsCleaner >> cleanCloseProtocolsOf: methods [
 				thenDo: [ :meth | meth ensureProtocol: new ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
 	methods iterator
 		| #isTestMethod selectIt
@@ -100,17 +101,17 @@ ChanelProtocolsCleaner >> ensureTestMethodsAreInRightProtocol: methods [
 		> [ :method | method ensureProtocol: #tests ] doIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner >> methodsInSpecificProtocolMap [
 	^ self class methodsInSpecificProtocolMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner >> protocolsToCleanMap [
 	^ self class protocolsToCleanMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChanelProtocolsCleaner >> testMethodsInSpecificProtocolMap [
 	^ self class testMethodsInSpecificProtocolMap
 ]

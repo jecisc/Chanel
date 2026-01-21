@@ -1,17 +1,18 @@
 Class {
-	#name : #ChanelCondenseMethodsCleanerTest,
-	#superclass : #ChanelAbstractCleanerTest,
-	#category : #'Chanel-Pharo11Plus-Tests'
+	#name : 'ChanelCondenseMethodsCleanerTest',
+	#superclass : 'ChanelAbstractCleanerTest',
+	#category : 'Chanel-Pharo11Plus-Tests',
+	#package : 'Chanel-Pharo11Plus-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ChanelCondenseMethodsCleanerTest >> setUp [
 
 	super setUp.
 	class := self createDefaultClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelCondenseMethodsCleanerTest >> testCondenseMethodsWithFinalDot [
 	self assert: 'self toto
 	ifFalse: [ 2 ]
@@ -20,7 +21,7 @@ ChanelCondenseMethodsCleanerTest >> testCondenseMethodsWithFinalDot [
 	ifTrue: [ 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChanelCondenseMethodsCleanerTest >> testCondenseMethodsWithSpaces [
 	self assert: 'self toto
 	ifFalse: [ 2 ]
