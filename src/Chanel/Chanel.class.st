@@ -154,21 +154,21 @@ Chanel >> cleanUsing: cleaners [
 
 { #category : 'cleaning' }
 Chanel >> cleanWithSelectedCleaners: cleaners [
-	TinyCurrentLogger
-		value: self class logger
-		during: [ self
-				execute: [ UIManager default
-						displayProgress: 'Running Chanel'
-						from: 1
-						to: cleaners size
-						during: [ :bar |
-							cleaners
-								doWithIndex: [ :cleaner :index |
-									bar
-										value: index;
-										title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
-									self execute: [ (cleaner configuration: self) clean ] recordedAs: 'Running ' , cleaner printString ] ] ]
-				recordedAs: 'Running Chanel on: ' , (', ' join: (packages collect: #name)) ]
+
+	TinyCurrentLogger value: self class logger during: [
+		self
+			execute: [
+				[ :bar |
+				cleaners doWithIndex: [ :cleaner :index |
+						bar
+							value: index;
+							title: '(' , index asString , '/' , cleaners size asString , ') Running ' , cleaner printString.
+						self execute: [ (cleaner configuration: self) clean ] recordedAs: 'Running ' , cleaner printString ] ] asJob
+					title: 'Running Chanel';
+					min: 1;
+					max: cleaners size;
+					run ]
+			recordedAs: 'Running Chanel on: ' , (', ' join: (packages collect: #name)) ]
 ]
 
 { #category : 'accessing' }

@@ -14,6 +14,5 @@ Class {
 { #category : 'cleaning' }
 ChanelCondenseMethodsCleaner >> clean [
 
-	self configuration localMethods do: [ :cm |
-		(RBRefactoryChangeFactory instance addMethodSource: (ReMethodSourceCleaner clean: cm sourceCode) in: cm origin) execute ]
+	self configuration localMethods do: [ :cm | cm origin compile: (ReMethodSourceCleaner clean: cm sourceCode) ]
 ]
